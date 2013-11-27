@@ -10,7 +10,22 @@
 
 @implementation NexumUtil
 
-+(NSMutableDictionary *) getParamsOfURL: (NSURL *)URL{
++ (CGRect)currentScreenRect:(UIInterfaceOrientation)orientation {
+    CGRect currentScreenRect;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    if((BOOL)UIDeviceOrientationIsPortrait(orientation)){
+        currentScreenRect.size.width = screenRect.size.width;
+        currentScreenRect.size.height = screenRect.size.height;
+    } else {
+        currentScreenRect.size.width = screenRect.size.height;
+        currentScreenRect.size.height = screenRect.size.width;
+    }
+    
+    return currentScreenRect;
+}
+
++ (NSMutableDictionary *)paramsOfURL:(NSURL *)URL {
     NSString * query = [URL query];
     NSArray * pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];

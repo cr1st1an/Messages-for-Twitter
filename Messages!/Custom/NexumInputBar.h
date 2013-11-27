@@ -19,8 +19,8 @@
 @property (assign, nonatomic) float animationDuration;
 @property (assign, nonatomic) int currentWidth;
 
-- (void)initFrame:(BOOL)isPortrait;
-- (void)updateFrame:(BOOL)isPortrait withOrigin:(int)y andAnimation:(BOOL)animation;
+- (void)initFrame:(UIInterfaceOrientation)orientation;
+- (void)updateFrame:(UIInterfaceOrientation)orientation withOrigin:(int)y andAnimation:(BOOL)animation;
 - (void)updateTextViewHeight:(UITextView *)textView WithAnimation:(BOOL)animation;
 - (NSString*)textValue;
 - (void)textClear;

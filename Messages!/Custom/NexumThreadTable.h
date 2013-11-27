@@ -12,6 +12,6 @@
 
 @property (assign, nonatomic) float animationDuration;
 
-- (void)updateFrame:(BOOL)isPortrait withOrigin:(int)y andAnimation:(BOOL)animation;
+- (void)updateFrame:(UIInterfaceOrientation)orientation withOrigin:(int)y andAnimation:(BOOL)animation;
 
 @end

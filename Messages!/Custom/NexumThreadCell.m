@@ -11,7 +11,7 @@
 @implementation NexumThreadCell
 
 - (void)reuseCellWithThread:(NSDictionary *)thread {
-    self.loadImages = YES;
+    
     
     BOOL opened = [thread[@"opened"] boolValue];
     
@@ -41,6 +41,7 @@
             }];
         }
     } else {
+        self.loadImages = YES;
         self.picture.image = [UIImage imageNamed:@"placeholder"];
     }
 }

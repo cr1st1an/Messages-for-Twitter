@@ -10,19 +10,12 @@
 
 @implementation NexumMessageCell
 
-- (void)reuseCell:(BOOL)isPortrait withMessage:(NSDictionary *)message andProfile:(NSDictionary *)profile {
-    self.loadImages = YES;
+- (void)reuseCell:(UIInterfaceOrientation)orientation withMessage:(NSDictionary *)message andProfile:(NSDictionary *)profile {
     BOOL sent = [message[@"sent"] boolValue];
     
     self.backgroundColor = [UIColor clearColor];
     
-    int screenWidth;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(isPortrait){
-        screenWidth = screenRect.size.width;
-    } else {
-        screenWidth = screenRect.size.height;
-    }
+    CGRect CSRect = [NexumUtil currentScreenRect:orientation];
     
     if(nil == self.point){
         self.point = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 17, 16)];
@@ -55,11 +48,11 @@
     
     
     CGRect messageFrame = self.message.frame;
-    CGSize messageSize = [self.message sizeThatFits:CGSizeMake((screenWidth - 140), FLT_MAX)];
-    if(messageSize.width < (screenWidth - 140))
+    CGSize messageSize = [self.message sizeThatFits:CGSizeMake((CSRect.size.width - 140), FLT_MAX)];
+    if(messageSize.width < (CSRect.size.width - 140))
         messageFrame.size.width = messageSize.width;
     else
-        messageFrame.size.width = (screenWidth - 140);
+        messageFrame.size.width = (CSRect.size.width - 140);
     messageFrame.size.height = messageSize.height;
     messageFrame.origin.x = 10;
     
@@ -80,9 +73,9 @@
         self.message.textColor = [UIColor whiteColor];
         self.message.tintColor = [UIColor whiteColor];
         self.point.image = [UIImage imageNamed:@"point_right"];
-        pointFrame.origin.x = (screenWidth - 56);
-        bubbleFrame.origin.x = ((screenWidth - 50) - bubbleFrame.size.width);
-        pictureFrame.origin.x = (screenWidth - 45);
+        pointFrame.origin.x = (CSRect.size.width - 56);
+        bubbleFrame.origin.x = ((CSRect.size.width - 50) - bubbleFrame.size.width);
+        pictureFrame.origin.x = (CSRect.size.width - 45);
     } else {
         self.bubble.backgroundColor = [UIColor C_d0f2ff];
         self.message.textColor = [UIColor C_032636];
@@ -119,6 +112,7 @@
                 }];
             }
         } else {
+            self.loadImages = YES;
             self.picture.image = [UIImage imageNamed:@"placeholder"];
         }
     } else {

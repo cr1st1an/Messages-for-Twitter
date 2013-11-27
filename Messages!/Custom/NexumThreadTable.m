@@ -10,22 +10,14 @@
 
 @implementation NexumThreadTable
 
-- (void)updateFrame:(BOOL)isPortrait withOrigin:(int)y andAnimation:(BOOL)animation{
-    int screenWidth;
-    int screenHeight;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(isPortrait){
-        screenWidth = screenRect.size.width;
-        screenHeight = screenRect.size.height;
-    } else {
-        screenWidth = screenRect.size.height;
-        screenHeight = screenRect.size.width;
-    }
+- (void)updateFrame:(UIInterfaceOrientation)orientation withOrigin:(int)y andAnimation:(BOOL)animation{
+    
+    CGRect CSRect = [NexumUtil currentScreenRect:orientation];
     
     CGRect viewFrame = self.frame;
     
-    if(0 == y || screenWidth == y || screenHeight == y){
-        viewFrame.size.height = screenHeight;
+    if(0 == y || CSRect.size.width == y || CSRect.size.height == y){
+        viewFrame.size.height = CSRect.size.height;
     } else {
         viewFrame.size.height = y;
     }

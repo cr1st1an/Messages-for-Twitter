@@ -10,7 +10,8 @@
 
 @interface NexumUtil : NSObject
 
-+(NSMutableDictionary *) getParamsOfURL: (NSURL *)URL;
++ (CGRect)currentScreenRect:(UIInterfaceOrientation)orientation;
++ (NSMutableDictionary *)paramsOfURL:(NSURL *)URL;
 + (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original;
 
 @end

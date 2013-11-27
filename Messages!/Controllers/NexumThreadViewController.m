@@ -38,7 +38,7 @@
     self.profile = [NSDictionary dictionary];
     self.account = [NexumDefaults currentAccount];
     
-    [self.inputBar initFrame:(UIDeviceOrientationIsPortrait(self.interfaceOrientation))];
+    [self.inputBar initFrame:self.interfaceOrientation];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -99,17 +99,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    int screenWidth;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(UIDeviceOrientationIsPortrait(self.interfaceOrientation)){
-        screenWidth = screenRect.size.width;
-    } else {
-        screenWidth = screenRect.size.height;
-    }
+    CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
     
     NSDictionary *message = [self.messages objectAtIndex:indexPath.row];
     self.sampleText.text = message[@"text"];
-    CGSize messageSize = [self.sampleText sizeThatFits:CGSizeMake((screenWidth - 150), FLT_MAX)];
+    CGSize messageSize = [self.sampleText sizeThatFits:CGSizeMake((CSRect.size.width - 150), FLT_MAX)];
     
     return (messageSize.height +  10);
 }
@@ -137,7 +131,7 @@
     }
     
     cell.identifier = message[@"identifier"];
-    [cell reuseCell:(UIDeviceOrientationIsPortrait(self.interfaceOrientation)) withMessage:message andProfile:profile];
+    [cell reuseCell:self.interfaceOrientation withMessage:message andProfile:profile];
     if(nil != profile)
         [cell performSelector:@selector(loadImageswithMessageAndProfile:) withObject:[NSArray arrayWithObjects:message, profile, nil] afterDelay:0.1];
     
@@ -155,8 +149,8 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     self.animatingRotation = NO;
     
-    [self.inputBar updateFrame:(UIDeviceOrientationIsPortrait(self.interfaceOrientation)) withOrigin:self.keyboardFrame.origin.y andAnimation:YES];
-    [self.tableView updateFrame:(UIDeviceOrientationIsPortrait(self.interfaceOrientation)) withOrigin:self.keyboardFrame.origin.y andAnimation:NO];
+    [self.inputBar updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:YES];
+    [self.tableView updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:NO];
     [self.tableView reloadData];
 }
 
@@ -166,8 +160,8 @@
     self.keyboardFrame = [[notificationInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     self.keyboardFrame = [self.view convertRect:self.keyboardFrame fromView:self.view.window];
 
-    [self.inputBar updateFrame:(UIDeviceOrientationIsPortrait(self.interfaceOrientation)) withOrigin:self.keyboardFrame.origin.y andAnimation:(!self.animatingRotation)];
-    [self.tableView updateFrame:(UIDeviceOrientationIsPortrait(self.interfaceOrientation)) withOrigin:self.keyboardFrame.origin.y andAnimation:(!self.animatingRotation)];
+    [self.inputBar updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:(!self.animatingRotation)];
+    [self.tableView updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:(!self.animatingRotation)];
     [self scrollToBottom];
 }
 
@@ -193,14 +187,9 @@
 
 -(void)scrollToBottom {
     if(self.isFirstLoad){
-        int screenHeight;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        if(UIDeviceOrientationIsPortrait(self.interfaceOrientation)){
-            screenHeight = screenRect.size.height;
-        } else {
-            screenHeight = screenRect.size.width;
-        }
-        if(screenHeight < (self.tableView.contentSize.height + self.inputBar.frame.size.height + self.navigationController.navigationBar.frame.size.height)){
+        CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
+
+        if(CSRect.size.height < (self.tableView.contentSize.height + self.inputBar.frame.size.height + self.navigationController.navigationBar.frame.size.height)){
             [self.tableView setContentOffset:CGPointMake(0, (self.tableView.contentSize.height - self.tableView.frame.size.height + self.inputBar.frame.size.height))];
             [self.tableView setNeedsLayout];
             

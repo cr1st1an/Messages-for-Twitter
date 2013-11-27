@@ -11,8 +11,6 @@
 @implementation NexumProfileCell
 
 - (void)reuseCellWithProfile:(NSDictionary *)profile andRow:(int)row {
-    self.loadImages = YES;
-    
     BOOL follower = [profile[@"follower"] boolValue];
     BOOL following = [profile[@"following"] boolValue];
     BOOL own = [profile[@"own"] boolValue];
@@ -49,6 +47,7 @@
             }];
         }
     } else {
+        self.loadImages = YES;
         self.picture.image = [UIImage imageNamed:@"placeholder"];
     }
 }

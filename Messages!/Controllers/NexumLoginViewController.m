@@ -26,7 +26,7 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSDictionary *urlGet = [NexumUtil getParamsOfURL:webView.request.URL];
+    NSDictionary *urlGet = [NexumUtil paramsOfURL:webView.request.URL];
     
     if(nil != [urlGet objectForKey:@"oauth_verifier"]){
         NSString *params = [NSString stringWithFormat:@"uiid=%@&client=%@&version=%@&oauth_token=%@&oauth_verifier=%@",

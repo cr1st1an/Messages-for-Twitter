@@ -10,28 +10,22 @@
 
 @implementation NexumInputBar
 
-- (void)initFrame:(BOOL)isPortrait {
+- (void)initFrame:(UIInterfaceOrientation)orientation {
     if (self) {
-        int screenWidth;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        if(isPortrait){
-            screenWidth = screenRect.size.width;
-        } else {
-            screenWidth = screenRect.size.height;
-        }
+        CGRect CSRect = [NexumUtil currentScreenRect:orientation];
         
         self.backgroundColor = [UIColor C_eaeced];
         
-        self.backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 40)];
+        self.backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CSRect.size.width, 40)];
         self.backgroundImage.image = [[UIImage imageNamed:@"back_input"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
         [self addSubview:self.backgroundImage];
         
-        self.inputField = [[UITextView alloc] initWithFrame:CGRectMake(5, 5, (screenWidth - 75), 35)];
+        self.inputField = [[UITextView alloc] initWithFrame:CGRectMake(5, 5, (CSRect.size.width - 75), 35)];
         self.inputField.backgroundColor = [UIColor clearColor];
         [self.inputField setFont:[UIFont systemFontOfSize:16]];
         [self addSubview:self.inputField];
         
-        self.sendButton = [[UIButton alloc] initWithFrame:CGRectMake((screenWidth - 65), 0, 65, 40)];
+        self.sendButton = [[UIButton alloc] initWithFrame:CGRectMake((CSRect.size.width - 65), 0, 65, 40)];
         self.sendButton.enabled = NO;
         self.sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [self.sendButton setTitle:@"Send" forState:UIControlStateNormal];
@@ -39,7 +33,7 @@
         [self.sendButton setTitleColor:[UIColor C_ccd6dd] forState:UIControlStateDisabled];
         [self addSubview:self.sendButton];
         
-        self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake((screenWidth - 65), 5, 65, 20)];
+        self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake((CSRect.size.width - 65), 5, 65, 20)];
         self.countLabel.textAlignment = NSTextAlignmentCenter;
         self.countLabel.font = [UIFont systemFontOfSize:12];
         [self addSubview:self.countLabel];
@@ -48,17 +42,8 @@
     }
 }
 
-- (void)updateFrame:(BOOL)isPortrait withOrigin:(int)y andAnimation:(BOOL)animation {
-    int screenWidth;
-    int screenHeight;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(isPortrait){
-        screenWidth = screenRect.size.width;
-        screenHeight = screenRect.size.height;
-    } else {
-        screenWidth = screenRect.size.height;
-        screenHeight = screenRect.size.width;
-    }
+- (void)updateFrame:(UIInterfaceOrientation)orientation withOrigin:(int)y andAnimation:(BOOL)animation {
+    CGRect CSRect = [NexumUtil currentScreenRect:orientation];
     
     CGRect viewFrame = self.frame;
     CGRect backgroundFrame = self.backgroundImage.frame;
@@ -67,17 +52,17 @@
     CGRect sendFrame = self.sendButton.frame;
    
     
-    if(0 == y || screenWidth == y || screenHeight == y){
-        viewFrame.origin.y = (screenHeight - viewFrame.size.height);
+    if(0 == y || CSRect.size.width == y || CSRect.size.height == y){
+        viewFrame.origin.y = (CSRect.size.height - viewFrame.size.height);
     } else {
         viewFrame.origin.y = (y - viewFrame.size.height);
     }
     
-    viewFrame.size.width = screenWidth;
-    backgroundFrame.size.width = screenWidth;
-    inputFrame.size.width = (screenWidth - 75);
-    countFrame.origin.x = (screenWidth - 65);
-    sendFrame.origin.x = (screenWidth - 65);
+    viewFrame.size.width = CSRect.size.width;
+    backgroundFrame.size.width = CSRect.size.width;
+    inputFrame.size.width = (CSRect.size.width - 75);
+    countFrame.origin.x = (CSRect.size.width - 65);
+    sendFrame.origin.x = (CSRect.size.width - 65);
     
     
     if(animation){
@@ -99,7 +84,7 @@
         [UIView commitAnimations];
     }
     
-    self.currentWidth = screenWidth;
+    self.currentWidth = CSRect.size.width;
     [self updateTextViewHeight:self.inputField WithAnimation:animation];
 }
 
