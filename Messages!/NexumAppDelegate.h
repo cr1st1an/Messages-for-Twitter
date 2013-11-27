@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Crashlytics/Crashlytics.h>
 #import "FICImageCache.h"
 
 @interface NexumAppDelegate : UIResponder <UIApplicationDelegate, FICImageCacheDelegate>

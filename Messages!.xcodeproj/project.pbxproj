@@ -24,7 +24,6 @@
 		2A07A98D183E8475008498F4 /* NexumInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A000BCD1833046000BB87C3 /* NexumInboxViewController.m */; };
 		2A07A98E183E8475008498F4 /* NexumMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A09BC5C183C2E8B00AE4152 /* NexumMessageCell.m */; };
 		2A07A98F183E8475008498F4 /* NexumDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5AE2E31832B9EA00BCE981 /* NexumDefaults.m */; };
-		2A07A991183E8475008498F4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1BAC95183D50AF0053491E /* Crashlytics.framework */; };
 		2A07A992183E8475008498F4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3B2A8B1831F4E100E82B8C /* CoreGraphics.framework */; };
 		2A07A993183E8475008498F4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3B2A8D1831F4E100E82B8C /* UIKit.framework */; };
 		2A07A994183E8475008498F4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3B2A891831F4E100E82B8C /* Foundation.framework */; };
@@ -34,7 +33,6 @@
 		2A07A999183E8475008498F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A3B2A921831F4E100E82B8C /* InfoPlist.strings */; };
 		2A09BC5D183C2E8B00AE4152 /* NexumMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A09BC5C183C2E8B00AE4152 /* NexumMessageCell.m */; };
 		2A09BC60183C303F00AE4152 /* NexumThreadTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A09BC5F183C303F00AE4152 /* NexumThreadTable.m */; };
-		2A1BAC96183D50AF0053491E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1BAC95183D50AF0053491E /* Crashlytics.framework */; };
 		2A1BAC99183D51080053491E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A3B2A9B1831F4E100E82B8C /* Main.storyboard */; };
 		2A25E42C1843123300A18F26 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A25E42B1843123300A18F26 /* Social.framework */; };
 		2A25E42D1843123B00A18F26 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A25E42B1843123300A18F26 /* Social.framework */; };
@@ -83,12 +81,11 @@
 		2A000BCC1833046000BB87C3 /* NexumInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumInboxViewController.h; path = Controllers/NexumInboxViewController.h; sourceTree = "<group>"; };
 		2A000BCD1833046000BB87C3 /* NexumInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumInboxViewController.m; path = Controllers/NexumInboxViewController.m; sourceTree = "<group>"; };
 		2A07A99E183E8475008498F4 /* ßeta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ßeta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A07A99F183E8475008498F4 /* In House-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "In House-Info.plist"; path = "/Users/cr1st1an/Software/Messages/[app] Messages/Twitter iOS 1.0/In House-Info.plist"; sourceTree = "<absolute>"; };
+		2A07A99F183E8475008498F4 /* Info-InHouse.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-InHouse.plist"; path = "/Users/cr1st1an/Software/Twitter/[ios] Messages!/Messages!/Info-InHouse.plist"; sourceTree = "<absolute>"; };
 		2A09BC5B183C2E8B00AE4152 /* NexumMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumMessageCell.h; path = Custom/NexumMessageCell.h; sourceTree = "<group>"; };
 		2A09BC5C183C2E8B00AE4152 /* NexumMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumMessageCell.m; path = Custom/NexumMessageCell.m; sourceTree = "<group>"; };
 		2A09BC5E183C303F00AE4152 /* NexumThreadTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumThreadTable.h; path = Custom/NexumThreadTable.h; sourceTree = "<group>"; };
 		2A09BC5F183C303F00AE4152 /* NexumThreadTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumThreadTable.m; path = Custom/NexumThreadTable.m; sourceTree = "<group>"; };
-		2A1BAC95183D50AF0053491E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		2A25E42B1843123300A18F26 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		2A25E42E184318B500A18F26 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		2A25E431184320AA00A18F26 /* NexumTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumTwitter.h; path = Library/NexumTwitter.h; sourceTree = "<group>"; };
@@ -99,7 +96,7 @@
 		2A3B2A891831F4E100E82B8C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A3B2A8B1831F4E100E82B8C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2A3B2A8D1831F4E100E82B8C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		2A3B2A911831F4E100E82B8C /* App Store-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "App Store-Info.plist"; sourceTree = "<group>"; };
+		2A3B2A911831F4E100E82B8C /* Info-AppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-AppStore.plist"; sourceTree = "<group>"; };
 		2A3B2A931831F4E100E82B8C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A3B2A951831F4E100E82B8C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A3B2A971831F4E100E82B8C /* Messages!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Messages!-Prefix.pch"; sourceTree = "<group>"; };
@@ -140,7 +137,6 @@
 		2A98DC231834180E0009E4DF /* NexumSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumSearchViewController.h; path = Controllers/NexumSearchViewController.h; sourceTree = "<group>"; };
 		2A98DC241834180E0009E4DF /* NexumSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumSearchViewController.m; path = Controllers/NexumSearchViewController.m; sourceTree = "<group>"; };
 		2AC4E1E1183D6BB700BC589E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		2AE2E9AD183D0B85006D90D8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = "Twitter iOS 1.0/Frameworks/Crashlytics.framework"; sourceTree = "<group>"; };
 		2AF59B5E1832C4CB003E153E /* NexumTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumTabBarViewController.h; path = Controllers/NexumTabBarViewController.h; sourceTree = "<group>"; };
 		2AF59B5F1832C4CB003E153E /* NexumTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumTabBarViewController.m; path = Controllers/NexumTabBarViewController.m; sourceTree = "<group>"; };
 		2AF59B611832CB2A003E153E /* NexumLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumLoginViewController.h; path = Controllers/NexumLoginViewController.h; sourceTree = "<group>"; };
@@ -160,7 +156,6 @@
 			files = (
 				2A25E42D1843123B00A18F26 /* Social.framework in Frameworks */,
 				2AF8B5D0184150C3005EA74A /* AudioToolbox.framework in Frameworks */,
-				2A07A991183E8475008498F4 /* Crashlytics.framework in Frameworks */,
 				2A07A992183E8475008498F4 /* CoreGraphics.framework in Frameworks */,
 				2A07A993183E8475008498F4 /* UIKit.framework in Frameworks */,
 				2A07A994183E8475008498F4 /* Foundation.framework in Frameworks */,
@@ -174,7 +169,6 @@
 			files = (
 				2A25E42C1843123300A18F26 /* Social.framework in Frameworks */,
 				2AF8B5CF184150BA005EA74A /* AudioToolbox.framework in Frameworks */,
-				2A1BAC96183D50AF0053491E /* Crashlytics.framework in Frameworks */,
 				2A3B2A8C1831F4E100E82B8C /* CoreGraphics.framework in Frameworks */,
 				2A3B2A8E1831F4E100E82B8C /* UIKit.framework in Frameworks */,
 				2A3B2A8A1831F4E100E82B8C /* Foundation.framework in Frameworks */,
@@ -210,8 +204,6 @@
 				2A25E42B1843123300A18F26 /* Social.framework */,
 				2AF8B5CE184150BA005EA74A /* AudioToolbox.framework */,
 				2A78FECF183FBE8900D59CC9 /* FastImageCache */,
-				2A1BAC95183D50AF0053491E /* Crashlytics.framework */,
-				2AE2E9AD183D0B85006D90D8 /* Crashlytics.framework */,
 				2A3B2AC11831FADC00E82B8C /* StoreKit.framework */,
 				2A3B2A891831F4E100E82B8C /* Foundation.framework */,
 				2A3B2A8B1831F4E100E82B8C /* CoreGraphics.framework */,
@@ -241,8 +233,8 @@
 		2A3B2A901831F4E100E82B8C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2A07A99F183E8475008498F4 /* In House-Info.plist */,
-				2A3B2A911831F4E100E82B8C /* App Store-Info.plist */,
+				2A07A99F183E8475008498F4 /* Info-InHouse.plist */,
+				2A3B2A911831F4E100E82B8C /* Info-AppStore.plist */,
 				2A3B2A921831F4E100E82B8C /* InfoPlist.strings */,
 				2A3B2A951831F4E100E82B8C /* main.m */,
 				2A3B2A971831F4E100E82B8C /* Messages!-Prefix.pch */,
@@ -362,7 +354,6 @@
 				2A3B2A821831F4E100E82B8C /* Sources */,
 				2A3B2A831831F4E100E82B8C /* Frameworks */,
 				2A3B2A841831F4E100E82B8C /* Resources */,
-				2A76B0CB183D3E0100A9B59E /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -440,20 +431,6 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		2A07A99A183E8475008498F4 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run f3306f5f915daa17558ed40c9672f1d49830f4e2";
-		};
-		2A76B0CB183D3E0100A9B59E /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -563,13 +540,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: NexumDigital Inc.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NexumDigital Inc.";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Messages/[app] Messages/Twitter iOS 1.0\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages!/Messages!-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/In House-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Messages!/Info-InHouse.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "ßeta";
 				PROVISIONING_PROFILE = "9D74F82C-6396-4591-BA1D-1FBFFED588D8";
@@ -585,13 +559,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: NexumDigital Inc.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NexumDigital Inc.";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Messages/[app] Messages/Twitter iOS 1.0\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages!/Messages!-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/In House-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Messages!/Info-InHouse.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "ßeta";
 				PROVISIONING_PROFILE = "9D74F82C-6396-4591-BA1D-1FBFFED588D8";
@@ -677,13 +648,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cristian Castillo (GVBURY8ZD3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cristian Castillo (GVBURY8ZD3)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Messages/[app] Messages/Twitter iOS 1.0\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages!/Messages!-Prefix.pch";
-				INFOPLIST_FILE = "Messages!/App Store-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Messages!/Info-AppStore.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Messages!";
 				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";
@@ -700,13 +668,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cristian Castillo (GVBURY8ZD3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cristian Castillo (GVBURY8ZD3)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Messages/[app] Messages/Twitter iOS 1.0\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages!/Messages!-Prefix.pch";
-				INFOPLIST_FILE = "Messages!/App Store-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Messages!/Info-AppStore.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Messages!";
 				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";

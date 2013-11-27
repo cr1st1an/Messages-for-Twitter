@@ -47,7 +47,6 @@
     
     //[sharedImageCache reset];
     
-    [Crashlytics startWithAPIKey:@"f3306f5f915daa17558ed40c9672f1d49830f4e2"];
     return YES;
 }
 							
