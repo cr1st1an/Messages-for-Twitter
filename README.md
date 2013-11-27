@@ -28,5 +28,5 @@ The very first release we're making is our iOS client for the Twitter service, w
 
 We're thrilled to be living in this time and age, where you can just build stuff and connect with people through your work. And we don't want to miss this opportunity of writing a part of history, even if it's a short, private one.
 
-Come in, it's open 
+Come in, it's open  
 Cris
