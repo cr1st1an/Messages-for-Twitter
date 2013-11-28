@@ -15,14 +15,14 @@
 @implementation NexumLoginViewController
 
 - (void)viewDidLoad {
-    self.webview.delegate = self;
+    self.twitterWebview.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSString *endpoint = [NSString stringWithFormat:@"%@%@", BACKEND_URL, @"sessions/auth"];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:endpoint]];
-    [self.webview loadRequest:urlRequest];
+    [self.twitterWebview loadRequest:urlRequest];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -49,7 +49,7 @@
 - (IBAction)refreshAction:(id)sender {
     NSString *endpoint = [NSString stringWithFormat:@"%@%@", BACKEND_URL, @"sessions/auth"];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:endpoint]];
-    [self.webview loadRequest:urlRequest];
+    [self.twitterWebview loadRequest:urlRequest];
 }
 
 @end

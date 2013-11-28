@@ -10,7 +10,7 @@
 
 @interface NexumLoginViewController : UIViewController <UIWebViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIWebView *webview;
+@property (weak, nonatomic) IBOutlet UIWebView *twitterWebview;
 
 - (IBAction)refreshAction:(id)sender;
 

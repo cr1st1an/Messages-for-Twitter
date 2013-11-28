@@ -33,6 +33,7 @@
     
     self.isLoading = NO;
     self.isFirstLoad = YES;
+    self.isScrolling = NO;
     
     self.messages = [[NSMutableArray alloc] init];
     self.profile = [NSDictionary dictionary];
@@ -45,7 +46,7 @@
     
     [self.inputBar.sendButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
     
-    [self loadData];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -58,7 +59,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [self loadData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -150,7 +151,7 @@
     self.animatingRotation = NO;
     
     [self.inputBar updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:YES];
-    [self.tableView updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:NO];
+    [self.tableView updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:YES];
     [self.tableView reloadData];
 }
 
@@ -186,20 +187,25 @@
 #pragma mark - Util
 
 -(void)scrollToBottom {
-    if(self.isFirstLoad){
-        CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
-
-        if(CSRect.size.height < (self.tableView.contentSize.height + self.inputBar.frame.size.height + self.navigationController.navigationBar.frame.size.height)){
-            [self.tableView setContentOffset:CGPointMake(0, (self.tableView.contentSize.height - self.tableView.frame.size.height + self.inputBar.frame.size.height))];
-            [self.tableView setNeedsLayout];
+    if(!self.isScrolling){
+        self.isScrolling = YES;
+        if(self.isFirstLoad){
+            CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
             
-        }
-        self.tableView.alpha = 1;
-        self.isFirstLoad = NO;
-    } else {
-        if(1 < [self.messages count]){
-            NSIndexPath* bottomIndex = [NSIndexPath indexPathForRow:([self.messages count]-1) inSection:0];
-            [self.tableView scrollToRowAtIndexPath:bottomIndex atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            if(CSRect.size.height < (self.tableView.contentSize.height + self.inputBar.frame.size.height + self.navigationController.navigationBar.frame.size.height)){
+                [self.tableView setContentOffset:CGPointMake(0, (self.tableView.contentSize.height - self.tableView.frame.size.height + self.inputBar.frame.size.height))];
+                [self.tableView setNeedsLayout];
+                
+            }
+            self.tableView.alpha = 1;
+            self.isFirstLoad = NO;
+            self.isScrolling = NO;
+        } else {
+            if(1 < [self.messages count]){
+                NSIndexPath* bottomIndex = [NSIndexPath indexPathForRow:([self.messages count]-1) inSection:0];
+                [self.tableView scrollToRowAtIndexPath:bottomIndex atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            }
+            self.isScrolling = NO;
         }
     }
 }

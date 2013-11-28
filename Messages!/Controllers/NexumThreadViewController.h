@@ -20,11 +20,11 @@
 @property (strong, nonatomic) NSDictionary *account;
 
 @property (assign, nonatomic) BOOL isLoading;
-@property (assign, nonatomic) BOOL animatingRotation;
+@property (assign, nonatomic) BOOL isScrolling;
 @property (assign, nonatomic) BOOL isFirstLoad;
+@property (assign, nonatomic) BOOL animatingRotation;
 @property (assign, nonatomic) CGRect keyboardFrame;
 @property (strong, nonatomic) UITextView *sampleText;
-
 
 @property (weak, nonatomic) IBOutlet NexumInputBar *inputBar;
 @property (weak, nonatomic) IBOutlet NexumThreadTable *tableView;

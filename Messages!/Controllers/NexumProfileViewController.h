@@ -38,6 +38,7 @@
 @property (strong, nonatomic) NSString *path;
 @property (strong, nonatomic) NSString *page;
 
+- (IBAction)logoutAction:(UIBarButtonItem *)sender;
 - (IBAction)dinamicAction:(id)sender;
 - (IBAction)followingAction:(id)sender;
 - (IBAction)followersAction:(id)sender;

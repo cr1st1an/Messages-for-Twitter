@@ -15,7 +15,7 @@
 
 #define C_4fdd86    colorWithRed:0.310 green:0.867 blue:0.525 alpha:1.00
 #define C_1ab4ef    colorWithRed:0.102 green:0.706 blue:0.937 alpha:1.00
-#define C_1ab4ef_T  colorWithRed:0.102 green:0.706 blue:0.937 alpha:0.85
+#define C_1ab4ef_T  colorWithRed:0.102 green:0.706 blue:0.937 alpha:0.90
 #define C_f8f8f8    colorWithRed:0.973 green:0.973 blue:0.973 alpha:1.00
 #define C_f8f8f8_T  colorWithRed:0.973 green:0.973 blue:0.973 alpha:0.85
 #define C_ededea    colorWithRed:0.929 green:0.929 blue:0.918 alpha:1.00

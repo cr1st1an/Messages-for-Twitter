@@ -11,7 +11,7 @@
 @implementation NexumAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window.backgroundColor = [UIColor C_f8f8f8];
+    self.window.backgroundColor = [UIColor C_1ab4ef];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -51,10 +51,10 @@
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application {
-    application.applicationIconBadgeNumber = 0;
+    
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)applicationm {
+- (void)applicationDidEnterBackground:(UIApplication *)application {
     
 }
 
@@ -63,7 +63,10 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    
+    if(nil != [NexumDefaults currentSession]){
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+    }
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -10,6 +10,4 @@
 
 @interface NexumTabBarViewController : UITabBarController
 
-- (void)showLoginWebView;
-
 @end

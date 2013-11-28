@@ -33,7 +33,7 @@
     if(own){
         self.actionButton.backgroundColor = [UIColor C_ffdd1f];
         self.actionButton.tintColor = [UIColor whiteColor];
-        [self.actionButton setTitle:@"become a sponsor" forState:UIControlStateNormal];
+        [self.actionButton setTitle:@"become featured" forState:UIControlStateNormal];
     } else if((follower && following) || follower){
         self.actionButton.backgroundColor = [UIColor C_4fdd86];
         self.actionButton.tintColor = [UIColor whiteColor];
@@ -153,6 +153,11 @@
 }
 
 #pragma mark - Actions
+
+- (IBAction)logoutAction:(UIBarButtonItem *)sender {
+    [NexumDefaults addSession:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (IBAction)dinamicAction:(id)sender {
     BOOL follower = [self.profile[@"follower"] boolValue];

@@ -1,54 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="nkx-F8-p70">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Nexum Login View Controller - Login-->
-        <scene sceneID="shG-5j-eCt">
-            <objects>
-                <viewController id="gCh-Ir-rNw" customClass="NexumLoginViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="beJ-H4-0UM"/>
-                        <viewControllerLayoutGuide type="bottom" id="49F-6H-Pfv"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ZYu-DK-Hwm">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFC-em-faB">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="BFC-em-faB" firstAttribute="top" secondItem="ZYu-DK-Hwm" secondAttribute="top" id="CJ2-4o-gtU"/>
-                            <constraint firstItem="BFC-em-faB" firstAttribute="leading" secondItem="ZYu-DK-Hwm" secondAttribute="leading" id="E1Q-wi-219"/>
-                            <constraint firstAttribute="trailing" secondItem="BFC-em-faB" secondAttribute="trailing" id="RnJ-BT-72J"/>
-                            <constraint firstItem="49F-6H-Pfv" firstAttribute="top" secondItem="BFC-em-faB" secondAttribute="bottom" id="txh-gk-YDY"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Login" id="Wem-L1-7KB">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="fxX-5z-JND">
-                            <connections>
-                                <action selector="refreshAction:" destination="gCh-Ir-rNw" id="K1n-LW-TNe"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="webview" destination="BFC-em-faB" id="CeV-wM-2J2"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Yag-bN-vpe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1398" y="-1273"/>
-        </scene>
         <!--Nexum Tab Bar View Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
                 <tabBarController id="8YX-ce-x5E" customClass="NexumTabBarViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ZTH-ME-Fgc"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -60,12 +20,74 @@
                         <segue destination="xrd-gV-NVb" kind="relationship" relationship="viewControllers" id="lEr-zj-DpU"/>
                         <segue destination="BxA-3R-cCt" kind="relationship" relationship="viewControllers" id="959-Y3-8rq"/>
                         <segue destination="fsy-Wu-oqI" kind="relationship" relationship="viewControllers" id="CyE-Eg-FWE"/>
-                        <segue destination="dBJ-cD-lIw" kind="modal" identifier="showLogin" id="anB-mu-pCk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="180"/>
+            <point key="canvasLocation" x="308" y="180"/>
+        </scene>
+        <!--Nexum Login View Controller - Login-->
+        <scene sceneID="gIj-kK-l1Y">
+            <objects>
+                <viewController id="s8n-uo-xln" customClass="NexumLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5Ag-Ln-3La"/>
+                        <viewControllerLayoutGuide type="bottom" id="Lxq-jb-Ep0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pYn-G0-Bgk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N9n-Nx-JTF">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.82352941180000006" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="N9n-Nx-JTF" firstAttribute="top" secondItem="pYn-G0-Bgk" secondAttribute="top" id="AUO-F7-xNY"/>
+                            <constraint firstItem="N9n-Nx-JTF" firstAttribute="leading" secondItem="pYn-G0-Bgk" secondAttribute="leading" id="VFd-7O-DDk"/>
+                            <constraint firstItem="Lxq-jb-Ep0" firstAttribute="top" secondItem="N9n-Nx-JTF" secondAttribute="bottom" id="d5C-DB-Vox"/>
+                            <constraint firstAttribute="trailing" secondItem="N9n-Nx-JTF" secondAttribute="trailing" id="fUG-Pc-BhR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Login" id="4CF-YK-qUH">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="EdH-dx-7S9">
+                            <connections>
+                                <action selector="refreshAction:" destination="s8n-uo-xln" id="dtR-k4-mbu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="twitterWebview" destination="N9n-Nx-JTF" id="gdX-Qh-2ZH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fna-AB-d25" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="308" y="-545"/>
+        </scene>
+        <!--Nexum Start View Controller-->
+        <scene sceneID="hYm-co-Hjx">
+            <objects>
+                <viewController id="nkx-F8-p70" customClass="NexumStartViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1Zg-e8-uuv"/>
+                        <viewControllerLayoutGuide type="bottom" id="TFT-97-b68"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0eh-uV-Fqv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.1019607843" green="0.70588235290000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <segue destination="8YX-ce-x5E" kind="modal" identifier="openApp" modalTransitionStyle="crossDissolve" id="HCP-cn-ZGm"/>
+                        <segue destination="7VL-pW-JDO" kind="modal" identifier="requestLogin" id="Wqh-sS-Rso"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jar-uL-cht" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-243" y="180"/>
         </scene>
         <!--Nexum Search View Controller - Contacts-->
         <scene sceneID="Cal-Bn-BTv">
@@ -166,7 +188,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xiU-0m-D5N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1398" y="928"/>
+            <point key="canvasLocation" x="1435" y="904"/>
         </scene>
         <!--Nexum Thread View Controller-->
         <scene sceneID="7vG-Qk-Rzb">
@@ -225,7 +247,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NE5-UZ-DRQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1958" y="928"/>
+            <point key="canvasLocation" x="1996" y="904"/>
         </scene>
         <!--Nexum Profile View Controller - Account-->
         <scene sceneID="xcc-WX-1se">
@@ -472,6 +494,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Account" id="LpE-hM-6BF">
                         <barButtonItem key="backBarButtonItem" title=" " id="utw-Id-AB5"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="lzm-sp-X87">
+                            <connections>
+                                <action selector="logoutAction:" destination="Rdn-B0-5HI" id="lkA-8H-J5t"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="actionButton" destination="yM7-yh-c0v" id="39Y-Cz-Vd8"/>
@@ -488,7 +515,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LBO-nf-K0L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1398" y="1702"/>
+            <point key="canvasLocation" x="1435" y="1616"/>
         </scene>
         <!--Nexum Inbox View Controller - Inbox-->
         <scene sceneID="2fK-OB-AV5">
@@ -596,7 +623,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wca-29-fRO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1398" y="180"/>
+            <point key="canvasLocation" x="1435" y="180"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SRB-kW-pHp">
@@ -620,9 +647,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZi-bX-4ef" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872" y="-557"/>
+            <point key="canvasLocation" x="913" y="-545"/>
         </scene>
-        <!--Nexum Alpha View Controller - ß1.0 (001) #20-->
+        <!--Nexum Alpha View Controller - ß1.0 (001) #21-->
         <scene sceneID="ypi-y3-xiN">
             <objects>
                 <viewController id="RqJ-Gj-AK8" customClass="NexumAlphaViewController" sceneMemberID="viewController">
@@ -648,7 +675,7 @@
                             <constraint firstAttribute="trailing" secondItem="4wd-YO-cCj" secondAttribute="trailing" id="gOf-Ue-nL9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="ß1.0 (001) #20" id="igY-kA-F8v">
+                    <navigationItem key="navigationItem" title="ß1.0 (001) #21" id="igY-kA-F8v">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="uhV-U3-w2m">
                             <connections>
                                 <action selector="refreshAction:" destination="RqJ-Gj-AK8" id="4aq-yO-fd8"/>
@@ -661,7 +688,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ju4-zk-jMa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1398" y="-557"/>
+            <point key="canvasLocation" x="1435" y="-545"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9uS-EU-x8E">
@@ -685,7 +712,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k1N-Wb-X4W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872" y="180"/>
+            <point key="canvasLocation" x="913" y="180"/>
         </scene>
         <!--Navigation Controller -  -->
         <scene sceneID="5a7-6G-cOd">
@@ -709,28 +736,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fXz-XB-76M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872" y="1702"/>
+            <point key="canvasLocation" x="913" y="1616"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="y8u-MZ-ncO">
+        <scene sceneID="F2b-7P-5o9">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dBJ-cD-lIw" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7VL-pW-JDO" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ddH-N9-Rci">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="En2-3g-3We">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="gCh-Ir-rNw" kind="relationship" relationship="rootViewController" id="dGr-nv-sdT"/>
+                        <segue destination="s8n-uo-xln" kind="relationship" relationship="rootViewController" id="uvp-Uz-QXz"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kTo-zV-lmS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IB5-w9-hwl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872" y="-1273"/>
+            <point key="canvasLocation" x="-243" y="-545"/>
         </scene>
     </scenes>
     <resources>
@@ -748,7 +772,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="NI5-G3-mfV"/>
         <segue reference="Tkw-rL-iWg"/>
+        <segue reference="AhZ-YR-TkT"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -69,6 +69,8 @@
 		2A934D2E184446CF0062C144 /* NexumAlphaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A934D2C184446CF0062C144 /* NexumAlphaViewController.m */; };
 		2A98DC251834180E0009E4DF /* NexumSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A98DC241834180E0009E4DF /* NexumSearchViewController.m */; };
 		2AC4E1E2183D6BB700BC589E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AC4E1E1183D6BB700BC589E /* Images.xcassets */; };
+		2AE1EFA11846ADC800E7BA04 /* NexumStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */; };
+		2AE1EFA21846ADC800E7BA04 /* NexumStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */; };
 		2AF59B601832C4CB003E153E /* NexumTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B5F1832C4CB003E153E /* NexumTabBarViewController.m */; };
 		2AF59B631832CB2A003E153E /* NexumLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B621832CB2A003E153E /* NexumLoginViewController.m */; };
 		2AF59B671832D355003E153E /* NexumUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B661832D355003E153E /* NexumUtil.m */; };
@@ -137,6 +139,8 @@
 		2A98DC231834180E0009E4DF /* NexumSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumSearchViewController.h; path = Controllers/NexumSearchViewController.h; sourceTree = "<group>"; };
 		2A98DC241834180E0009E4DF /* NexumSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumSearchViewController.m; path = Controllers/NexumSearchViewController.m; sourceTree = "<group>"; };
 		2AC4E1E1183D6BB700BC589E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		2AE1EF9F1846ADC800E7BA04 /* NexumStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumStartViewController.h; path = Controllers/NexumStartViewController.h; sourceTree = "<group>"; };
+		2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumStartViewController.m; path = Controllers/NexumStartViewController.m; sourceTree = "<group>"; };
 		2AF59B5E1832C4CB003E153E /* NexumTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumTabBarViewController.h; path = Controllers/NexumTabBarViewController.h; sourceTree = "<group>"; };
 		2AF59B5F1832C4CB003E153E /* NexumTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumTabBarViewController.m; path = Controllers/NexumTabBarViewController.m; sourceTree = "<group>"; };
 		2AF59B611832CB2A003E153E /* NexumLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumLoginViewController.h; path = Controllers/NexumLoginViewController.h; sourceTree = "<group>"; };
@@ -301,6 +305,8 @@
 		2AC242ED1832B6A1009ADBA0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2AE1EF9F1846ADC800E7BA04 /* NexumStartViewController.h */,
+				2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */,
 				2AF59B5E1832C4CB003E153E /* NexumTabBarViewController.h */,
 				2AF59B5F1832C4CB003E153E /* NexumTabBarViewController.m */,
 				2AF59B611832CB2A003E153E /* NexumLoginViewController.h */,
@@ -336,7 +342,6 @@
 				2A07A97F183E8475008498F4 /* Sources */,
 				2A07A990183E8475008498F4 /* Frameworks */,
 				2A07A996183E8475008498F4 /* Resources */,
-				2A07A99A183E8475008498F4 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -429,23 +434,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		2A07A99A183E8475008498F4 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run f3306f5f915daa17558ed40c9672f1d49830f4e2";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		2A07A97F183E8475008498F4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -464,6 +452,7 @@
 				2A07A987183E8475008498F4 /* NexumThreadViewController.m in Sources */,
 				2A78FEE8183FBE8900D59CC9 /* FICImageTableEntry.m in Sources */,
 				2A07A988183E8475008498F4 /* NexumBackend.m in Sources */,
+				2AE1EFA21846ADC800E7BA04 /* NexumStartViewController.m in Sources */,
 				2A07A989183E8475008498F4 /* NexumUtil.m in Sources */,
 				2A07A98A183E8475008498F4 /* NexumThreadTable.m in Sources */,
 				2A07A98B183E8475008498F4 /* NexumThreadCell.m in Sources */,
@@ -496,6 +485,7 @@
 				2A7D9951183830B700BF2221 /* NexumThreadViewController.m in Sources */,
 				2A78FEE7183FBE8900D59CC9 /* FICImageTableEntry.m in Sources */,
 				2AF59B6A1832D58F003E153E /* NexumBackend.m in Sources */,
+				2AE1EFA11846ADC800E7BA04 /* NexumStartViewController.m in Sources */,
 				2AF59B671832D355003E153E /* NexumUtil.m in Sources */,
 				2A09BC60183C303F00AE4152 /* NexumThreadTable.m in Sources */,
 				2A7D995C1839372C00BF2221 /* NexumThreadCell.m in Sources */,
