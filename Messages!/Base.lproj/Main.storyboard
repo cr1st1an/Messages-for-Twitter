@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Nexum Tab Bar View Controller-->
+        <!--Nexum Tabs View Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
-                <tabBarController id="8YX-ce-x5E" customClass="NexumTabBarViewController" sceneMemberID="viewController">
+                <tabBarController id="8YX-ce-x5E" customClass="NexumTabsViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="ZTH-ME-Fgc"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -38,10 +38,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N9n-Nx-JTF">
+                            <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9n-Nx-JTF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.82352941180000006" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -92,7 +93,7 @@
         <!--Nexum Search View Controller - Contacts-->
         <scene sceneID="Cal-Bn-BTv">
             <objects>
-                <tableViewController id="a0R-Vd-Qad" customClass="NexumSearchViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchView" id="a0R-Vd-Qad" customClass="NexumSearchViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" id="Oqf-o2-gCL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -180,20 +181,19 @@
                     <navigationItem key="navigationItem" title="Contacts" id="y6n-Tt-gHW">
                         <barButtonItem key="backBarButtonItem" title=" " id="Ie3-DL-IW8"/>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="searchBar" destination="Gmy-L2-lLG" id="RM6-h4-14h"/>
-                        <segue destination="Rdn-B0-5HI" kind="push" identifier="showProfile" id="Tkw-rL-iWg"/>
-                        <segue destination="hym-Qr-Ua3" kind="push" identifier="showChat" id="ext-HS-gLl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xiU-0m-D5N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1435" y="904"/>
+            <point key="canvasLocation" x="1893" y="-545"/>
         </scene>
         <!--Nexum Thread View Controller-->
         <scene sceneID="7vG-Qk-Rzb">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="hym-Qr-Ua3" customClass="NexumThreadViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ThreadView" hidesBottomBarWhenPushed="YES" id="hym-Qr-Ua3" customClass="NexumThreadViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ng4-Cw-wkP"/>
                         <viewControllerLayoutGuide type="bottom" id="bN0-FK-leT"/>
@@ -238,7 +238,17 @@
                             <constraint firstItem="bN0-FK-leT" firstAttribute="top" secondItem="14e-2R-ZJv" secondAttribute="bottom" id="xQD-zJ-Slm"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Lgd-Mx-74p"/>
+                    <navigationItem key="navigationItem" id="Lgd-Mx-74p">
+                        <barButtonItem key="backBarButtonItem" title=" " id="lfY-D3-aFC"/>
+                        <barButtonItem key="rightBarButtonItem" image="tool_user" id="PUj-wL-7kz">
+                            <inset key="imageInsets" minX="-15" minY="1" maxX="15" maxY="-1"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                            <connections>
+                                <action selector="profileAction:" destination="hym-Qr-Ua3" id="qRR-Bf-peI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="inputBar" destination="14e-2R-ZJv" id="vcs-xE-dUc"/>
@@ -247,7 +257,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NE5-UZ-DRQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1996" y="904"/>
+            <point key="canvasLocation" x="1893" y="180"/>
         </scene>
         <!--Nexum Profile View Controller - Account-->
         <scene sceneID="xcc-WX-1se">
@@ -494,7 +504,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Account" id="LpE-hM-6BF">
                         <barButtonItem key="backBarButtonItem" title=" " id="utw-Id-AB5"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="lzm-sp-X87">
+                        <barButtonItem key="rightBarButtonItem" image="tool_options" id="lzm-sp-X87">
+                            <inset key="imageInsets" minX="-15" minY="1" maxX="15" maxY="-1"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="logoutAction:" destination="Rdn-B0-5HI" id="lkA-8H-J5t"/>
                             </connections>
@@ -510,12 +522,11 @@
                         <outlet property="mainPlaceholder" destination="K16-zN-eCt" id="p7Y-do-sWl"/>
                         <outlet property="picture" destination="q0t-AQ-IqW" id="odQ-jc-ZB2"/>
                         <outlet property="username" destination="7oJ-Ng-NNI" id="EOp-U2-e1L"/>
-                        <segue destination="hym-Qr-Ua3" kind="push" identifier="showChat" id="AhZ-YR-TkT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LBO-nf-K0L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1435" y="1616"/>
+            <point key="canvasLocation" x="1435" y="940"/>
         </scene>
         <!--Nexum Inbox View Controller - Inbox-->
         <scene sceneID="2fK-OB-AV5">
@@ -609,17 +620,14 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Inbox" id="v3G-eD-iXJ">
                         <barButtonItem key="backBarButtonItem" title=" " id="NqA-aU-ssg"/>
-                        <barButtonItem key="rightBarButtonItem" image="compose" id="4f8-6M-WiB">
-                            <inset key="imageInsets" minX="-6" minY="0.0" maxX="6" maxY="0.0"/>
+                        <barButtonItem key="rightBarButtonItem" image="tool_compose" id="4f8-6M-WiB">
+                            <inset key="imageInsets" minX="-15" minY="1" maxX="15" maxY="-1"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
-                                <segue destination="a0R-Vd-Qad" kind="push" id="TIP-Us-R4X"/>
+                                <action selector="searchAction:" destination="Mth-F0-aOr" id="jrp-4t-VSn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="hym-Qr-Ua3" kind="push" identifier="showChat" id="NI5-G3-mfV"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wca-29-fRO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -649,7 +657,7 @@
             </objects>
             <point key="canvasLocation" x="913" y="-545"/>
         </scene>
-        <!--Nexum Alpha View Controller - ß1.0 (001) #21-->
+        <!--Nexum Alpha View Controller - ß1.0 (001) #23-->
         <scene sceneID="ypi-y3-xiN">
             <objects>
                 <viewController id="RqJ-Gj-AK8" customClass="NexumAlphaViewController" sceneMemberID="viewController">
@@ -675,7 +683,7 @@
                             <constraint firstAttribute="trailing" secondItem="4wd-YO-cCj" secondAttribute="trailing" id="gOf-Ue-nL9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="ß1.0 (001) #21" id="igY-kA-F8v">
+                    <navigationItem key="navigationItem" title="ß1.0 (001) #23" id="igY-kA-F8v">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="uhV-U3-w2m">
                             <connections>
                                 <action selector="refreshAction:" destination="RqJ-Gj-AK8" id="4aq-yO-fd8"/>
@@ -736,7 +744,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fXz-XB-76M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="913" y="1616"/>
+            <point key="canvasLocation" x="913" y="940"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F2b-7P-5o9">
@@ -759,20 +767,18 @@
     </scenes>
     <resources>
         <image name="back_overlay" width="320" height="160"/>
-        <image name="compose" width="25" height="25"/>
         <image name="placeholder" width="50" height="50"/>
         <image name="stroke" width="42" height="42"/>
         <image name="tab_icon_beta" width="31" height="31"/>
         <image name="tab_icon_bubble" width="31" height="31"/>
         <image name="tab_icon_card" width="31" height="31"/>
+        <image name="tool_compose" width="44" height="44"/>
+        <image name="tool_options" width="44" height="44"/>
+        <image name="tool_user" width="44" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="Tkw-rL-iWg"/>
-        <segue reference="AhZ-YR-TkT"/>
-    </inferredMetricsTieBreakers>
 </document>

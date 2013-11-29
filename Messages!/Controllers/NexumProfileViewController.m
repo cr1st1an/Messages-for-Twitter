@@ -21,7 +21,7 @@
     if(nil == self.profile)
         self.profile = currentAccount;
     else
-        self.title = [NSString stringWithFormat:@"@%@", self.profile[@"username"]];
+        self.title = self.profile[@"fullname"];
     
     self.username.text = [NSString stringWithFormat:@"@%@", self.profile[@"username"]];
     
@@ -52,8 +52,15 @@
     [self loadDataFromPath:self.path withPage:self.page];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+    
     [self.description sizeToFit];
     
     self.infoPlaceholder.frame = CGRectMake(self.infoPlaceholder.frame.origin.x, self.infoPlaceholder.frame.origin.y, self.infoPlaceholder.frame.size.width, (self.description.frame.size.height + 74));
@@ -66,20 +73,13 @@
     [self performSelector:@selector(loadBackImage) withObject:nil afterDelay:0.1];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue identifier] isEqualToString:@"showChat"]){
-        NexumThreadViewController *threadView = [segue destinationViewController];
-        threadView.thread = self.nextThread;
-    }
-}
-
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    NexumProfileViewController *dest = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
-    dest.profile =[self.profiles objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:dest animated:YES];
+    NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
+    nextViewController.profile =[self.profiles objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:nextViewController animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -170,8 +170,10 @@
         NSArray *data = [NSArray arrayWithObjects:self.profile[@"identifier"], [NSString stringWithFormat:@"@%@", self.profile[@"username"]], nil];
         NSArray *keys = [NSArray arrayWithObjects:@"identifier", @"subtitle", nil];
         
-        self.nextThread = [NSDictionary dictionaryWithObjects:data forKeys:keys];
-        [self performSegueWithIdentifier:@"showChat" sender:self];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
+        nextViewController.thread = [NSDictionary dictionaryWithObjects:data forKeys:keys];
+        [self.navigationController pushViewController:nextViewController animated:YES];
     } else {
         [NexumTwitter postStatus:[NSString stringWithFormat:TW_INVITE, self.profile[@"username"]] onView:self];
     }
@@ -202,8 +204,10 @@
         NSArray *data = [NSArray arrayWithObjects:profile[@"identifier"], [NSString stringWithFormat:@"@%@", profile[@"username"]], nil];
         NSArray *keys = [NSArray arrayWithObjects:@"identifier", @"subtitle", nil];
         
-        self.nextThread = [NSDictionary dictionaryWithObjects:data forKeys:keys];
-        [self performSegueWithIdentifier:@"showChat" sender:self];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
+        nextViewController.thread = [NSDictionary dictionaryWithObjects:data forKeys:keys];
+        [self.navigationController pushViewController:nextViewController animated:YES];
     } else {
         [NexumTwitter postStatus:[NSString stringWithFormat:TW_INVITE, profile[@"username"]] onView:self];
     }

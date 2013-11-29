@@ -9,16 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "NexumThreadCell.h"
 #import "NexumThreadViewController.h"
+#import "NexumSearchViewController.h"
 
 @interface NexumInboxViewController : UITableViewController
 
 @property (strong, nonatomic) NSArray *threads;
-@property (strong, nonatomic) NSDictionary *nextThread;
 
 @property (assign, nonatomic) BOOL isLoading;
 
 - (void)loadData;
 - (void)clearTable;
+
+- (IBAction)searchAction:(UIBarButtonItem *)sender;
 
 - (void)pushNotification:(NSNotification *)notification;
 

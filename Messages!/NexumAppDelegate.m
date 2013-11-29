@@ -47,6 +47,9 @@
     
     //[sharedImageCache reset];
     
+    [Flurry setCrashReportingEnabled:YES];
+    [Flurry startSession:FLURRY_API_KEY];
+    
     return YES;
 }
 							

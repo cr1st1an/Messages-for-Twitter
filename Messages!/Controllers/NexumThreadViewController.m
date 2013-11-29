@@ -36,7 +36,7 @@
     self.isScrolling = NO;
     
     self.messages = [[NSMutableArray alloc] init];
-    self.profile = [NSDictionary dictionary];
+    self.profile = nil;
     self.account = [NexumDefaults currentAccount];
     
     [self.inputBar initFrame:self.interfaceOrientation];
@@ -46,11 +46,17 @@
     
     [self.inputBar.sendButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
     
-    
+    NSString *params = [NSString stringWithFormat:@"identifier=%@", self.thread[@"identifier"]];
+    [NexumBackend apiRequest:@"GET" forPath:@"profiles" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
+        if(success){
+            self.profile = data[@"profile_data"];
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustViewForKeyboardNotification:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustViewForKeyboardNotification:) name:UIKeyboardWillHideNotification object:nil];
@@ -59,6 +65,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+    
     [self loadData];
 }
 
@@ -72,6 +80,15 @@
 
 #pragma mark - Data sources
 
+- (IBAction)profileAction:(UIBarButtonItem *)sender {
+    if(nil != self.profile){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
+        nextViewController.profile = self.profile;
+        [self.navigationController pushViewController:nextViewController animated:YES];
+    }
+}
+
 - (void)loadData {
     if(!self.isLoading){
         self.isLoading = YES;
@@ -80,7 +97,6 @@
         [NexumBackend apiRequest:@"GET" forPath:@"messages" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
             if(success){
                 self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]] ;
-                self.profile = data[@"profile_data"];
                 [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
                 [self performSelectorOnMainThread:@selector(scrollToBottom) withObject:nil waitUntilDone:YES];
                 self.isLoading = NO;
@@ -133,8 +149,9 @@
     
     cell.identifier = message[@"identifier"];
     [cell reuseCell:self.interfaceOrientation withMessage:message andProfile:profile];
-    if(nil != profile)
+    if(nil != profile){
         [cell performSelector:@selector(loadImageswithMessageAndProfile:) withObject:[NSArray arrayWithObjects:message, profile, nil] afterDelay:0.1];
+    }
     
     return cell;
 }
@@ -217,7 +234,6 @@
     if([(NSString *)self.account[@"identifier"] isEqualToString:(NSString *)data[@"recipient"]]){
         if([(NSString *)self.profile[@"identifier"] isEqualToString:(NSString *)data[@"sender"]]){
             [self loadData];
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         }
     }
 }

@@ -11,11 +11,21 @@
 @implementation NexumTwitter
 
 + (void) postStatus:(NSString *)status onView:(UIViewController *)view {
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-        SLComposeViewController *sendTweet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [sendTweet setInitialText:status];
-        [view presentViewController:sendTweet animated:YES completion:nil];
-    }
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Invited!" message:status delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles:nil];
+    [message show];
+    
+    NSString *params = [NSString stringWithFormat:@"status=%@", status];
+    [NexumBackend apiRequest:@"POST" forPath:@"statuses/update" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    
+//    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+//        SLComposeViewController *sendTweet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+//        [sendTweet setInitialText:status];
+//        [view presentViewController:sendTweet animated:YES completion:nil];
+//    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"buttonIndex %d", buttonIndex);
 }
 
 + (void) follow:(NSString *)identifier {

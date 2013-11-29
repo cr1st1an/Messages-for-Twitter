@@ -10,6 +10,7 @@
 #import "NexumInputBar.h"
 #import "NexumThreadTable.h"
 #import "NexumMessageCell.h"
+#import "NexumProfileViewController.h"
 
 @interface NexumThreadViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
@@ -28,6 +29,8 @@
 
 @property (weak, nonatomic) IBOutlet NexumInputBar *inputBar;
 @property (weak, nonatomic) IBOutlet NexumThreadTable *tableView;
+
+- (IBAction)profileAction:(UIBarButtonItem *)sender;
 
 - (void)loadData;
 - (void)scrollToBottom;

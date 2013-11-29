@@ -24,6 +24,7 @@
     [super viewWillAppear:animated];
     
     [self loadData];
+    [self.navigationController.tabBarItem setBadgeValue:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -38,18 +39,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"pushNotification" object:nil];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue identifier] isEqualToString:@"showChat"]){
-        NexumThreadViewController *threadView = [segue destinationViewController];
-        threadView.thread = self.nextThread;
-    }
-}
-
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.nextThread = [self.threads objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier: @"showChat" sender:self];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
+    nextViewController.thread = [self.threads objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:nextViewController animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -96,11 +92,20 @@
     [self.tableView reloadData];
 }
 
+- (IBAction)searchAction:(UIBarButtonItem *)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    NexumSearchViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"SearchView"];
+    [self.navigationController pushViewController:nextViewController animated:YES];
+}
+
 #pragma mark - Push notification
 
 - (void)pushNotification:(NSNotification *)notification{
-    [self loadData];
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    NSDictionary *currentAccount = [NexumDefaults currentAccount];
+    NSDictionary *data = notification.userInfo;
+    if([(NSString *)currentAccount[@"identifier"] isEqualToString:(NSString *)data[@"recipient"]]){
+        [self loadData];
+    }
 }
 
 @end

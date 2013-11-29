@@ -29,16 +29,6 @@
     [self loadDataFromPath:self.path withPage:self.page andQuery:self.query];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue identifier] isEqualToString:@"showProfile"]){
-        NexumProfileViewController *profileView = [segue destinationViewController];
-        profileView.profile = self.nextProfile;
-    } else if([[segue identifier] isEqualToString:@"showChat"]){
-        NexumThreadViewController *threadView = [segue destinationViewController];
-        threadView.thread = self.nextThread;
-    }
-}
-
 #pragma mark - SearchBar delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -53,8 +43,10 @@
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.nextProfile = [self.profiles objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier: @"showProfile" sender:self];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
+    nextViewController.profile = [self.profiles objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:nextViewController animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -119,8 +111,10 @@
         NSArray *data = [NSArray arrayWithObjects:profile[@"identifier"], [NSString stringWithFormat:@"@%@", profile[@"username"]], nil];
         NSArray *keys = [NSArray arrayWithObjects:@"identifier", @"subtitle", nil];
         
-        self.nextThread = [NSDictionary dictionaryWithObjects:data forKeys:keys];
-        [self performSegueWithIdentifier: @"showChat" sender:self];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
+        nextViewController.thread = [NSDictionary dictionaryWithObjects:data forKeys:keys];
+        [self.navigationController pushViewController:nextViewController animated:YES];
     } else {
         [NexumTwitter postStatus:[NSString stringWithFormat:TW_INVITE, profile[@"username"]] onView:self];
     }

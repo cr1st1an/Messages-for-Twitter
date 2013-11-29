@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) NSMutableArray *profiles;
 @property (strong, nonatomic) NSDictionary *nextProfile;
-@property (strong, nonatomic) NSDictionary *nextThread;
 
 @property (assign, nonatomic) BOOL isLoading;
 @property (assign, nonatomic) double lastCellRequest;

@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) NSMutableArray *profiles;
 @property (strong, nonatomic) NSDictionary *nextProfile;
-@property (strong, nonatomic) NSDictionary *nextThread;
 
 @property (strong, nonatomic) IBOutlet UIImageView *back;
 @property (strong, nonatomic) IBOutlet UIView *mainPlaceholder;

@@ -9,7 +9,7 @@
 #import <Social/Social.h>
 #import <Foundation/Foundation.h>
 
-@interface NexumTwitter : NSObject
+@interface NexumTwitter : NSObject <UIAlertViewDelegate>
 
 + (void) postStatus:(NSString *)status onView:(UIViewController *)view;
 + (void) follow:(NSString *)identifier;
