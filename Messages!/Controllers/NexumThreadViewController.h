@@ -27,12 +27,15 @@
 @property (assign, nonatomic) CGRect keyboardFrame;
 @property (strong, nonatomic) UITextView *sampleText;
 
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet NexumInputBar *inputBar;
 @property (weak, nonatomic) IBOutlet NexumThreadTable *tableView;
 
 - (IBAction)profileAction:(UIBarButtonItem *)sender;
 
 - (void)loadData;
+- (void)dataDidLoad;
 - (void)scrollToBottom;
 
 - (void)pushNotification:(NSNotification *)notification;

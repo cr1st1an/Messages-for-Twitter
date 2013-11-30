@@ -16,6 +16,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if(self.isChildOfThread){
+        UIEdgeInsets inset = [self.tableView contentInset];
+        inset.bottom = 49;
+        self.tableView.contentInset = inset;
+    } else {
+        self.isChildOfThread = NO;
+    }
+    
+    
     NSDictionary *currentAccount = [NexumDefaults currentAccount];
     
     if(nil == self.profile)
@@ -49,12 +58,14 @@
     [self clearTable];
     self.path = @"contacts/following";
     self.followingButton.tintColor = [UIColor whiteColor];
-    [self loadDataFromPath:self.path withPage:self.page];
+    
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+    // MOVE TO DidLoad
+    [self loadDataFromPath:self.path withPage:self.page];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,6 +90,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
     nextViewController.profile =[self.profiles objectAtIndex:indexPath.row];
+    nextViewController.isChildOfThread = self.isChildOfThread;
     [self.navigationController pushViewController:nextViewController animated:YES];
 }
 
@@ -135,6 +147,7 @@
 - (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page {
     if(!self.isLoading){
         self.isLoading = YES;
+        self.activityRow.alpha = 1;
         
         NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@",
                             self.profile[@"identifier"],
@@ -145,6 +158,7 @@
             if(success){
                 self.page = data[@"pagination"][@"next"];
                 [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
                 [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
             }
             self.isLoading = NO;
@@ -152,11 +166,61 @@
     }
 }
 
+- (void)dataDidLoad {
+    self.activityRow.alpha = 0;
+}
+
 #pragma mark - Actions
 
-- (IBAction)logoutAction:(UIBarButtonItem *)sender {
-    [NexumDefaults addSession:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)optionsAction:(UIBarButtonItem *)sender {
+    BOOL follower = [self.profile[@"follower"] boolValue];
+    BOOL following = [self.profile[@"following"] boolValue];
+    BOOL own = [self.profile[@"own"] boolValue];
+    
+    if(own){
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"cancel"
+                                      destructiveButtonTitle:@"logout"
+                                      otherButtonTitles: nil];
+        [actionSheet showInView:self.view];
+    } else {
+        NSString *relationshipAction = nil;
+        NSString *title = nil;
+        if(following){
+            relationshipAction = @"unfollow";
+        } else {
+            relationshipAction = @"follow";
+        }
+        if(follower){
+            title = [NSString stringWithFormat:@"@%@ is following you.", self.profile[@"username"]];
+        } else {
+            title = [NSString stringWithFormat:@"@%@ is not following you.", self.profile[@"username"]];
+        }
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:title
+                                      delegate:self
+                                      cancelButtonTitle:@"cancel"
+                                      destructiveButtonTitle:@"block"
+                                      otherButtonTitles: relationshipAction, nil];
+        [actionSheet showInView:self.view];
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if  ([buttonTitle isEqualToString:@"logout"]) {
+        [NexumDefaults addSession:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if  ([buttonTitle isEqualToString:@"follow"]) {
+        [NexumTwitter follow:self.profile[@"identifier"]];
+    } else if  ([buttonTitle isEqualToString:@"unfollow"]) {
+        [NexumTwitter unfollow:self.profile[@"identifier"]];
+    } else if  ([buttonTitle isEqualToString:@"block"]) {
+        [NexumTwitter block:self.profile[@"identifier"]];
+    }
 }
 
 - (IBAction)dinamicAction:(id)sender {

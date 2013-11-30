@@ -13,6 +13,7 @@
 @interface NexumSearchViewController : UITableViewController <UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UIView *activityRow;
 
 @property (strong, nonatomic) NSMutableArray *profiles;
 @property (strong, nonatomic) NSDictionary *nextProfile;
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) NSString *page;
 
 - (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page andQuery:(NSString *)query;
+- (void)dataDidLoad;
 - (void)clearTable;
 
 - (IBAction)rowButtonAction:(UIButton *)sender;

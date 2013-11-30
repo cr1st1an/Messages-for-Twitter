@@ -85,6 +85,7 @@
 - (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page andQuery:(NSString *)query{
     if(!self.isLoading){
         self.isLoading = YES;
+        self.activityRow.alpha = 1;
         
         NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@&query=%@", [NexumDefaults currentAccount][@"identifier"], page, query];
         
@@ -92,11 +93,16 @@
             if(success){
                 self.page = data[@"pagination"][@"next"];
                 [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
                 [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
             }
             self.isLoading = NO;
         }];
     }
+}
+
+- (void)dataDidLoad {
+    self.activityRow.alpha = 0;
 }
 
 #pragma mark - Actions

@@ -104,6 +104,24 @@
                             <color key="barTintColor" red="0.4549019608" green="0.82352941180000006" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                         </searchBar>
+                        <view key="tableFooterView" alpha="0.0" contentMode="scaleToFill" id="qjW-nr-c6a">
+                            <rect key="frame" x="0.0" y="676" width="320" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-Z4-kzE">
+                                    <rect key="frame" x="142" y="49" width="37" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="37" id="48h-La-nhi"/>
+                                    </constraints>
+                                    <color key="color" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="QuX-Z4-kzE" firstAttribute="top" secondItem="qjW-nr-c6a" secondAttribute="top" constant="49" id="34h-Pw-5SF"/>
+                                <constraint firstAttribute="centerX" secondItem="QuX-Z4-kzE" secondAttribute="centerX" id="xI4-L2-JAP"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileCell" id="rl0-5q-ncm" customClass="NexumProfileCell">
                                 <rect key="frame" x="0.0" y="130" width="320" height="61"/>
@@ -183,6 +201,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="activityRow" destination="qjW-nr-c6a" id="Jxw-X4-KL6"/>
                         <outlet property="searchBar" destination="Gmy-L2-lLG" id="RM6-h4-14h"/>
                     </connections>
                 </tableViewController>
@@ -218,6 +237,16 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ziQ-cC-LYU">
+                                <rect key="frame" x="141" y="266" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="37" id="8Yo-QD-Bcx"/>
+                                    <constraint firstAttribute="height" constant="37" id="8xi-18-VkO"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="37" id="ppc-Rz-k1J"/>
+                                </constraints>
+                                <color key="color" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="14e-2R-ZJv" customClass="NexumInputBar">
                                 <rect key="frame" x="0.0" y="528" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -229,8 +258,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="ziQ-cC-LYU" secondAttribute="centerY" id="2v1-FC-ySY"/>
                             <constraint firstItem="b06-HZ-BNQ" firstAttribute="leading" secondItem="KS7-ME-XjN" secondAttribute="leading" id="Fhl-Ru-FXY"/>
                             <constraint firstAttribute="trailing" secondItem="14e-2R-ZJv" secondAttribute="trailing" id="WQx-Oq-rvh"/>
+                            <constraint firstAttribute="centerX" secondItem="ziQ-cC-LYU" secondAttribute="centerX" id="fMu-CU-zut"/>
                             <constraint firstItem="bN0-FK-leT" firstAttribute="top" secondItem="b06-HZ-BNQ" secondAttribute="bottom" id="hXf-Oz-YIA"/>
                             <constraint firstItem="b06-HZ-BNQ" firstAttribute="top" secondItem="KS7-ME-XjN" secondAttribute="top" id="ioc-zy-znY"/>
                             <constraint firstItem="14e-2R-ZJv" firstAttribute="leading" secondItem="KS7-ME-XjN" secondAttribute="leading" id="lvH-DX-0oS"/>
@@ -251,6 +282,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="ziQ-cC-LYU" id="d37-Q0-uyI"/>
                         <outlet property="inputBar" destination="14e-2R-ZJv" id="vcs-xE-dUc"/>
                         <outlet property="tableView" destination="b06-HZ-BNQ" id="n8h-O4-VS3"/>
                     </connections>
@@ -264,7 +296,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ProfileView" id="Rdn-B0-5HI" customClass="NexumProfileViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" id="Law-XQ-XWg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" autoresizesSubviews="NO" contentMode="scaleToFill" id="3n6-7A-agJ">
@@ -428,6 +460,24 @@
                                 <constraint firstItem="vHV-tL-0HJ" firstAttribute="top" secondItem="3n6-7A-agJ" secondAttribute="top" id="vhv-KT-6Sy"/>
                             </constraints>
                         </view>
+                        <view key="tableFooterView" alpha="0.0" contentMode="scaleToFill" id="sVP-qO-rB6">
+                            <rect key="frame" x="0.0" y="387" width="320" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dMV-jd-1hD">
+                                    <rect key="frame" x="142" y="49" width="37" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="37" id="JTl-G7-0v5"/>
+                                    </constraints>
+                                    <color key="color" red="0.5607843137254902" green="0.5607843137254902" blue="0.5607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="dMV-jd-1hD" firstAttribute="top" secondItem="sVP-qO-rB6" secondAttribute="top" constant="49" id="1FW-jB-cQ4"/>
+                                <constraint firstAttribute="centerX" secondItem="dMV-jd-1hD" secondAttribute="centerX" id="RWT-xt-R88"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileCell" id="hEr-4B-9H1" customClass="NexumProfileCell">
                                 <rect key="frame" x="0.0" y="326" width="320" height="61"/>
@@ -508,12 +558,14 @@
                             <inset key="imageInsets" minX="-15" minY="1" maxX="15" maxY="-1"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
-                                <action selector="logoutAction:" destination="Rdn-B0-5HI" id="lkA-8H-J5t"/>
+                                <action selector="optionsAction:" destination="Rdn-B0-5HI" id="PoN-6v-Cd7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="actionButton" destination="yM7-yh-c0v" id="39Y-Cz-Vd8"/>
+                        <outlet property="activityRow" destination="sVP-qO-rB6" id="xOV-pO-3aG"/>
                         <outlet property="back" destination="5ma-N7-2cR" id="vYl-Dh-z9l"/>
                         <outlet property="description" destination="dfD-oU-ZdK" id="0sF-WH-dcn"/>
                         <outlet property="followersButton" destination="BVs-LB-Ppm" id="70N-7J-FMn"/>
@@ -537,6 +589,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.91764705882352937" alpha="1" colorSpace="deviceRGB"/>
+                        <view key="tableFooterView" alpha="0.0" contentMode="scaleToFill" id="aSc-wh-a9m">
+                            <rect key="frame" x="0.0" y="157" width="320" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="COf-vt-JM8">
+                                    <rect key="frame" x="142" y="49" width="37" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="37" id="r52-p4-j1H"/>
+                                    </constraints>
+                                    <color key="color" red="0.56078431370000004" green="0.56078431370000004" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="COf-vt-JM8" firstAttribute="top" secondItem="aSc-wh-a9m" secondAttribute="top" constant="49" id="4kb-FG-DBT"/>
+                                <constraint firstAttribute="centerX" secondItem="COf-vt-JM8" secondAttribute="centerX" id="WM7-7S-bo5"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="InboxCell" id="NQG-It-bLa" customClass="NexumThreadCell">
                                 <rect key="frame" x="0.0" y="86" width="320" height="71"/>
@@ -628,6 +698,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="activityRow" destination="aSc-wh-a9m" id="J9x-F8-n1m"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wca-29-fRO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -657,7 +730,7 @@
             </objects>
             <point key="canvasLocation" x="913" y="-545"/>
         </scene>
-        <!--Nexum Alpha View Controller - ß1.0 (001) #23-->
+        <!--Nexum Alpha View Controller - ß1.0 (001) #24-->
         <scene sceneID="ypi-y3-xiN">
             <objects>
                 <viewController id="RqJ-Gj-AK8" customClass="NexumAlphaViewController" sceneMemberID="viewController">
@@ -683,7 +756,7 @@
                             <constraint firstAttribute="trailing" secondItem="4wd-YO-cCj" secondAttribute="trailing" id="gOf-Ue-nL9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="ß1.0 (001) #23" id="igY-kA-F8v">
+                    <navigationItem key="navigationItem" title="ß1.0 (001) #24" id="igY-kA-F8v">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="uhV-U3-w2m">
                             <connections>
                                 <action selector="refreshAction:" destination="RqJ-Gj-AK8" id="4aq-yO-fd8"/>

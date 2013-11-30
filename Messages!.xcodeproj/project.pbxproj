@@ -565,8 +565,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/cr1st1an/Software/Twitter/[ios]",
-					"Messages!/Flurry",
+					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
 				);
 				PRODUCT_NAME = "ßeta";
 				PROVISIONING_PROFILE = "9D74F82C-6396-4591-BA1D-1FBFFED588D8";
@@ -589,8 +588,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/cr1st1an/Software/Twitter/[ios]",
-					"Messages!/Flurry",
+					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
 				);
 				PRODUCT_NAME = "ßeta";
 				PROVISIONING_PROFILE = "9D74F82C-6396-4591-BA1D-1FBFFED588D8";
@@ -683,8 +681,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/cr1st1an/Software/Twitter/[ios]",
-					"Messages!/Flurry",
+					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
 				);
 				PRODUCT_NAME = "Messages!";
 				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";
@@ -708,8 +705,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/cr1st1an/Software/Twitter/[ios]",
-					"Messages!/Flurry",
+					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
 				);
 				PRODUCT_NAME = "Messages!";
 				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";

@@ -53,15 +53,21 @@
 - (void)loadData {
     if(!self.isLoading){
         self.isLoading = YES;
+        self.activityRow.alpha = 1;
 
         [NexumBackend apiRequest:@"GET" forPath:@"threads" withParams:@"" andBlock:^(BOOL success, NSDictionary *data) {
             if(success){
                 self.threads = data[@"threads_data"];
+                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
                 [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-                self.isLoading = NO;
             }
+            self.isLoading = NO;
         }];
     }
+}
+
+- (void)dataDidLoad {
+    self.activityRow.alpha = 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
