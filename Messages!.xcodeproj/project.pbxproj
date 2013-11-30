@@ -681,7 +681,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
+					"Flurry/**",
 				);
 				PRODUCT_NAME = "Messages!";
 				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";
@@ -705,7 +705,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
+					"Flurry/**",
 				);
 				PRODUCT_NAME = "Messages!";
 				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";

@@ -25,8 +25,6 @@
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.alpha = 0;
     
-    self.activityIndicator.alpha = 1;
-    
     self.sampleText = [[UITextView alloc] init];
     self.sampleText.editable = NO;
     self.sampleText.scrollEnabled = NO;
@@ -54,12 +52,11 @@
             self.profile = data[@"profile_data"];
         }
     }];
-    
-    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustViewForKeyboardNotification:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustViewForKeyboardNotification:) name:UIKeyboardWillHideNotification object:nil];
@@ -88,7 +85,6 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
         nextViewController.profile = self.profile;
-        nextViewController.isChildOfThread = YES;
         [self.navigationController pushViewController:nextViewController animated:YES];
     }
 }
@@ -100,18 +96,13 @@
         NSString *params = [NSString stringWithFormat:@"identifier=%@", self.thread[@"identifier"]];
         [NexumBackend apiRequest:@"GET" forPath:@"messages" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
             if(success){
-                self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]];
+                self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]] ;
                 [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
                 [self performSelectorOnMainThread:@selector(scrollToBottom) withObject:nil waitUntilDone:YES];
+                self.isLoading = NO;
             }
-            self.isLoading = NO;
         }];
     }
-}
-
-- (void)dataDidLoad {
-    self.activityIndicator.alpha = 0;
 }
 
 #pragma mark - UITableView delegates
@@ -203,7 +194,7 @@
     [self.messages addObject:newMessage];
     
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-    [self performSelectorOnMainThread:@selector(scrollToBottom) withObject:nil waitUntilDone:YES];
+    [self scrollToBottom];
 
     NSString *params = [NSString stringWithFormat:@"identifier=%@&text=%@", self.profile[@"identifier"], [self.inputBar textValue]];
     [NexumBackend apiRequest:@"POST" forPath:@"messages" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];

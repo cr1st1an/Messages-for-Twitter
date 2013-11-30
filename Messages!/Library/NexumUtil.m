@@ -39,13 +39,13 @@
 }
 
 + (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:original];
-    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, 1.0);
-    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds cornerRadius:cornerRadius] addClip];
-    [original drawInRect:imageView.bounds];
-    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsBeginImageContextWithOptions(original.size, NO, 0);
+    CGRect rect = CGRectMake(0, 0, original.size.width, original.size.height);
+    [[UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius] addClip];
+    [original drawInRect:rect];
+    UIImage *roundedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return imageView.image;
+    return roundedImage;
 }
 
 @end
