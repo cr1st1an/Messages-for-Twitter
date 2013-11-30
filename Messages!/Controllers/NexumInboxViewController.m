@@ -54,15 +54,23 @@
     if(!self.isLoading){
         self.isLoading = YES;
         self.activityRow.alpha = 1;
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
 
-        [NexumBackend apiRequest:@"GET" forPath:@"threads" withParams:@"" andBlock:^(BOOL success, NSDictionary *data) {
-            if(success){
-                self.threads = data[@"threads_data"];
-                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-            }
-            self.isLoading = NO;
-        }];
+            [NexumBackend apiRequest:@"GET" forPath:@"threads" withParams:@"" andBlock:^(BOOL success, NSDictionary *data) {
+                if(success){
+                    self.threads = data[@"threads_data"];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self dataDidLoad];
+                        [self.tableView reloadData];
+                    });
+                    
+                }
+                self.isLoading = NO;
+            }];
+            
+        });
     }
 }
 
@@ -87,7 +95,8 @@
     NSDictionary *thread = [self.threads objectAtIndex:indexPath.row];
     cell.identifier = thread[@"identifier"];
     [cell reuseCellWithThread:thread];
-    [cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.1];
+    [cell loadImagesWithThread:thread];
+    //[cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.1];
     return cell;
 }
 
