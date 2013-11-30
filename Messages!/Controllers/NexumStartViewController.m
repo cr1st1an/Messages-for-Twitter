@@ -33,13 +33,25 @@
     
     [NexumBackend apiRequest:@"POST" forPath:@"sessions" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
         if(success){
-            [NexumDefaults addAccount:data[@"account_data"]];
-            [NexumBackend apiRequest:@"POST" forPath:@"workers/01" withParams:@"" andBlock:^(BOOL success, NSDictionary *data) {}];
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
-            [self performSelectorOnMainThread:@selector(openApp) withObject:nil waitUntilDone:YES];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+                
+                [NexumDefaults addAccount:data[@"account_data"]];
+                [NexumBackend apiRequest:@"POST" forPath:@"workers/01" withParams:@"" andBlock:^(BOOL success, NSDictionary *data) {}];
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+                
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [self openApp];
+                });
+                
+            });
+                
         } else {
             [NexumDefaults addSession:nil];
-            [self performSelectorOnMainThread:@selector(requestLogin) withObject:nil waitUntilDone:YES];
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self requestLogin];
+            });
         }
     }];
 }

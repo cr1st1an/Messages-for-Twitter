@@ -69,7 +69,8 @@
     NSDictionary *profile = [self.profiles objectAtIndex:indexPath.row];
     cell.identifier = profile[@"identifier"];
     [cell reuseCellWithProfile:profile andRow:indexPath.row];
-    [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.1];
+    [cell loadImagesWithProfile:profile];
+    //[cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.1];
     
     if([self.profiles count] < (indexPath.row + 20)){
         if([NSNull null] != (NSNull *)self.page){
@@ -89,15 +90,22 @@
         
         NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@&query=%@", [NexumDefaults currentAccount][@"identifier"], page, query];
         
-        [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-            if(success){
-                self.page = data[@"pagination"][@"next"];
-                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
-                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-            }
-            self.isLoading = NO;
-        }];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+            
+            [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
+                if(success){
+                    self.page = data[@"pagination"][@"next"];
+                    [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self dataDidLoad];
+                        [self.tableView reloadData];
+                    });
+                }
+                self.isLoading = NO;
+            }];
+            
+        });
     }
 }
 

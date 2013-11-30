@@ -80,8 +80,8 @@
         self.infoPlaceholder.center = self.mainPlaceholder.center;
     }];
     
-    [self performSelector:@selector(loadProfileImage) withObject:nil afterDelay:0.1];
-    [self performSelector:@selector(loadBackImage) withObject:nil afterDelay:0.1];
+    [self loadProfileImage];
+    [self loadBackImage];
 }
 
 #pragma mark - TableView delegate
@@ -114,7 +114,8 @@
     NSDictionary *profile = [self.profiles objectAtIndex:indexPath.row];
     cell.identifier = profile[@"identifier"];
     [cell reuseCellWithProfile:profile andRow:indexPath.row];
-    [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.1];
+    [cell loadImagesWithProfile:profile];
+    //[cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.1];
     
     if([self.profiles count] < (indexPath.row + 20)){
         if([NSNull null] != (NSNull *)self.page){
@@ -154,15 +155,22 @@
                             page
                             ];
         
-        [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-            if(success){
-                self.page = data[@"pagination"][@"next"];
-                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
-                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-            }
-            self.isLoading = NO;
-        }];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        
+            [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
+                if(success){
+                    self.page = data[@"pagination"][@"next"];
+                    [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self dataDidLoad];
+                        [self.tableView reloadData];
+                    });
+                }
+                self.isLoading = NO;
+            }];
+            
+        });
     }
 }
 
@@ -301,13 +309,17 @@
 }
 
 - (void)loadBackImage {
-    if(![[NSString stringWithFormat:@"%@",self.profile[@"back"]] isEqualToString:@""]){
-        self.backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.profile[@"back"]]];
-        self.backImage = [UIImage imageWithData:self.backData];
-        [UIView animateWithDuration:1.0 animations:^(void) {
-            self.back.image = self.backImage;
-            self.back.alpha = 1;
-        }];
+    if (!self.backImage && ![self.profile[@"back"] isEqualToString:@""] ){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+            self.backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.profile[@"back"]]];
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                self.backImage = [UIImage imageWithData:self.backData];
+                [UIView animateWithDuration:1.0 animations:^(void) {
+                    self.back.image = self.backImage;
+                    self.back.alpha = 1;
+                }];
+            });
+        });
     } else {
         [UIView animateWithDuration:1.0 animations:^(void) {
             self.back.alpha = 1;

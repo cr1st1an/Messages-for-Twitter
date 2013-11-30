@@ -98,15 +98,23 @@
         self.isLoading = YES;
         
         NSString *params = [NSString stringWithFormat:@"identifier=%@", self.thread[@"identifier"]];
-        [NexumBackend apiRequest:@"GET" forPath:@"messages" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-            if(success){
-                self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]];
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
-                [self performSelectorOnMainThread:@selector(scrollToBottom) withObject:nil waitUntilDone:YES];
-            }
-            self.isLoading = NO;
-        }];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+            
+            [NexumBackend apiRequest:@"GET" forPath:@"messages" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
+                if(success){
+                    self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self.tableView reloadData];
+                        [self dataDidLoad];
+                        [self scrollToBottom];
+                    });
+                }
+                self.isLoading = NO;
+            }];
+            
+        });
     }
 }
 
