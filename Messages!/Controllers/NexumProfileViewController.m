@@ -16,15 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if(self.isChildOfThread){
-        UIEdgeInsets inset = [self.tableView contentInset];
-        inset.bottom = 49;
-        self.tableView.contentInset = inset;
-    } else {
-        self.isChildOfThread = NO;
-    }
-    
-    
     NSDictionary *currentAccount = [NexumDefaults currentAccount];
     
     if(nil == self.profile)
@@ -58,14 +49,12 @@
     [self clearTable];
     self.path = @"contacts/following";
     self.followingButton.tintColor = [UIColor whiteColor];
-    
-    self.tabBarController.tabBar.hidden = NO;
+    [self loadDataFromPath:self.path withPage:self.page];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    // MOVE TO DidLoad
-    [self loadDataFromPath:self.path withPage:self.page];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -80,8 +69,35 @@
         self.infoPlaceholder.center = self.mainPlaceholder.center;
     }];
     
-    [self performSelector:@selector(loadProfileImage) withObject:nil afterDelay:0.1];
-    [self performSelector:@selector(loadBackImage) withObject:nil afterDelay:0.1];
+    NexumProfilePicture *profilePicture = [[NexumProfilePicture alloc] init];
+    
+    profilePicture.identifier = self.profile[@"identifier"];
+    profilePicture.pictureURL = self.profile[@"picture"];
+    
+    [[FICImageCache sharedImageCache] retrieveImageForEntity:profilePicture withFormatName:@"picture" completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
+        [UIView animateWithDuration:1.0 animations:^(void) {
+            self.picture.image = image;
+        }];
+    }];
+    
+    if (!self.backImage && ![self.profile[@"back"] isEqualToString:@""] ){
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+            
+            self.backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.profile[@"back"]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                
+                self.backImage = [UIImage imageWithData:self.backData];
+                [UIView animateWithDuration:1.0 animations:^(void) {
+                    self.back.image = self.backImage;
+                    self.back.alpha = 1;
+                }];
+                
+            });
+        });
+        
+    }
 }
 
 #pragma mark - TableView delegate
@@ -90,7 +106,6 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
     nextViewController.profile =[self.profiles objectAtIndex:indexPath.row];
-    nextViewController.isChildOfThread = self.isChildOfThread;
     [self.navigationController pushViewController:nextViewController animated:YES];
 }
 
@@ -114,7 +129,7 @@
     NSDictionary *profile = [self.profiles objectAtIndex:indexPath.row];
     cell.identifier = profile[@"identifier"];
     [cell reuseCellWithProfile:profile andRow:indexPath.row];
-    [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.1];
+    [cell loadImagesWithProfile:profile];
     
     if([self.profiles count] < (indexPath.row + 20)){
         if([NSNull null] != (NSNull *)self.page){
@@ -147,80 +162,37 @@
 - (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page {
     if(!self.isLoading){
         self.isLoading = YES;
-        self.activityRow.alpha = 1;
         
         NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@",
                             self.profile[@"identifier"],
                             page
                             ];
         
-        [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-            if(success){
-                self.page = data[@"pagination"][@"next"];
-                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
-                [self performSelectorOnMainThread:@selector(dataDidLoad) withObject:nil waitUntilDone:YES];
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-            }
-            self.isLoading = NO;
-        }];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        
+            [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
+                if(success){
+                    self.page = data[@"pagination"][@"next"];
+                    [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self.tableView reloadData];
+                        
+                    });
+                    
+                }
+                self.isLoading = NO;
+            }];
+            
+        });
     }
-}
-
-- (void)dataDidLoad {
-    self.activityRow.alpha = 0;
 }
 
 #pragma mark - Actions
 
-- (IBAction)optionsAction:(UIBarButtonItem *)sender {
-    BOOL follower = [self.profile[@"follower"] boolValue];
-    BOOL following = [self.profile[@"following"] boolValue];
-    BOOL own = [self.profile[@"own"] boolValue];
-    
-    if(own){
-        UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                      initWithTitle:nil
-                                      delegate:self
-                                      cancelButtonTitle:@"cancel"
-                                      destructiveButtonTitle:@"logout"
-                                      otherButtonTitles: nil];
-        [actionSheet showInView:self.view];
-    } else {
-        NSString *relationshipAction = nil;
-        NSString *title = nil;
-        if(following){
-            relationshipAction = @"unfollow";
-        } else {
-            relationshipAction = @"follow";
-        }
-        if(follower){
-            title = [NSString stringWithFormat:@"@%@ is following you.", self.profile[@"username"]];
-        } else {
-            title = [NSString stringWithFormat:@"@%@ is not following you.", self.profile[@"username"]];
-        }
-        
-        UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                      initWithTitle:title
-                                      delegate:self
-                                      cancelButtonTitle:@"cancel"
-                                      destructiveButtonTitle:@"block"
-                                      otherButtonTitles: relationshipAction, nil];
-        [actionSheet showInView:self.view];
-    }
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    if  ([buttonTitle isEqualToString:@"logout"]) {
-        [NexumDefaults addSession:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else if  ([buttonTitle isEqualToString:@"follow"]) {
-        [NexumTwitter follow:self.profile[@"identifier"]];
-    } else if  ([buttonTitle isEqualToString:@"unfollow"]) {
-        [NexumTwitter unfollow:self.profile[@"identifier"]];
-    } else if  ([buttonTitle isEqualToString:@"block"]) {
-        [NexumTwitter block:self.profile[@"identifier"]];
-    }
+- (IBAction)logoutAction:(UIBarButtonItem *)sender {
+    [NexumDefaults addSession:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)dinamicAction:(id)sender {
@@ -285,34 +257,6 @@
     self.page = @"0";
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView reloadData];
-}
-
-- (void)loadProfileImage {
-    NexumProfilePicture *profilePicture = [[NexumProfilePicture alloc] init];
-    
-    profilePicture.identifier = self.profile[@"identifier"];
-    profilePicture.pictureURL = self.profile[@"picture"];
-    
-    [[FICImageCache sharedImageCache] retrieveImageForEntity:profilePicture withFormatName:@"picture" completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
-        [UIView animateWithDuration:1.0 animations:^(void) {
-            self.picture.image = image;
-        }];
-    }];
-}
-
-- (void)loadBackImage {
-    if(![[NSString stringWithFormat:@"%@",self.profile[@"back"]] isEqualToString:@""]){
-        self.backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.profile[@"back"]]];
-        self.backImage = [UIImage imageWithData:self.backData];
-        [UIView animateWithDuration:1.0 animations:^(void) {
-            self.back.image = self.backImage;
-            self.back.alpha = 1;
-        }];
-    } else {
-        [UIView animateWithDuration:1.0 animations:^(void) {
-            self.back.alpha = 1;
-        }];
-    }
 }
 
 @end

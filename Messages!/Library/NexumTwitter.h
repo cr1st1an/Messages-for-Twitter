@@ -13,8 +13,5 @@
 
 + (void) postStatus:(NSString *)status onView:(UIViewController *)view;
 + (void) follow:(NSString *)identifier;
-+ (void) unfollow:(NSString *)identifier;
-+ (void) block:(NSString *)identifier;
-+ (void) unblock:(NSString *)identifier;
 
 @end

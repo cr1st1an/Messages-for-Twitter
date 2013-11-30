@@ -17,10 +17,7 @@
 
 @property (assign, nonatomic) BOOL isLoading;
 
-@property (weak, nonatomic) IBOutlet UIView *activityRow;
-
 - (void)loadData;
-- (void)dataDidLoad;
 - (void)clearTable;
 
 - (IBAction)searchAction:(UIBarButtonItem *)sender;

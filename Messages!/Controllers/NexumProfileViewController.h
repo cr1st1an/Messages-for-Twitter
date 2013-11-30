@@ -10,7 +10,7 @@
 #import "NexumProfileCell.h"
 #import "NexumThreadViewController.h"
 
-@interface NexumProfileViewController : UITableViewController <UIActionSheetDelegate>
+@interface NexumProfileViewController : UITableViewController
 
 @property (strong, nonatomic) NSDictionary *profile;
 
@@ -23,7 +23,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *picture;
 @property (strong, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UILabel *description;
-@property (weak, nonatomic) IBOutlet UIView *activityRow;
 
 @property (strong, nonatomic) NSData *pictureData;
 @property (strong, nonatomic) UIImage *pictureImage;
@@ -35,20 +34,15 @@
 @property (strong, nonatomic) IBOutlet UIButton *followersButton;
 
 @property (assign, nonatomic) BOOL isLoading;
-@property (assign, nonatomic) BOOL isChildOfThread;
 @property (strong, nonatomic) NSString *path;
 @property (strong, nonatomic) NSString *page;
 
-- (IBAction)optionsAction:(UIBarButtonItem *)sender;
+- (IBAction)logoutAction:(UIBarButtonItem *)sender;
 - (IBAction)dinamicAction:(id)sender;
 - (IBAction)followingAction:(id)sender;
 - (IBAction)followersAction:(id)sender;
 - (IBAction)rowButtonAction:(id)sender;
 
 - (void)clearTable;
-- (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page;
-- (void)dataDidLoad;
-- (void)loadProfileImage;
-- (void)loadBackImage;
 
 @end

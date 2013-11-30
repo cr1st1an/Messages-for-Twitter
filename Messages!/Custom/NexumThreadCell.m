@@ -44,6 +44,7 @@
         self.loadImages = YES;
         self.picture.image = [UIImage imageNamed:@"placeholder"];
     }
+    [self setNeedsLayout];
 }
 
 - (void)loadImagesWithThread:(NSDictionary *)thread {
@@ -61,6 +62,7 @@
             }];
         }
     }
+    [self setNeedsLayout];
 }
 
 @end
