@@ -227,17 +227,16 @@
 		2A3B2A8F1831F4E100E82B8C /* Messages! */ = {
 			isa = PBXGroup;
 			children = (
-				2AE2BF8D18480ADA00821F6B /* Media */,
-				2A7D99561839370D00BF2221 /* Custom */,
-				2AC242EE1832B6C8009ADBA0 /* Models */,
-				2AC242ED1832B6A1009ADBA0 /* Controllers */,
-				2AC242EC1832B692009ADBA0 /* Library */,
 				2A3B2A981831F4E100E82B8C /* NexumAppDelegate.h */,
 				2A3B2A991831F4E100E82B8C /* NexumAppDelegate.m */,
-				2A3B2A9B1831F4E100E82B8C /* Main.storyboard */,
-				2A3B2A901831F4E100E82B8C /* Supporting Files */,
-				2AF59B641832CE92003E153E /* DefaultConstants.h */,
 				2A8846661847FC79001C2FAF /* ConfigConstants.h */,
+				2AF59B641832CE92003E153E /* DefaultConstants.h */,
+				2A3B2A9B1831F4E100E82B8C /* Main.storyboard */,
+				2AC242ED1832B6A1009ADBA0 /* Controllers */,
+				2A7D99561839370D00BF2221 /* Custom */,
+				2AC242EC1832B692009ADBA0 /* Library */,
+				2AE2BF8D18480ADA00821F6B /* Media */,
+				2A3B2A901831F4E100E82B8C /* Supporting Files */,
 				2AC4E1E1183D6BB700BC589E /* Images.xcassets */,
 			);
 			path = "Messages!";
@@ -246,8 +245,8 @@
 		2A3B2A901831F4E100E82B8C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2A07A99F183E8475008498F4 /* Info-InHouse.plist */,
 				2A3B2A911831F4E100E82B8C /* Info-AppStore.plist */,
+				2A07A99F183E8475008498F4 /* Info-InHouse.plist */,
 				2A3B2A921831F4E100E82B8C /* InfoPlist.strings */,
 				2A3B2A951831F4E100E82B8C /* main.m */,
 				2A3B2A971831F4E100E82B8C /* Messages!-Prefix.pch */,
@@ -280,14 +279,14 @@
 		2A7D99561839370D00BF2221 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				2A7D995D18393C7C00BF2221 /* NexumInputBar.h */,
+				2A7D995E18393C7C00BF2221 /* NexumInputBar.m */,
+				2A09BC5B183C2E8B00AE4152 /* NexumMessageCell.h */,
+				2A09BC5C183C2E8B00AE4152 /* NexumMessageCell.m */,
 				2A7D99571839372C00BF2221 /* NexumProfileCell.h */,
 				2A7D99581839372C00BF2221 /* NexumProfileCell.m */,
 				2A7D99591839372C00BF2221 /* NexumThreadCell.h */,
 				2A7D995A1839372C00BF2221 /* NexumThreadCell.m */,
-				2A09BC5B183C2E8B00AE4152 /* NexumMessageCell.h */,
-				2A09BC5C183C2E8B00AE4152 /* NexumMessageCell.m */,
-				2A7D995D18393C7C00BF2221 /* NexumInputBar.h */,
-				2A7D995E18393C7C00BF2221 /* NexumInputBar.m */,
 				2A09BC5E183C303F00AE4152 /* NexumThreadTable.h */,
 				2A09BC5F183C303F00AE4152 /* NexumThreadTable.m */,
 			);
@@ -297,16 +296,16 @@
 		2AC242EC1832B692009ADBA0 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				2A78FEEF183FDCFD00D59CC9 /* NexumProfilePicture.h */,
-				2A78FEF0183FDCFD00D59CC9 /* NexumProfilePicture.m */,
 				2AF59B681832D58F003E153E /* NexumBackend.h */,
 				2AF59B691832D58F003E153E /* NexumBackend.m */,
 				2A5AE2E21832B9EA00BCE981 /* NexumDefaults.h */,
 				2A5AE2E31832B9EA00BCE981 /* NexumDefaults.m */,
-				2AF59B651832D355003E153E /* NexumUtil.h */,
-				2AF59B661832D355003E153E /* NexumUtil.m */,
+				2A78FEEF183FDCFD00D59CC9 /* NexumProfilePicture.h */,
+				2A78FEF0183FDCFD00D59CC9 /* NexumProfilePicture.m */,
 				2A25E431184320AA00A18F26 /* NexumTwitter.h */,
 				2A25E432184320AA00A18F26 /* NexumTwitter.m */,
+				2AF59B651832D355003E153E /* NexumUtil.h */,
+				2AF59B661832D355003E153E /* NexumUtil.m */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -314,31 +313,24 @@
 		2AC242ED1832B6A1009ADBA0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2A934D2B184446CF0062C144 /* NexumAlphaViewController.h */,
+				2A934D2C184446CF0062C144 /* NexumAlphaViewController.m */,
+				2A000BCC1833046000BB87C3 /* NexumInboxViewController.h */,
+				2A000BCD1833046000BB87C3 /* NexumInboxViewController.m */,
+				2AF59B611832CB2A003E153E /* NexumLoginViewController.h */,
+				2AF59B621832CB2A003E153E /* NexumLoginViewController.m */,
+				2A26C89018355A8900B3E12F /* NexumProfileViewController.h */,
+				2A26C89118355A8900B3E12F /* NexumProfileViewController.m */,
+				2A98DC231834180E0009E4DF /* NexumSearchViewController.h */,
+				2A98DC241834180E0009E4DF /* NexumSearchViewController.m */,
 				2AE1EF9F1846ADC800E7BA04 /* NexumStartViewController.h */,
 				2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */,
 				2AE2BF911848163400821F6B /* NexumTabsViewController.h */,
 				2AE2BF921848163400821F6B /* NexumTabsViewController.m */,
-				2AF59B611832CB2A003E153E /* NexumLoginViewController.h */,
-				2AF59B621832CB2A003E153E /* NexumLoginViewController.m */,
-				2A000BCC1833046000BB87C3 /* NexumInboxViewController.h */,
-				2A000BCD1833046000BB87C3 /* NexumInboxViewController.m */,
 				2A7D994F183830B700BF2221 /* NexumThreadViewController.h */,
 				2A7D9950183830B700BF2221 /* NexumThreadViewController.m */,
-				2A98DC231834180E0009E4DF /* NexumSearchViewController.h */,
-				2A98DC241834180E0009E4DF /* NexumSearchViewController.m */,
-				2A26C89018355A8900B3E12F /* NexumProfileViewController.h */,
-				2A26C89118355A8900B3E12F /* NexumProfileViewController.m */,
-				2A934D2B184446CF0062C144 /* NexumAlphaViewController.h */,
-				2A934D2C184446CF0062C144 /* NexumAlphaViewController.m */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		2AC242EE1832B6C8009ADBA0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		2AE2BF881848073E00821F6B /* Flurry */ = {
@@ -565,7 +557,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
+					Flurry,
 				);
 				PRODUCT_NAME = "ßeta";
 				PROVISIONING_PROFILE = "9D74F82C-6396-4591-BA1D-1FBFFED588D8";
@@ -588,7 +580,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"/Users/cr1st1an/Software/Twitter/[ios] Messages!\"/**",
+					Flurry,
 				);
 				PRODUCT_NAME = "ßeta";
 				PROVISIONING_PROFILE = "9D74F82C-6396-4591-BA1D-1FBFFED588D8";
@@ -684,7 +676,7 @@
 					Flurry,
 				);
 				PRODUCT_NAME = "Messages!";
-				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";
+				PROVISIONING_PROFILE = "F30C7D11-5464-449B-B0DE-5F53C6BB2EE5";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -708,7 +700,7 @@
 					Flurry,
 				);
 				PRODUCT_NAME = "Messages!";
-				PROVISIONING_PROFILE = "8C7333D0-B535-4B1D-8616-5B4C6704158B";
+				PROVISIONING_PROFILE = "F30C7D11-5464-449B-B0DE-5F53C6BB2EE5";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

@@ -35,7 +35,6 @@
 - (IBAction)profileAction:(UIBarButtonItem *)sender;
 
 - (void)loadData;
-- (void)dataDidLoad;
 - (void)scrollToBottom;
 
 - (void)pushNotification:(NSNotification *)notification;

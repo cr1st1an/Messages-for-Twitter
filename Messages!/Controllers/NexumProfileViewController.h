@@ -36,7 +36,7 @@
 
 @property (assign, nonatomic) BOOL isLoading;
 @property (assign, nonatomic) BOOL isChildOfThread;
-@property (strong, nonatomic) NSString *path;
+@property (strong, nonatomic) NSString *dataSource;
 @property (strong, nonatomic) NSString *page;
 
 - (IBAction)optionsAction:(UIBarButtonItem *)sender;
@@ -46,8 +46,7 @@
 - (IBAction)rowButtonAction:(id)sender;
 
 - (void)clearTable;
-- (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page;
-- (void)dataDidLoad;
+- (void)loadData;
 - (void)loadProfileImage;
 - (void)loadBackImage;
 

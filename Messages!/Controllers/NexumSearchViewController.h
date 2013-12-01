@@ -20,12 +20,11 @@
 
 @property (assign, nonatomic) BOOL isLoading;
 @property (assign, nonatomic) double lastCellRequest;
-@property (strong, nonatomic) NSString *path;
+@property (strong, nonatomic) NSString *dataSource;
 @property (strong, nonatomic) NSString *query;
 @property (strong, nonatomic) NSString *page;
 
-- (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page andQuery:(NSString *)query;
-- (void)dataDidLoad;
+- (void)loadData;
 - (void)clearTable;
 
 - (IBAction)rowButtonAction:(UIButton *)sender;

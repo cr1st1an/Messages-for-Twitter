@@ -10,9 +10,120 @@
 
 @implementation NexumBackend
 
-+ (void) apiRequest:(NSString *)method forPath:(NSString *)path withParams:(NSString *)params andBlock:(void (^)(BOOL success, NSDictionary *data)) block {
-    
-    
++ (void)getContactsFollowers:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"contacts/followers" withParams:params];
+        block(data);
+    });
+}
+
++ (void)getContactsFollowing:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"contacts/following" withParams:params];
+        block(data);
+    });
+}
+
++ (void)getContactsSearch:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"contacts/search" withParams:params];
+        block(data);
+    });
+}
+
++ (void)getContactsSuggested:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"contacts/suggested" withParams:params];
+        block(data);
+    });
+}
+
++ (void)getMessages:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"messages" withParams:params];
+        block(data);
+    });
+}
+
++ (void)getProfiles:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"profiles" withParams:params];
+        block(data);
+    });
+}
+
++ (void)getThreads:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"threads" withParams:@""];
+        block(data);
+    });
+}
+
+
++ (void)postMessages:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"messages" withParams:params];
+    });
+}
+
+
++ (void)postAccountsDeviceToken:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"accounts/device_token" withParams:params];
+    });
+}
+
++ (void)postSessions:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"POST" forPath:@"sessions" withParams:params];
+        block(data);
+    });
+}
+
++ (void)postSessionsAuth:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"POST" forPath:@"sessions/auth" withParams:params];
+        block(data);
+    });
+}
+
++ (void)postWorkers01 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"workers/01" withParams:@""];
+    });
+}
+
++ (void)postStatusesUpdate:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"statuses/update" withParams:params];
+    });
+}
+
++ (void)postContactsFollow:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/follow" withParams:params];
+    });
+}
+
++ (void)postContactsUnfollow:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/unfollow" withParams:params];
+    });
+}
+
++ (void)postContactsBlock:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/block" withParams:params];
+    });
+}
+
++ (void)postContactsUnblock:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/unblock" withParams:params];
+    });
+}
+
++ (NSDictionary *)apiRequest:(NSString *)method forPath:(NSString *)path withParams:(NSString *)params {
     NSString *endpoint = nil;
     NSMutableURLRequest *URLRequest = [[NSMutableURLRequest alloc] init];
     [URLRequest setHTTPMethod:method];
@@ -28,19 +139,19 @@
     } else {
         endpoint = [NSString stringWithFormat:@"%@%@?%@", BACKEND_URL, path, params];
     }
-    [URLRequest setURL:[NSURL URLWithString:endpoint]];
+    [URLRequest setURL:[NSURL URLWithString:[endpoint stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [NSURLConnection sendAsynchronousRequest:URLRequest queue:queue completionHandler:^(NSURLResponse *URLResponse, NSData *responseData, NSError *error) {
-        if ([responseData length] > 0){
-            NSError *JSONErrorResponse = nil;
-            id JSONResponse = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&JSONErrorResponse];
-            BOOL success = [JSONResponse[@"success"] boolValue];
-            block(success, JSONResponse);
-        } else {
-            block(NO, nil);
-        }
-    }];
+    NSURLResponse *URLResponse;
+    NSError *error;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:URLRequest returningResponse:&URLResponse error:&error];
+    
+    id JSONResponse = nil;
+    if ([responseData length] > 0){
+        NSError *JSONErrorResponse = nil;
+        JSONResponse = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&JSONErrorResponse];
+    }
+    
+    return JSONResponse;
 }
 
 @end

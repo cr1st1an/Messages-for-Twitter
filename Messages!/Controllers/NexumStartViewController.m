@@ -30,22 +30,16 @@
 - (void)sessionStart {
     NSString *uiid = [[[[UIDevice alloc] init] identifierForVendor] UUIDString];
     NSString *params = [NSString stringWithFormat:@"id_session=%@&uiid=%@", [NexumDefaults currentSession], uiid];
-    
-    [NexumBackend apiRequest:@"POST" forPath:@"sessions" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
+    [NexumBackend postSessions:params withAsyncBlock:^(NSDictionary *data) {
+        BOOL success = [data[@"success"] boolValue];
         if(success){
+            [NexumDefaults addAccount:data[@"account_data"]];
+            [NexumBackend postWorkers01];
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-                
-                [NexumDefaults addAccount:data[@"account_data"]];
-                [NexumBackend apiRequest:@"POST" forPath:@"workers/01" withParams:@"" andBlock:^(BOOL success, NSDictionary *data) {}];
-                [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
-                
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self openApp];
-                });
-                
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self openApp];
             });
-                
         } else {
             [NexumDefaults addSession:nil];
             

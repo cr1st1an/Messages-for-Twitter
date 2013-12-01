@@ -18,15 +18,10 @@
     [super viewDidLoad];
     
     [self clearTable];
-    self.path = @"contacts/suggested";
+    self.dataSource = @"suggested";
+    [self loadData];
     
     self.searchBar.delegate = self;
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    [self loadDataFromPath:self.path withPage:self.page andQuery:self.query];
 }
 
 #pragma mark - SearchBar delegate
@@ -34,10 +29,9 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self clearTable];
     [self.searchBar resignFirstResponder];
-    self.path = @"contacts/search";
+    self.dataSource = @"search";
     self.query = searchBar.text;
-    
-    [self loadDataFromPath:self.path withPage:self.page andQuery:searchBar.text];
+    [self loadData];
 }
 
 #pragma mark - TableView delegate
@@ -69,12 +63,10 @@
     NSDictionary *profile = [self.profiles objectAtIndex:indexPath.row];
     cell.identifier = profile[@"identifier"];
     [cell reuseCellWithProfile:profile andRow:indexPath.row];
-    [cell loadImagesWithProfile:profile];
-    //[cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.1];
-    
+    [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
     if([self.profiles count] < (indexPath.row + 20)){
         if([NSNull null] != (NSNull *)self.page){
-            [self loadDataFromPath:self.path withPage:self.page andQuery:self.query];
+            [self loadData];
         }
     }
     
@@ -83,34 +75,35 @@
 
 #pragma mark - Load data
 
-- (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page andQuery:(NSString *)query{
+- (void)loadData {
     if(!self.isLoading){
         self.isLoading = YES;
         self.activityRow.alpha = 1;
-        
-        NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@&query=%@", [NexumDefaults currentAccount][@"identifier"], page, query];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-            
-            [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-                if(success){
-                    self.page = data[@"pagination"][@"next"];
-                    [self.profiles addObjectsFromArray:data[@"profiles_data"]];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^ {
-                        [self dataDidLoad];
-                        [self.tableView reloadData];
-                    });
-                }
-                self.isLoading = NO;
+        NSString *params = nil;
+        if([@"suggested" isEqualToString:self.dataSource]){
+            params = [NSString stringWithFormat:@"identifier=%@&page=%@", [NexumDefaults currentAccount][@"identifier"], self.page];
+            [NexumBackend getContactsSuggested:params withAsyncBlock:^(NSDictionary *data) {
+                self.page = data[@"pagination"][@"next"];
+                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                dispatch_async(dispatch_get_main_queue(), ^ {
+                    self.activityRow.alpha = 0;
+                    [self.tableView reloadData];
+                    self.isLoading = NO;
+                });
             }];
-            
-        });
+        } else if([@"search" isEqualToString:self.dataSource]){
+            params = [NSString stringWithFormat:@"identifier=%@&page=%@&query=%@", [NexumDefaults currentAccount][@"identifier"], self.page, self.query];
+            [NexumBackend getContactsSearch:params withAsyncBlock:^(NSDictionary *data) {
+                self.page = data[@"pagination"][@"next"];
+                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                dispatch_async(dispatch_get_main_queue(), ^ {
+                    self.activityRow.alpha = 0;
+                    [self.tableView reloadData];
+                    self.isLoading = NO;
+                });
+            }];
+        }
     }
-}
-
-- (void)dataDidLoad {
-    self.activityRow.alpha = 0;
 }
 
 #pragma mark - Actions
@@ -144,4 +137,5 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView reloadData];
 }
+
 @end

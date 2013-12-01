@@ -81,8 +81,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     NSString *deviceToken = [[[[newDeviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""] stringByReplacingOccurrencesOfString: @">" withString: @""] stringByReplacingOccurrencesOfString: @" " withString: @""];
     NSString *params = [NSString stringWithFormat:@"device_token=%@", deviceToken];
-    
-    [NexumBackend apiRequest:@"POST" forPath:@"accounts/device_token" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    [NexumBackend postAccountsDeviceToken:params];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {

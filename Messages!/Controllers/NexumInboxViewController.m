@@ -16,20 +16,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self clearTable];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self loadData];
     [self.navigationController.tabBarItem setBadgeValue:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotification:) name:@"pushNotification" object:nil];
 }
 
@@ -54,28 +47,15 @@
     if(!self.isLoading){
         self.isLoading = YES;
         self.activityRow.alpha = 1;
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-
-            [NexumBackend apiRequest:@"GET" forPath:@"threads" withParams:@"" andBlock:^(BOOL success, NSDictionary *data) {
-                if(success){
-                    self.threads = data[@"threads_data"];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^ {
-                        [self dataDidLoad];
-                        [self.tableView reloadData];
-                    });
-                    
-                }
+        [NexumBackend getThreads:^(NSDictionary *data) {
+            self.threads = data[@"threads_data"];
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                self.activityRow.alpha = 0;
+                [self.tableView reloadData];
                 self.isLoading = NO;
-            }];
-            
-        });
+            });
+        }];
     }
-}
-
-- (void)dataDidLoad {
-    self.activityRow.alpha = 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -95,8 +75,7 @@
     NSDictionary *thread = [self.threads objectAtIndex:indexPath.row];
     cell.identifier = thread[@"identifier"];
     [cell reuseCellWithThread:thread];
-    [cell loadImagesWithThread:thread];
-    //[cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.1];
+    [cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.01];
     return cell;
 }
 

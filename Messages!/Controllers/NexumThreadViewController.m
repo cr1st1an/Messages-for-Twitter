@@ -49,28 +49,22 @@
     [self.inputBar.sendButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", self.thread[@"identifier"]];
-    [NexumBackend apiRequest:@"GET" forPath:@"profiles" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-        if(success){
-            self.profile = data[@"profile_data"];
-        }
+    [NexumBackend getProfiles:params withAsyncBlock:^(NSDictionary *data) {
+        self.profile = data[@"profile_data"];
     }];
     
     self.tabBarController.tabBar.hidden = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self loadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustViewForKeyboardNotification:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustViewForKeyboardNotification:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotification:) name:@"pushNotification" object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    self.tabBarController.tabBar.hidden = YES;
     
-    [self loadData];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -98,28 +92,17 @@
         self.isLoading = YES;
         
         NSString *params = [NSString stringWithFormat:@"identifier=%@", self.thread[@"identifier"]];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend getMessages:params withAsyncBlock:^(NSDictionary *data) {
+            self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]];
             
-            [NexumBackend apiRequest:@"GET" forPath:@"messages" withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-                if(success){
-                    self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^ {
-                        [self.tableView reloadData];
-                        [self dataDidLoad];
-                        [self scrollToBottom];
-                    });
-                }
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self.tableView reloadData];
+                self.activityIndicator.alpha = 0;
+                [self scrollToBottom];
                 self.isLoading = NO;
-            }];
-            
-        });
+            });
+        }];
     }
-}
-
-- (void)dataDidLoad {
-    self.activityIndicator.alpha = 0;
 }
 
 #pragma mark - UITableView delegates
@@ -214,7 +197,7 @@
     [self performSelectorOnMainThread:@selector(scrollToBottom) withObject:nil waitUntilDone:YES];
 
     NSString *params = [NSString stringWithFormat:@"identifier=%@&text=%@", self.profile[@"identifier"], [self.inputBar textValue]];
-    [NexumBackend apiRequest:@"POST" forPath:@"messages" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    [NexumBackend postMessages:params];
     [self.inputBar textClear];
 }
 

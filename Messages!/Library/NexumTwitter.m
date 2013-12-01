@@ -15,7 +15,7 @@
     [message show];
     
     NSString *params = [NSString stringWithFormat:@"status=%@", status];
-    [NexumBackend apiRequest:@"POST" forPath:@"statuses/update" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    [NexumBackend postStatusesUpdate:params];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -27,7 +27,7 @@
     [message show];
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", identifier];
-    [NexumBackend apiRequest:@"POST" forPath:@"contacts/follow" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    [NexumBackend postContactsFollow:params];
 }
 
 + (void) unfollow:(NSString *)identifier {
@@ -35,8 +35,7 @@
     [message show];
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", identifier];
-    
-    [NexumBackend apiRequest:@"POST" forPath:@"contacts/unfollow" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    [NexumBackend postContactsUnfollow:params];
 }
 
 + (void) block:(NSString *)identifier {
@@ -44,14 +43,12 @@
     [message show];
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", identifier];
-    
-    [NexumBackend apiRequest:@"POST" forPath:@"contacts/block" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    [NexumBackend postContactsBlock:params];
 }
 
 + (void) unblock:(NSString *)identifier {
     NSString *params = [NSString stringWithFormat:@"identifier=%@", identifier];
-    
-    [NexumBackend apiRequest:@"POST" forPath:@"contacts/unblock" withParams:params andBlock:^(BOOL success, NSDictionary *data) {}];
+    [NexumBackend postContactsUnblock:params];
 }
 
 @end

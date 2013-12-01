@@ -29,10 +29,4 @@
 #define C_0aa4dd    colorWithRed:0.039 green:0.643 blue:0.867 alpha:1.00
 #define C_ffdd1f    colorWithRed:1.000 green:0.867 blue:0.122 alpha:1.00
 
-/* Constants defined in ConfigConstants.h
-
-#define FLURRY_API_KEY     @"UA-XXXX-Y"
-
- */
-
 #endif

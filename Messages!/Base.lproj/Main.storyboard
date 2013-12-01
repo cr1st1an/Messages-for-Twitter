@@ -730,7 +730,7 @@
             </objects>
             <point key="canvasLocation" x="913" y="-545"/>
         </scene>
-        <!--Nexum Alpha View Controller - ß1.0 (001) #24-->
+        <!--Nexum Alpha View Controller - ß1.0 (001) #25-->
         <scene sceneID="ypi-y3-xiN">
             <objects>
                 <viewController id="RqJ-Gj-AK8" customClass="NexumAlphaViewController" sceneMemberID="viewController">
@@ -756,7 +756,7 @@
                             <constraint firstAttribute="trailing" secondItem="4wd-YO-cCj" secondAttribute="trailing" id="gOf-Ue-nL9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="ß1.0 (001) #24" id="igY-kA-F8v">
+                    <navigationItem key="navigationItem" title="ß1.0 (001) #25" id="igY-kA-F8v">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="uhV-U3-w2m">
                             <connections>
                                 <action selector="refreshAction:" destination="RqJ-Gj-AK8" id="4aq-yO-fd8"/>

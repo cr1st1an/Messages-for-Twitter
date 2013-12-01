@@ -24,7 +24,6 @@
         self.isChildOfThread = NO;
     }
     
-    
     NSDictionary *currentAccount = [NexumDefaults currentAccount];
     
     if(nil == self.profile)
@@ -56,16 +55,14 @@
     }
     
     [self clearTable];
-    self.path = @"contacts/following";
+    self.dataSource = @"following";
     self.followingButton.tintColor = [UIColor whiteColor];
     
+    [self loadData];
+    [self loadProfileImage];
+    [self loadBackImage];
+    
     self.tabBarController.tabBar.hidden = NO;
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    // MOVE TO DidLoad
-    [self loadDataFromPath:self.path withPage:self.page];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,9 +76,6 @@
     [UIView animateWithDuration:0.25 animations:^(void) {
         self.infoPlaceholder.center = self.mainPlaceholder.center;
     }];
-    
-    [self loadProfileImage];
-    [self loadBackImage];
 }
 
 #pragma mark - TableView delegate
@@ -114,12 +108,11 @@
     NSDictionary *profile = [self.profiles objectAtIndex:indexPath.row];
     cell.identifier = profile[@"identifier"];
     [cell reuseCellWithProfile:profile andRow:indexPath.row];
-    [cell loadImagesWithProfile:profile];
-    //[cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.1];
+    [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
     
     if([self.profiles count] < (indexPath.row + 20)){
         if([NSNull null] != (NSNull *)self.page){
-            [self loadDataFromPath:self.path withPage:self.page];
+            [self loadData];
         }
     }
     
@@ -145,37 +138,33 @@
 
 #pragma mark - Load data
 
-- (void)loadDataFromPath:(NSString *)path withPage:(NSString *)page {
+- (void)loadData {
     if(!self.isLoading){
         self.isLoading = YES;
         self.activityRow.alpha = 1;
-        
-        NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@",
-                            self.profile[@"identifier"],
-                            page
-                            ];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-        
-            [NexumBackend apiRequest:@"GET" forPath:path withParams:params andBlock:^(BOOL success, NSDictionary *data) {
-                if(success){
-                    self.page = data[@"pagination"][@"next"];
-                    [self.profiles addObjectsFromArray:data[@"profiles_data"]];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^ {
-                        [self dataDidLoad];
-                        [self.tableView reloadData];
-                    });
-                }
-                self.isLoading = NO;
+        NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@", self.profile[@"identifier"], self.page];
+        if([@"following" isEqualToString:self.dataSource]){
+            [NexumBackend getContactsFollowing:params withAsyncBlock:^(NSDictionary *data) {
+                self.page = data[@"pagination"][@"next"];
+                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                dispatch_async(dispatch_get_main_queue(), ^ {
+                    self.activityRow.alpha = 0;
+                    [self.tableView reloadData];
+                    self.isLoading = NO;
+                });
             }];
-            
-        });
+        } else if([@"followers" isEqualToString:self.dataSource]){
+            [NexumBackend getContactsFollowers:params withAsyncBlock:^(NSDictionary *data) {
+                self.page = data[@"pagination"][@"next"];
+                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                dispatch_async(dispatch_get_main_queue(), ^ {
+                    self.activityRow.alpha = 0;
+                    [self.tableView reloadData];
+                    self.isLoading = NO;
+                });
+            }];
+        }
     }
-}
-
-- (void)dataDidLoad {
-    self.activityRow.alpha = 0;
 }
 
 #pragma mark - Actions
@@ -202,9 +191,9 @@
             relationshipAction = @"follow";
         }
         if(follower){
-            title = [NSString stringWithFormat:@"@%@ is following you.", self.profile[@"username"]];
+            title = [NSString stringWithFormat:@"@%@ is following you", self.profile[@"username"]];
         } else {
-            title = [NSString stringWithFormat:@"@%@ is not following you.", self.profile[@"username"]];
+            title = [NSString stringWithFormat:@"@%@ is not following you", self.profile[@"username"]];
         }
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc]
@@ -253,18 +242,18 @@
 
 - (IBAction)followingAction:(id)sender {
     [self clearTable];
-    self.path = @"contacts/following";
+    self.dataSource = @"following";
     self.followersButton.tintColor = [UIColor C_22a1d9];
     self.followingButton.tintColor = [UIColor whiteColor];
-    [self loadDataFromPath:self.path withPage:self.page];
+    [self loadData];
 }
 
 - (IBAction)followersAction:(id)sender {
     [self clearTable];
-    self.path = @"contacts/followers";
+    self.dataSource = @"followers";
     self.followingButton.tintColor = [UIColor C_22a1d9];
     self.followersButton.tintColor = [UIColor whiteColor];
-    [self loadDataFromPath:self.path withPage:self.page];
+    [self loadData];
 }
 
 - (IBAction)rowButtonAction:(id)sender {
