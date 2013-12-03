@@ -7,9 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FICImageCache.h"
-#import "FICEntity.h"
-#import "FICUtilities.h"
 
 @interface NexumProfilePicture : NSObject <FICEntity>
 

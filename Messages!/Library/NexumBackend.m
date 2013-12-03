@@ -52,7 +52,14 @@
     });
 }
 
-+ (void)getThreads:(void (^)(NSDictionary *data))block {
++ (void)getPurchasesRecentWithAsyncBlock:(void (^)(NSDictionary *data))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"purchases/recent" withParams:@""];
+        block(data);
+    });
+}
+
++ (void)getThreadsWithAsyncBlock:(void (^)(NSDictionary *data))block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
         NSDictionary *data = [NexumBackend apiRequest:@"GET" forPath:@"threads" withParams:@""];
         block(data);
@@ -60,16 +67,46 @@
 }
 
 
+
++ (void)postAccountsDeviceToken:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"accounts/device_token" withParams:params];
+    });
+}
++ (void)postContactsBlock:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/block" withParams:params];
+    });
+}
+
++ (void)postContactsFollow:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/follow" withParams:params];
+    });
+}
+
++ (void)postContactsUnblock:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/unblock" withParams:params];
+    });
+}
+
++ (void)postContactsUnfollow:(NSString *)params {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
+        [NexumBackend apiRequest:@"POST" forPath:@"contacts/unfollow" withParams:params];
+    });
+}
+
 + (void)postMessages:(NSString *)params {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
         [NexumBackend apiRequest:@"POST" forPath:@"messages" withParams:params];
     });
 }
 
-
-+ (void)postAccountsDeviceToken:(NSString *)params {
++ (void)postPurchases:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-        [NexumBackend apiRequest:@"POST" forPath:@"accounts/device_token" withParams:params];
+        NSDictionary *data = [NexumBackend apiRequest:@"POST" forPath:@"purchases" withParams:params];
+        block(data);
     });
 }
 
@@ -87,43 +124,22 @@
     });
 }
 
-+ (void)postWorkers01 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-        [NexumBackend apiRequest:@"POST" forPath:@"workers/01" withParams:@""];
-    });
-}
-
 + (void)postStatusesUpdate:(NSString *)params {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
         [NexumBackend apiRequest:@"POST" forPath:@"statuses/update" withParams:params];
     });
 }
 
-+ (void)postContactsFollow:(NSString *)params {
++ (void)postWorkers01 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-        [NexumBackend apiRequest:@"POST" forPath:@"contacts/follow" withParams:params];
+        [NexumBackend apiRequest:@"POST" forPath:@"workers/01" withParams:@""];
     });
 }
 
-+ (void)postContactsUnfollow:(NSString *)params {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-        [NexumBackend apiRequest:@"POST" forPath:@"contacts/unfollow" withParams:params];
-    });
-}
-
-+ (void)postContactsBlock:(NSString *)params {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-        [NexumBackend apiRequest:@"POST" forPath:@"contacts/block" withParams:params];
-    });
-}
-
-+ (void)postContactsUnblock:(NSString *)params {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-        [NexumBackend apiRequest:@"POST" forPath:@"contacts/unblock" withParams:params];
-    });
-}
 
 + (NSDictionary *)apiRequest:(NSString *)method forPath:(NSString *)path withParams:(NSString *)params {
+    [Flurry logEvent:[NSString stringWithFormat:@"%@/%@",method,path] timed:YES];
+    
     NSString *endpoint = nil;
     NSMutableURLRequest *URLRequest = [[NSMutableURLRequest alloc] init];
     [URLRequest setHTTPMethod:method];
@@ -151,6 +167,7 @@
         JSONResponse = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&JSONErrorResponse];
     }
     
+    [Flurry endTimedEvent:[NSString stringWithFormat:@"%@/%@",method,path] withParameters:nil];
     return JSONResponse;
 }
 

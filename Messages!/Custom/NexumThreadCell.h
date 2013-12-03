@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString *identifier;
 
 @property (strong, nonatomic) IBOutlet UIView *indicator;
+@property (strong, nonatomic) IBOutlet UIImageView *badge;
 @property (strong, nonatomic) IBOutlet UIImageView *picture;
 @property (strong, nonatomic) IBOutlet UILabel *title;
 @property (strong, nonatomic) IBOutlet UILabel *preview;

@@ -24,12 +24,21 @@
 }
 
 - (NSString *)sourceImageUUID {
+    if([NSNull null] == (NSNull *)self.pictureURL){
+        self.pictureURL = @"";
+    }
+
+    
     CFUUIDBytes sourceImageUUIDBytes = FICUUIDBytesFromMD5HashOfString(self.pictureURL);
     NSString *sourceImageUUID = FICStringWithUUIDBytes(sourceImageUUIDBytes);
     return sourceImageUUID;
 }
 
 - (NSURL *)sourceImageURLWithFormatName:(NSString *)formatName {
+    if([NSNull null] == (NSNull *)self.pictureURL){
+        self.pictureURL = @"";
+    }
+    
     return [NSURL URLWithString:self.pictureURL];
 }
 

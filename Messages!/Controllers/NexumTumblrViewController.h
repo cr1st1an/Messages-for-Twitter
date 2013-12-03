@@ -1,5 +1,5 @@
 //
-//  NexumAlphaViewController.h
+//  NexumTumblrViewController.h
 //  Messages!
 //
 //  Created by Cristian Castillo on 11/25/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NexumAlphaViewController : UIViewController
+@interface NexumTumblrViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
 

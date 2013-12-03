@@ -44,6 +44,8 @@
 		2A3B2A961831F4E100E82B8C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B2A951831F4E100E82B8C /* main.m */; };
 		2A3B2A9A1831F4E100E82B8C /* NexumAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B2A991831F4E100E82B8C /* NexumAppDelegate.m */; };
 		2A3B2AC21831FADC00E82B8C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3B2AC11831FADC00E82B8C /* StoreKit.framework */; };
+		2A54C311184BDA020023A8CD /* NexumFeaturedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C310184BDA020023A8CD /* NexumFeaturedViewController.m */; };
+		2A54C312184BDA020023A8CD /* NexumFeaturedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C310184BDA020023A8CD /* NexumFeaturedViewController.m */; };
 		2A5AE2E41832B9EA00BCE981 /* NexumDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5AE2E31832B9EA00BCE981 /* NexumDefaults.m */; };
 		2A78FEDF183FBE8900D59CC9 /* FICImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A78FED3183FBE8900D59CC9 /* FICImageCache.m */; };
 		2A78FEE0183FBE8900D59CC9 /* FICImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A78FED3183FBE8900D59CC9 /* FICImageCache.m */; };
@@ -63,8 +65,8 @@
 		2A7D995B1839372C00BF2221 /* NexumProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D99581839372C00BF2221 /* NexumProfileCell.m */; };
 		2A7D995C1839372C00BF2221 /* NexumThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D995A1839372C00BF2221 /* NexumThreadCell.m */; };
 		2A7D995F18393C7C00BF2221 /* NexumInputBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D995E18393C7C00BF2221 /* NexumInputBar.m */; };
-		2A934D2D184446CF0062C144 /* NexumAlphaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A934D2C184446CF0062C144 /* NexumAlphaViewController.m */; };
-		2A934D2E184446CF0062C144 /* NexumAlphaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A934D2C184446CF0062C144 /* NexumAlphaViewController.m */; };
+		2A934D2D184446CF0062C144 /* NexumTumblrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A934D2C184446CF0062C144 /* NexumTumblrViewController.m */; };
+		2A934D2E184446CF0062C144 /* NexumTumblrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A934D2C184446CF0062C144 /* NexumTumblrViewController.m */; };
 		2A98DC251834180E0009E4DF /* NexumSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A98DC241834180E0009E4DF /* NexumSearchViewController.m */; };
 		2AC4E1E2183D6BB700BC589E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AC4E1E1183D6BB700BC589E /* Images.xcassets */; };
 		2AE1EFA11846ADC800E7BA04 /* NexumStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */; };
@@ -76,6 +78,10 @@
 		2AE2BF931848163400821F6B /* NexumTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE2BF921848163400821F6B /* NexumTabsViewController.m */; };
 		2AE2BF941848163400821F6B /* NexumTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE2BF921848163400821F6B /* NexumTabsViewController.m */; };
 		2AE2BF95184832BF00821F6B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03BA851848053800232C08 /* SystemConfiguration.framework */; };
+		2AE8BE68184C1154009249F9 /* NexumFeaturedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE8BE67184C1154009249F9 /* NexumFeaturedCell.m */; };
+		2AE8BE69184C1154009249F9 /* NexumFeaturedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE8BE67184C1154009249F9 /* NexumFeaturedCell.m */; };
+		2AE8BE6B184C1DD4009249F9 /* featured.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2AE8BE6A184C1DD4009249F9 /* featured.mp3 */; };
+		2AE8BE6C184C1DD4009249F9 /* featured.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2AE8BE6A184C1DD4009249F9 /* featured.mp3 */; };
 		2AF59B631832CB2A003E153E /* NexumLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B621832CB2A003E153E /* NexumLoginViewController.m */; };
 		2AF59B671832D355003E153E /* NexumUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B661832D355003E153E /* NexumUtil.m */; };
 		2AF59B6A1832D58F003E153E /* NexumBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B691832D58F003E153E /* NexumBackend.m */; };
@@ -109,6 +115,8 @@
 		2A3B2A991831F4E100E82B8C /* NexumAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NexumAppDelegate.m; sourceTree = "<group>"; };
 		2A3B2A9C1831F4E100E82B8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2A3B2AC11831FADC00E82B8C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2A54C30F184BDA020023A8CD /* NexumFeaturedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumFeaturedViewController.h; path = Controllers/NexumFeaturedViewController.h; sourceTree = "<group>"; };
+		2A54C310184BDA020023A8CD /* NexumFeaturedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumFeaturedViewController.m; path = Controllers/NexumFeaturedViewController.m; sourceTree = "<group>"; };
 		2A5AE2E21832B9EA00BCE981 /* NexumDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumDefaults.h; path = Library/NexumDefaults.h; sourceTree = "<group>"; };
 		2A5AE2E31832B9EA00BCE981 /* NexumDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumDefaults.m; path = Library/NexumDefaults.m; sourceTree = "<group>"; };
 		2A78FED0183FBE8900D59CC9 /* FICEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FICEntity.h; sourceTree = "<group>"; };
@@ -137,8 +145,8 @@
 		2A7D995D18393C7C00BF2221 /* NexumInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumInputBar.h; path = Custom/NexumInputBar.h; sourceTree = "<group>"; };
 		2A7D995E18393C7C00BF2221 /* NexumInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumInputBar.m; path = Custom/NexumInputBar.m; sourceTree = "<group>"; };
 		2A8846661847FC79001C2FAF /* ConfigConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigConstants.h; sourceTree = "<group>"; };
-		2A934D2B184446CF0062C144 /* NexumAlphaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumAlphaViewController.h; path = Controllers/NexumAlphaViewController.h; sourceTree = "<group>"; };
-		2A934D2C184446CF0062C144 /* NexumAlphaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumAlphaViewController.m; path = Controllers/NexumAlphaViewController.m; sourceTree = "<group>"; };
+		2A934D2B184446CF0062C144 /* NexumTumblrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumTumblrViewController.h; path = Controllers/NexumTumblrViewController.h; sourceTree = "<group>"; };
+		2A934D2C184446CF0062C144 /* NexumTumblrViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumTumblrViewController.m; path = Controllers/NexumTumblrViewController.m; sourceTree = "<group>"; };
 		2A98DC231834180E0009E4DF /* NexumSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumSearchViewController.h; path = Controllers/NexumSearchViewController.h; sourceTree = "<group>"; };
 		2A98DC241834180E0009E4DF /* NexumSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumSearchViewController.m; path = Controllers/NexumSearchViewController.m; sourceTree = "<group>"; };
 		2AC4E1E1183D6BB700BC589E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -146,9 +154,12 @@
 		2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumStartViewController.m; path = Controllers/NexumStartViewController.m; sourceTree = "<group>"; };
 		2AE2BF891848076400821F6B /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		2AE2BF8A1848076400821F6B /* libFlurry_4.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.0.a; sourceTree = "<group>"; };
-		2AE2BF8E18480B0000821F6B /* newdm.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = newdm.aif; sourceTree = "<group>"; };
+		2AE2BF8E18480B0000821F6B /* newdm.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = newdm.aif; path = Media/newdm.aif; sourceTree = "<group>"; };
 		2AE2BF911848163400821F6B /* NexumTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumTabsViewController.h; path = Controllers/NexumTabsViewController.h; sourceTree = "<group>"; };
 		2AE2BF921848163400821F6B /* NexumTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumTabsViewController.m; path = Controllers/NexumTabsViewController.m; sourceTree = "<group>"; };
+		2AE8BE66184C1154009249F9 /* NexumFeaturedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumFeaturedCell.h; path = Custom/NexumFeaturedCell.h; sourceTree = "<group>"; };
+		2AE8BE67184C1154009249F9 /* NexumFeaturedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumFeaturedCell.m; path = Custom/NexumFeaturedCell.m; sourceTree = "<group>"; };
+		2AE8BE6A184C1DD4009249F9 /* featured.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = featured.mp3; path = Media/featured.mp3; sourceTree = "<group>"; };
 		2AF59B611832CB2A003E153E /* NexumLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumLoginViewController.h; path = Controllers/NexumLoginViewController.h; sourceTree = "<group>"; };
 		2AF59B621832CB2A003E153E /* NexumLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumLoginViewController.m; path = Controllers/NexumLoginViewController.m; sourceTree = "<group>"; };
 		2AF59B641832CE92003E153E /* DefaultConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultConstants.h; sourceTree = "<group>"; };
@@ -212,13 +223,13 @@
 		2A3B2A881831F4E100E82B8C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2AE2BF881848073E00821F6B /* Flurry */,
-				2A03BA851848053800232C08 /* SystemConfiguration.framework */,
 				2AF8B5CE184150BA005EA74A /* AudioToolbox.framework */,
-				2A78FECF183FBE8900D59CC9 /* FastImageCache */,
-				2A3B2AC11831FADC00E82B8C /* StoreKit.framework */,
-				2A3B2A891831F4E100E82B8C /* Foundation.framework */,
 				2A3B2A8B1831F4E100E82B8C /* CoreGraphics.framework */,
+				2A78FECF183FBE8900D59CC9 /* FastImageCache */,
+				2AE2BF881848073E00821F6B /* Flurry */,
+				2A3B2A891831F4E100E82B8C /* Foundation.framework */,
+				2A3B2AC11831FADC00E82B8C /* StoreKit.framework */,
+				2A03BA851848053800232C08 /* SystemConfiguration.framework */,
 				2A3B2A8D1831F4E100E82B8C /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -279,6 +290,8 @@
 		2A7D99561839370D00BF2221 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				2AE8BE66184C1154009249F9 /* NexumFeaturedCell.h */,
+				2AE8BE67184C1154009249F9 /* NexumFeaturedCell.m */,
 				2A7D995D18393C7C00BF2221 /* NexumInputBar.h */,
 				2A7D995E18393C7C00BF2221 /* NexumInputBar.m */,
 				2A09BC5B183C2E8B00AE4152 /* NexumMessageCell.h */,
@@ -313,8 +326,8 @@
 		2AC242ED1832B6A1009ADBA0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2A934D2B184446CF0062C144 /* NexumAlphaViewController.h */,
-				2A934D2C184446CF0062C144 /* NexumAlphaViewController.m */,
+				2A54C30F184BDA020023A8CD /* NexumFeaturedViewController.h */,
+				2A54C310184BDA020023A8CD /* NexumFeaturedViewController.m */,
 				2A000BCC1833046000BB87C3 /* NexumInboxViewController.h */,
 				2A000BCD1833046000BB87C3 /* NexumInboxViewController.m */,
 				2AF59B611832CB2A003E153E /* NexumLoginViewController.h */,
@@ -329,6 +342,8 @@
 				2AE2BF921848163400821F6B /* NexumTabsViewController.m */,
 				2A7D994F183830B700BF2221 /* NexumThreadViewController.h */,
 				2A7D9950183830B700BF2221 /* NexumThreadViewController.m */,
+				2A934D2B184446CF0062C144 /* NexumTumblrViewController.h */,
+				2A934D2C184446CF0062C144 /* NexumTumblrViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -345,6 +360,7 @@
 		2AE2BF8D18480ADA00821F6B /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				2AE8BE6A184C1DD4009249F9 /* featured.mp3 */,
 				2AE2BF8E18480B0000821F6B /* newdm.aif */,
 			);
 			name = Media;
@@ -437,6 +453,7 @@
 				2A07A997183E8475008498F4 /* Images.xcassets in Resources */,
 				2A07A998183E8475008498F4 /* Main.storyboard in Resources */,
 				2AE2BF9018480B0000821F6B /* newdm.aif in Resources */,
+				2AE8BE6C184C1DD4009249F9 /* featured.mp3 in Resources */,
 				2A07A999183E8475008498F4 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,6 +465,7 @@
 				2AC4E1E2183D6BB700BC589E /* Images.xcassets in Resources */,
 				2A1BAC99183D51080053491E /* Main.storyboard in Resources */,
 				2AE2BF8F18480B0000821F6B /* newdm.aif in Resources */,
+				2AE8BE6B184C1DD4009249F9 /* featured.mp3 in Resources */,
 				2A3B2A941831F4E100E82B8C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,6 +477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A54C312184BDA020023A8CD /* NexumFeaturedViewController.m in Sources */,
 				2A07A980183E8475008498F4 /* NexumInputBar.m in Sources */,
 				2A25E434184320AA00A18F26 /* NexumTwitter.m in Sources */,
 				2A07A981183E8475008498F4 /* NexumAppDelegate.m in Sources */,
@@ -481,8 +500,9 @@
 				2A07A98D183E8475008498F4 /* NexumInboxViewController.m in Sources */,
 				2A78FEEA183FBE8900D59CC9 /* FICUtilities.m in Sources */,
 				2A07A98E183E8475008498F4 /* NexumMessageCell.m in Sources */,
+				2AE8BE69184C1154009249F9 /* NexumFeaturedCell.m in Sources */,
 				2A78FEE6183FBE8900D59CC9 /* FICImageTableChunk.m in Sources */,
-				2A934D2E184446CF0062C144 /* NexumAlphaViewController.m in Sources */,
+				2A934D2E184446CF0062C144 /* NexumTumblrViewController.m in Sources */,
 				2A07A98F183E8475008498F4 /* NexumDefaults.m in Sources */,
 				2A78FEE2183FBE8900D59CC9 /* FICImageFormat.m in Sources */,
 			);
@@ -492,6 +512,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A54C311184BDA020023A8CD /* NexumFeaturedViewController.m in Sources */,
 				2A7D995F18393C7C00BF2221 /* NexumInputBar.m in Sources */,
 				2A25E433184320AA00A18F26 /* NexumTwitter.m in Sources */,
 				2A3B2A9A1831F4E100E82B8C /* NexumAppDelegate.m in Sources */,
@@ -514,8 +535,9 @@
 				2A000BCE1833046000BB87C3 /* NexumInboxViewController.m in Sources */,
 				2A78FEE9183FBE8900D59CC9 /* FICUtilities.m in Sources */,
 				2A09BC5D183C2E8B00AE4152 /* NexumMessageCell.m in Sources */,
+				2AE8BE68184C1154009249F9 /* NexumFeaturedCell.m in Sources */,
 				2A78FEE5183FBE8900D59CC9 /* FICImageTableChunk.m in Sources */,
-				2A934D2D184446CF0062C144 /* NexumAlphaViewController.m in Sources */,
+				2A934D2D184446CF0062C144 /* NexumTumblrViewController.m in Sources */,
 				2A5AE2E41832B9EA00BCE981 /* NexumDefaults.m in Sources */,
 				2A78FEE1183FBE8900D59CC9 /* FICImageFormat.m in Sources */,
 			);

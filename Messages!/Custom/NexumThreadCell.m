@@ -11,9 +11,11 @@
 @implementation NexumThreadCell
 
 - (void)reuseCellWithThread:(NSDictionary *)thread {
-    
-    
     BOOL opened = [thread[@"opened"] boolValue];
+    BOOL verified = [thread[@"profile_data"][@"verified"] boolValue];
+    BOOL featured = [thread[@"profile_data"][@"featured"] boolValue];
+    BOOL protected = [thread[@"profile_data"][@"protected"] boolValue];
+    BOOL staff = [thread[@"profile_data"][@"staff"] boolValue];
     
     if(opened){
         self.indicator.backgroundColor = [UIColor C_ededea];
@@ -21,12 +23,23 @@
         self.indicator.backgroundColor = [UIColor C_4fdd86];
     }
     
+    if(staff) {
+        self.badge.image = [UIImage imageNamed:@"badge_staff"];
+    } else if(featured){
+        self.badge.image = [UIImage imageNamed:@"badge_featured"];
+    } else if(verified) {
+        self.badge.image = [UIImage imageNamed:@"badge_verified"];
+    } else if(protected) {
+        self.badge.image = [UIImage imageNamed:@"badge_protected"];
+    } else {
+        self.badge.image = nil;
+    }
+    
     self.title.text = thread[@"title"];
     self.preview.text = [NSString stringWithFormat:@"%@\n\n", thread[@"preview"]];
     self.timeago.text = thread[@"timeago"];
     
     NexumProfilePicture *profilePicture = [[NexumProfilePicture alloc] init];
-    
     profilePicture.identifier = thread[@"identifier"];
     profilePicture.pictureURL = thread[@"picture"];
     

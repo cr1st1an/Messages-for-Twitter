@@ -16,9 +16,13 @@
     #import <AudioToolbox/AudioToolbox.h>
     #import "DefaultConstants.h"
     #import "ConfigConstants.h"
+    #import "FICImageCache.h"
+    #import "FICEntity.h"
+    #import "FICUtilities.h"
+    #import "Flurry.h"
+    #import "NexumProfilePicture.h"
     #import "NexumBackend.h"
     #import "NexumDefaults.h"
     #import "NexumUtil.h"
-    #import "NexumProfilePicture.h"
     #import "NexumTwitter.h"
 #endif

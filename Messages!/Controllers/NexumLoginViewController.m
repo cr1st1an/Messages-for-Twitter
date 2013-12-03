@@ -20,6 +20,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [Flurry logPageView];
+    
     NSString *endpoint = [NSString stringWithFormat:@"%@%@", BACKEND_URL, @"sessions/auth"];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:endpoint]];
     [self.twitterWebview loadRequest:urlRequest];

@@ -16,6 +16,8 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [Flurry logPageView];
+    
     if(nil == [NexumDefaults currentSession]){
         [self requestLogin];
     } else {
@@ -36,7 +38,7 @@
             [NexumDefaults addAccount:data[@"account_data"]];
             [NexumBackend postWorkers01];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
-            
+            [Flurry setUserID:data[@"account_data"][@"identifier"]];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self openApp];
             });

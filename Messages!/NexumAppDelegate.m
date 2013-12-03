@@ -20,7 +20,9 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     [[UITableView appearance] setBackgroundColor:[UIColor C_f8f8f8]];
-    [[UITableView appearance] setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [[UITableView appearance] setSeparatorColor:[UIColor C_ededea]];
+    
+    [[UIRefreshControl appearance] setTintColor:[UIColor C_cccccc]];
     
     UIView *selectionColor = [[UIView alloc] init];
     selectionColor.backgroundColor = [UIColor C_f8f8f8];

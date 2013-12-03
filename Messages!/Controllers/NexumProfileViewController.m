@@ -33,13 +33,12 @@
     
     self.username.text = [NSString stringWithFormat:@"@%@", self.profile[@"username"]];
     
-    self.description.numberOfLines = 0;
     self.description.text = self.profile[@"description"];
     BOOL follower = [self.profile[@"follower"] boolValue];
     BOOL following = [self.profile[@"following"] boolValue];
     BOOL own = [self.profile[@"own"] boolValue];
     if(own){
-        self.actionButton.backgroundColor = [UIColor C_ffdd1f];
+        self.actionButton.backgroundColor = [UIColor C_f8bf32];
         self.actionButton.tintColor = [UIColor whiteColor];
         [self.actionButton setTitle:@"become featured" forState:UIControlStateNormal];
     } else if((follower && following) || follower){
@@ -52,6 +51,23 @@
         self.actionButton.backgroundColor = [UIColor whiteColor];
         self.actionButton.tintColor = [UIColor C_4fdd86];
         [self.actionButton setTitle:@"invite to chat" forState:UIControlStateNormal];
+    }
+    
+    BOOL verified = [self.profile[@"verified"] boolValue];
+    BOOL featured = [self.profile[@"featured"] boolValue];
+    BOOL staff = [self.profile[@"staff"] boolValue];
+    BOOL protected = [self.profile[@"protected"] boolValue];
+    
+    if(staff) {
+        self.badge.image = [UIImage imageNamed:@"badge_staff"];
+    } else if(featured){
+        self.badge.image = [UIImage imageNamed:@"badge_featured"];
+    } else if(verified) {
+        self.badge.image = [UIImage imageNamed:@"badge_verified"];
+    } else if(protected) {
+        self.badge.image = [UIImage imageNamed:@"badge_protected"];
+    } else {
+        self.badge.image = nil;
     }
     
     [self clearTable];
@@ -67,11 +83,13 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [Flurry logPageView];
+    
     self.tabBarController.tabBar.hidden = NO;
     
     [self.description sizeToFit];
     
-    self.infoPlaceholder.frame = CGRectMake(self.infoPlaceholder.frame.origin.x, self.infoPlaceholder.frame.origin.y, self.infoPlaceholder.frame.size.width, (self.description.frame.size.height + 74));
+    self.infoPlaceholder.frame = CGRectMake(self.infoPlaceholder.frame.origin.x, self.infoPlaceholder.frame.origin.y, self.infoPlaceholder.frame.size.width, (self.description.frame.size.height + 64));
     
     [UIView animateWithDuration:0.25 animations:^(void) {
         self.infoPlaceholder.center = self.mainPlaceholder.center;
@@ -95,9 +113,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(0 < [self.profiles count])
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    
     return [self.profiles count];
 }
 
@@ -280,7 +295,6 @@
     self.profiles = [NSMutableArray array];
     self.isLoading = NO;
     self.page = @"0";
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView reloadData];
 }
 
@@ -298,13 +312,13 @@
 }
 
 - (void)loadBackImage {
-    if (!self.backImage && ![self.profile[@"back"] isEqualToString:@""] ){
+    if (![self.profile[@"back"] isEqualToString:@""] ){
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-            self.backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.profile[@"back"]]];
+            NSData *backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.profile[@"back"]]];
             dispatch_async(dispatch_get_main_queue(), ^ {
-                self.backImage = [UIImage imageWithData:self.backData];
+                UIImage *backImage = [UIImage imageWithData:backData];
                 [UIView animateWithDuration:1.0 animations:^(void) {
-                    self.back.image = self.backImage;
+                    self.back.image = backImage;
                     self.back.alpha = 1;
                 }];
             });

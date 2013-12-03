@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FICImageCache.h"
-#import "Flurry.h"
 
 @interface NexumAppDelegate : UIResponder <UIApplicationDelegate, FICImageCacheDelegate>
 

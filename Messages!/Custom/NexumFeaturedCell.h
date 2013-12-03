@@ -1,14 +1,14 @@
 //
-//  NexumProfileCell.h
-//  Twitter iOS 1.0
+//  NexumFeaturedCell.h
+//  Messages!
 //
-//  Created by Cristian Castillo on 11/13/13.
+//  Created by Cristian Castillo on 12/1/13.
 //  Copyright (c) 2013 NexumDigital Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface NexumProfileCell : UITableViewCell
+@interface NexumFeaturedCell : UITableViewCell
 
 @property (strong, nonatomic) NSString *identifier;
 

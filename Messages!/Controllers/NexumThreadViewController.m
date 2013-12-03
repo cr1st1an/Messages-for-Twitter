@@ -45,6 +45,7 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.inputBar.sendButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
     
@@ -58,6 +59,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [Flurry logPageView];
+    
     [self loadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustViewForKeyboardNotification:) name:UIKeyboardWillShowNotification object:nil];

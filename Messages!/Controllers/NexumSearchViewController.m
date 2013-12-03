@@ -24,6 +24,11 @@
     self.searchBar.delegate = self;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [Flurry logPageView];
+}
+
 #pragma mark - SearchBar delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -50,9 +55,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(0 < [self.profiles count])
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    
     return [self.profiles count];
 }
 
@@ -134,7 +136,6 @@
     self.isLoading = NO;
     self.page = @"0";
     self.query = @"";
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView reloadData];
 }
 

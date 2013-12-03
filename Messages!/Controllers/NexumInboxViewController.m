@@ -17,11 +17,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self clearTable];
+    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+    [refresh addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refresh;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [Flurry logPageView];
     [self loadData];
+    
     [self.navigationController.tabBarItem setBadgeValue:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotification:) name:@"pushNotification" object:nil];
 }
@@ -46,12 +51,15 @@
 - (void)loadData {
     if(!self.isLoading){
         self.isLoading = YES;
-        self.activityRow.alpha = 1;
-        [NexumBackend getThreads:^(NSDictionary *data) {
+        if(0 == [self.threads count]){
+            self.activityRow.alpha = 1;
+        }
+        [NexumBackend getThreadsWithAsyncBlock:^(NSDictionary *data) {
             self.threads = data[@"threads_data"];
             dispatch_async(dispatch_get_main_queue(), ^ {
                 self.activityRow.alpha = 0;
                 [self.tableView reloadData];
+                [self.refreshControl endRefreshing];
                 self.isLoading = NO;
             });
         }];
@@ -63,26 +71,24 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(0 < [self.threads count])
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    
     return [self.threads count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"InboxCell";
     NexumThreadCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
     NSDictionary *thread = [self.threads objectAtIndex:indexPath.row];
     cell.identifier = thread[@"identifier"];
     [cell reuseCellWithThread:thread];
     [cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.01];
+    
     return cell;
 }
 
 - (void)clearTable {
     self.threads = [NSMutableArray array];
     self.isLoading = NO;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView reloadData];
 }
 

@@ -17,17 +17,19 @@
 + (void)getContactsSuggested:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block;
 + (void)getMessages:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block;
 + (void)getProfiles:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block;
-+ (void)getThreads:(void (^)(NSDictionary *data))block;
++ (void)getPurchasesRecentWithAsyncBlock:(void (^)(NSDictionary *data))block;
++ (void)getThreadsWithAsyncBlock:(void (^)(NSDictionary *data))block;
 
 + (void)postAccountsDeviceToken:(NSString *)params;
-+ (void)postStatusesUpdate:(NSString *)params;
 + (void)postContactsBlock:(NSString *)params;
 + (void)postContactsFollow:(NSString *)params;
 + (void)postContactsUnblock:(NSString *)params;
 + (void)postContactsUnfollow:(NSString *)params;
 + (void)postMessages:(NSString *)params;
++ (void)postPurchases:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block;
 + (void)postSessions:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block;
 + (void)postSessionsAuth:(NSString *)params withAsyncBlock:(void (^)(NSDictionary *data))block;
++ (void)postStatusesUpdate:(NSString *)params;
 + (void)postWorkers01;
 
 + (NSDictionary *)apiRequest:(NSString *)type forPath:(NSString *)path withParams:(NSString *)params;
