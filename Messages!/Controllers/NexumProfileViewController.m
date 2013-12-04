@@ -106,11 +106,13 @@
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
-    nextViewController.profile =[_profiles objectAtIndex:indexPath.row];
-    nextViewController.isChildOfThread = self.isChildOfThread;
-    [self.navigationController pushViewController:nextViewController animated:YES];
+    if ([_profiles count] > indexPath.row) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
+        nextViewController.profile =[_profiles objectAtIndex:indexPath.row];
+        nextViewController.isChildOfThread = self.isChildOfThread;
+        [self.navigationController pushViewController:nextViewController animated:YES];
+    }
 }
 
 #pragma mark - Table view data source
@@ -127,10 +129,12 @@
     static NSString *CellIdentifier = @"ProfileCell";
     NexumProfileCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *profile = [_profiles objectAtIndex:indexPath.row];
-    cell.identifier = profile[@"identifier"];
-    [cell reuseCellWithProfile:profile andRow:indexPath.row];
-    [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
+    if([_profiles count] > indexPath.row){
+        NSDictionary *profile = [_profiles objectAtIndex:indexPath.row];
+        cell.identifier = profile[@"identifier"];
+        [cell reuseCellWithProfile:profile andRow:indexPath.row];
+        [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
+    }
     
     if([_profiles count] < (indexPath.row + 20)){
         if([NSNull null] != (NSNull *)_page){

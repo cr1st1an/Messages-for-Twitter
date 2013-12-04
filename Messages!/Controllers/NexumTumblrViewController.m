@@ -18,12 +18,12 @@
     [super viewDidAppear:animated];
     [Flurry logPageView];
     
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://getmessages.tumblr.com"]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:BLOG_URL]];
     [self.webview loadRequest:urlRequest];
 }
 
 - (IBAction)refreshAction:(UIBarButtonItem *)sender {
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://getmessages.tumblr.com"]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:BLOG_URL]];
     [self.webview loadRequest:urlRequest];
 }
 

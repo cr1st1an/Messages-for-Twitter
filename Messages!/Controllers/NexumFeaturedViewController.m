@@ -65,19 +65,23 @@
     static NSString *CellIdentifier = @"FeaturedCell";
     NexumFeaturedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *profile = [_profiles objectAtIndex:indexPath.row];
-    cell.identifier = profile[@"identifier"];
-    [cell reuseCellWithProfile:profile andRow:indexPath.row];
-    [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
+    if ([_profiles count] > indexPath.row) {
+        NSDictionary *profile = [_profiles objectAtIndex:indexPath.row];
+        cell.identifier = profile[@"identifier"];
+        [cell reuseCellWithProfile:profile andRow:indexPath.row];
+        [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
+    }
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
-    nextViewController.profile =[_profiles objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:nextViewController animated:YES];
+    if([_profiles count] > indexPath.row){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
+        nextViewController.profile =[_profiles objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:nextViewController animated:YES];
+    }
 }
 
 - (IBAction)buyAction {
@@ -85,9 +89,9 @@
     NSURL *soundURL = [NSURL fileURLWithPath:soundPath];
     AudioServicesCreateSystemSoundID(CFBridgingRetain(soundURL), &_soundEffect);
     
-    if([[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"] isEqualToString:@"mobi.nexum.messages.twitter"]){
+    if([[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"] isEqualToString:APPSTORE_ID]){
         [self.buyButton setTitle:@"unlocking..." forState:UIControlStateNormal];
-        SKProductsRequest *request= [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject: @"mobi.nexum.messages.twitter.001"]];
+        SKProductsRequest *request= [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject:[NSString stringWithFormat:@"%@.001", APPSTORE_ID]]];
         request.delegate = self;
         [request start];
     } else {

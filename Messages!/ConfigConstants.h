@@ -12,5 +12,7 @@
 #define FLURRY_API_KEY  @""
 #define BACKEND_URL     @""
 #define TW_INVITE       @""
+#define BLOG_URL        @""
+#define APPSTORE_ID     @""
 
 #endif

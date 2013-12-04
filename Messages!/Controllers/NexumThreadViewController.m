@@ -131,42 +131,51 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
+    int cellHeight = 0;
     
-    NSDictionary *message = [_messages objectAtIndex:indexPath.row];
-    _sampleText.text = message[@"text"];
-    CGSize messageSize = [_sampleText sizeThatFits:CGSizeMake((CSRect.size.width - 150), FLT_MAX)];
+    if ([_messages count] > indexPath.row) {
+        CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
+        
+        NSDictionary *message = [_messages objectAtIndex:indexPath.row];
+        _sampleText.text = message[@"text"];
+        CGSize messageSize = [_sampleText sizeThatFits:CGSizeMake((CSRect.size.width - 150), FLT_MAX)];
+        
+        cellHeight = (messageSize.height +  10);
+    }
     
-    return (messageSize.height +  10);
+    return cellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MessageCell";
     NexumMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *message = [_messages objectAtIndex:indexPath.row];
-    NSDictionary *nextMessage = nil;
-    
-    if((indexPath.row + 1) < [_messages count]){
-        nextMessage = [_messages objectAtIndex:(indexPath.row + 1)];
-    }
-    
-    NSDictionary *profile = nil;
-    BOOL sent = [message[@"sent"] boolValue];
-    BOOL sentNext = [nextMessage[@"sent"] boolValue];
-    if(nil == nextMessage || sent != sentNext){
-        if(sent){
-            profile = _account;
-        } else {
-            profile = _profile;
+    if([_messages count] > indexPath.row){
+        NSDictionary *message = [_messages objectAtIndex:indexPath.row];
+        NSDictionary *nextMessage = nil;
+        
+        if((indexPath.row + 1) < [_messages count]){
+            nextMessage = [_messages objectAtIndex:(indexPath.row + 1)];
+        }
+        
+        NSDictionary *profile = nil;
+        BOOL sent = [message[@"sent"] boolValue];
+        BOOL sentNext = [nextMessage[@"sent"] boolValue];
+        if(nil == nextMessage || sent != sentNext){
+            if(sent){
+                profile = _account;
+            } else {
+                profile = _profile;
+            }
+        }
+        
+        cell.identifier = message[@"identifier"];
+        [cell reuseCell:self.interfaceOrientation withMessage:message andProfile:profile];
+        if(nil != profile){
+            [cell performSelector:@selector(loadImageswithMessageAndProfile:) withObject:[NSArray arrayWithObjects:message, profile, nil] afterDelay:0.1];
         }
     }
     
-    cell.identifier = message[@"identifier"];
-    [cell reuseCell:self.interfaceOrientation withMessage:message andProfile:profile];
-    if(nil != profile){
-        [cell performSelector:@selector(loadImageswithMessageAndProfile:) withObject:[NSArray arrayWithObjects:message, profile, nil] afterDelay:0.1];
-    }
     
     return cell;
 }

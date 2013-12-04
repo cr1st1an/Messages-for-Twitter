@@ -44,10 +44,12 @@
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
-    nextViewController.thread = [_threads objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:nextViewController animated:YES];
+    if ([_threads count] > indexPath.row){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
+        nextViewController.thread = [_threads objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:nextViewController animated:YES];
+    }
 }
 
 #pragma mark - Table view data source
@@ -83,10 +85,12 @@
     static NSString *CellIdentifier = @"InboxCell";
     NexumThreadCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *thread = [_threads objectAtIndex:indexPath.row];
-    cell.identifier = thread[@"identifier"];
-    [cell reuseCellWithThread:thread];
-    [cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.01];
+    if([_threads count] > indexPath.row){
+        NSDictionary *thread = [_threads objectAtIndex:indexPath.row];
+        cell.identifier = thread[@"identifier"];
+        [cell reuseCellWithThread:thread];
+        [cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.01];
+    }
     
     return cell;
 }
