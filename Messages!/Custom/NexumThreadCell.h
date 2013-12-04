@@ -19,8 +19,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *preview;
 @property (strong, nonatomic) IBOutlet UILabel *timeago;
 
-@property (assign, nonatomic) BOOL loadImages;
-
 - (void)reuseCellWithThread:(NSDictionary *)thread;
 - (void)loadImagesWithThread:(NSDictionary *)thread;
 

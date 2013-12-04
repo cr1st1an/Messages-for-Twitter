@@ -55,4 +55,8 @@
     [self.twitterWebview loadRequest:urlRequest];
 }
 
+- (IBAction)stopAction:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

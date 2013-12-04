@@ -10,8 +10,9 @@
 
 @interface NexumStartViewController : UIViewController
 
-- (void)requestLogin;
-- (void)sessionStart;
-- (void)openApp;
+@property (strong, nonatomic) IBOutlet UIImageView *titleImage;
+@property (strong, nonatomic) IBOutlet UIButton *signinButton;
+
+- (IBAction)signinAction:(UIButton *)sender;
 
 @end

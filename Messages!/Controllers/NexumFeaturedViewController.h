@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
 #import "NexumFeaturedCell.h"
 #import "NexumProfileViewController.h"
 
-@interface NexumFeaturedViewController : UITableViewController
-
-@property (strong, nonatomic) NSDictionary *featuredProfile;
-@property (strong, nonatomic) NSString *featuredIdentifier;
-@property (strong, nonatomic) NSArray *profiles;
+@interface NexumFeaturedViewController : UITableViewController <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
 @property (weak, nonatomic) IBOutlet UIImageView *back;
 @property (weak, nonatomic) IBOutlet UIView *mainPlaceholder;
@@ -27,12 +24,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
 @property (weak, nonatomic) IBOutlet UIView *activityRow;
 
-@property (assign, nonatomic) BOOL isLoading;
-
 - (IBAction)buyAction;
-
-- (void)clearTable;
-- (void)loadData;
-- (void)reloadProfile;
+- (IBAction)profileAction:(UIButton *)sender;
+- (IBAction)rowButtonAction:(UIButton *)sender;
 
 @end

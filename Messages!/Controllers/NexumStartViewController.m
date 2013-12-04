@@ -19,10 +19,25 @@
     [Flurry logPageView];
     
     if(nil == [NexumDefaults currentSession]){
-        [self requestLogin];
+        [self presentSignin];
     } else {
         [self sessionStart];
-    }
+        [self performSelector:@selector(presentSignin) withObject:nil afterDelay:5.0];    }
+}
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)presentSignin {
+    [UIView animateWithDuration:0.5 animations:^(void) {
+        self.titleImage.alpha = 1;
+        self.signinButton.alpha = 1;
+    }];
 }
 
 - (void)requestLogin {
@@ -44,9 +59,8 @@
             });
         } else {
             [NexumDefaults addSession:nil];
-            
             dispatch_sync(dispatch_get_main_queue(), ^{
-                [self requestLogin];
+                [self presentSignin];
             });
         }
     }];
@@ -54,6 +68,14 @@
 
 - (void)openApp {
     [self performSegueWithIdentifier: @"openApp" sender:self];
+}
+
+- (IBAction)signinAction:(UIButton *)sender {
+    if(nil == [NexumDefaults currentSession]){
+        [self requestLogin];
+    } else {
+        [self sessionStart];
+    }
 }
 
 @end

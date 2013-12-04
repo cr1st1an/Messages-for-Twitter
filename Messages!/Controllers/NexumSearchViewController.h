@@ -15,18 +15,6 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIView *activityRow;
 
-@property (strong, nonatomic) NSMutableArray *profiles;
-@property (strong, nonatomic) NSDictionary *nextProfile;
-
-@property (assign, nonatomic) BOOL isLoading;
-@property (assign, nonatomic) double lastCellRequest;
-@property (strong, nonatomic) NSString *dataSource;
-@property (strong, nonatomic) NSString *query;
-@property (strong, nonatomic) NSString *page;
-
-- (void)loadData;
-- (void)clearTable;
-
 - (IBAction)rowButtonAction:(UIButton *)sender;
 
 @end

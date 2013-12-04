@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIWebView *twitterWebview;
 
 - (IBAction)refreshAction:(id)sender;
+- (IBAction)stopAction:(UIBarButtonItem *)sender;
 
 @end

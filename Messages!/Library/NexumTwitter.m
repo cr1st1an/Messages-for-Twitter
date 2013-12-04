@@ -23,7 +23,7 @@
 }
 
 + (void) follow:(NSString *)identifier {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Followed" message:@"It will appear on your lists in a couple of minutes." delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles:nil];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil message:@"Your follow request has been recorded, it will appear on your lists in a couple of minutes." delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles:nil];
     [message show];
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", identifier];
@@ -31,7 +31,7 @@
 }
 
 + (void) unfollow:(NSString *)identifier {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Unfollowed" message:@"It will dissapear from your lists in a couple of minutes." delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles:nil];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil message:@"Your unfollow request has been recorded, it will dissapear from your lists in a couple of minutes." delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles:nil];
     [message show];
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", identifier];
@@ -39,7 +39,7 @@
 }
 
 + (void) block:(NSString *)identifier {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Blocked" message:@"Use the official app to unblock." delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles:nil];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:nil message:@"Use the official app to unblock." delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles:nil];
     [message show];
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", identifier];

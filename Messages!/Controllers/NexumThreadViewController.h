@@ -16,27 +16,10 @@
 
 @property (strong, nonatomic) NSDictionary *thread;
 
-@property (strong, nonatomic) NSMutableArray *messages;
-@property (strong, nonatomic) NSDictionary *profile;
-@property (strong, nonatomic) NSDictionary *account;
-
-@property (assign, nonatomic) BOOL isLoading;
-@property (assign, nonatomic) BOOL isScrolling;
-@property (assign, nonatomic) BOOL isFirstLoad;
-@property (assign, nonatomic) BOOL animatingRotation;
-@property (assign, nonatomic) CGRect keyboardFrame;
-@property (strong, nonatomic) UITextView *sampleText;
-
-
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet NexumInputBar *inputBar;
 @property (weak, nonatomic) IBOutlet NexumThreadTable *tableView;
 
 - (IBAction)profileAction:(UIBarButtonItem *)sender;
-
-- (void)loadData;
-- (void)scrollToBottom;
-
-- (void)pushNotification:(NSNotification *)notification;
 
 @end

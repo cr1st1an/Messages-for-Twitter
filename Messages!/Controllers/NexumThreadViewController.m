@@ -12,7 +12,19 @@
 
 @end
 
-@implementation NexumThreadViewController
+@implementation NexumThreadViewController {
+    NSMutableArray *_messages;
+    NSDictionary *_profile;
+    NSDictionary *_account;
+    
+    UITextView *_sampleText;
+    
+    BOOL _isLoading;
+    BOOL _isScrolling;
+    BOOL _isFirstLoad;
+    BOOL _animatingRotation;
+    CGRect _keyboardFrame;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,19 +39,19 @@
     
     self.activityIndicator.alpha = 1;
     
-    self.sampleText = [[UITextView alloc] init];
-    self.sampleText.editable = NO;
-    self.sampleText.scrollEnabled = NO;
-    self.sampleText.font = [UIFont systemFontOfSize:16];
-    self.sampleText.clipsToBounds = NO;
+    _sampleText = [[UITextView alloc] init];
+    _sampleText.editable = NO;
+    _sampleText.scrollEnabled = NO;
+    _sampleText.font = [UIFont systemFontOfSize:16];
+    _sampleText.clipsToBounds = NO;
     
-    self.isLoading = NO;
-    self.isFirstLoad = YES;
-    self.isScrolling = NO;
+    _isLoading = NO;
+    _isFirstLoad = YES;
+    _isScrolling = NO;
     
-    self.messages = [[NSMutableArray alloc] init];
-    self.profile = nil;
-    self.account = [NexumDefaults currentAccount];
+    _messages = [[NSMutableArray alloc] init];
+    _profile = nil;
+    _account = [NexumDefaults currentAccount];
     
     [self.inputBar initFrame:self.interfaceOrientation];
     
@@ -51,7 +63,7 @@
     
     NSString *params = [NSString stringWithFormat:@"identifier=%@", self.thread[@"identifier"]];
     [NexumBackend getProfiles:params withAsyncBlock:^(NSDictionary *data) {
-        self.profile = data[@"profile_data"];
+        _profile = data[@"profile_data"];
     }];
     
     self.tabBarController.tabBar.hidden = YES;
@@ -81,28 +93,28 @@
 #pragma mark - Data sources
 
 - (IBAction)profileAction:(UIBarButtonItem *)sender {
-    if(nil != self.profile){
+    if(nil != _profile){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
-        nextViewController.profile = self.profile;
+        nextViewController.profile = _profile;
         nextViewController.isChildOfThread = YES;
         [self.navigationController pushViewController:nextViewController animated:YES];
     }
 }
 
 - (void)loadData {
-    if(!self.isLoading){
-        self.isLoading = YES;
+    if(!_isLoading){
+        _isLoading = YES;
         
         NSString *params = [NSString stringWithFormat:@"identifier=%@", self.thread[@"identifier"]];
         [NexumBackend getMessages:params withAsyncBlock:^(NSDictionary *data) {
-            self.messages = [NSMutableArray arrayWithArray:data[@"messages_data"]];
+            _messages = [NSMutableArray arrayWithArray:data[@"messages_data"]];
             
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self.tableView reloadData];
                 self.activityIndicator.alpha = 0;
                 [self scrollToBottom];
-                self.isLoading = NO;
+                _isLoading = NO;
             });
         }];
     }
@@ -115,15 +127,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.messages count];
+    return [_messages count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
     
-    NSDictionary *message = [self.messages objectAtIndex:indexPath.row];
-    self.sampleText.text = message[@"text"];
-    CGSize messageSize = [self.sampleText sizeThatFits:CGSizeMake((CSRect.size.width - 150), FLT_MAX)];
+    NSDictionary *message = [_messages objectAtIndex:indexPath.row];
+    _sampleText.text = message[@"text"];
+    CGSize messageSize = [_sampleText sizeThatFits:CGSizeMake((CSRect.size.width - 150), FLT_MAX)];
     
     return (messageSize.height +  10);
 }
@@ -132,11 +144,11 @@
     static NSString *CellIdentifier = @"MessageCell";
     NexumMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *message = [self.messages objectAtIndex:indexPath.row];
+    NSDictionary *message = [_messages objectAtIndex:indexPath.row];
     NSDictionary *nextMessage = nil;
     
-    if((indexPath.row + 1) < [self.messages count]){
-        nextMessage = [self.messages objectAtIndex:(indexPath.row + 1)];
+    if((indexPath.row + 1) < [_messages count]){
+        nextMessage = [_messages objectAtIndex:(indexPath.row + 1)];
     }
     
     NSDictionary *profile = nil;
@@ -144,9 +156,9 @@
     BOOL sentNext = [nextMessage[@"sent"] boolValue];
     if(nil == nextMessage || sent != sentNext){
         if(sent){
-            profile = self.account;
+            profile = _account;
         } else {
-            profile = self.profile;
+            profile = _profile;
         }
     }
     
@@ -163,26 +175,26 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    self.animatingRotation = YES;
+    _animatingRotation = YES;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    self.animatingRotation = NO;
+    _animatingRotation = NO;
     
-    [self.inputBar updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:YES];
-    [self.tableView updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:YES];
+    [self.inputBar updateFrame:self.interfaceOrientation withOrigin:_keyboardFrame.origin.y andAnimation:YES];
+    [self.tableView updateFrame:self.interfaceOrientation withOrigin:_keyboardFrame.origin.y andAnimation:YES];
     [self.tableView reloadData];
 }
 
 - (void)adjustViewForKeyboardNotification:(NSNotification *)notification {
     NSDictionary *notificationInfo = [notification userInfo];
     
-    self.keyboardFrame = [[notificationInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    self.keyboardFrame = [self.view convertRect:self.keyboardFrame fromView:self.view.window];
+    _keyboardFrame = [[notificationInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    _keyboardFrame = [self.view convertRect:_keyboardFrame fromView:self.view.window];
 
-    [self.inputBar updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:(!self.animatingRotation)];
-    [self.tableView updateFrame:self.interfaceOrientation withOrigin:self.keyboardFrame.origin.y andAnimation:(!self.animatingRotation)];
+    [self.inputBar updateFrame:self.interfaceOrientation withOrigin:_keyboardFrame.origin.y andAnimation:(!_animatingRotation)];
+    [self.tableView updateFrame:self.interfaceOrientation withOrigin:_keyboardFrame.origin.y andAnimation:(!_animatingRotation)];
     [self scrollToBottom];
 }
 
@@ -194,12 +206,12 @@
     [newMessage setValue:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]] forKey:@"identifier"];
     [newMessage setValue:[NSNumber numberWithBool:YES] forKey:@"sent"];
     
-    [self.messages addObject:newMessage];
+    [_messages addObject:newMessage];
     
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     [self performSelectorOnMainThread:@selector(scrollToBottom) withObject:nil waitUntilDone:YES];
 
-    NSString *params = [NSString stringWithFormat:@"identifier=%@&text=%@", self.profile[@"identifier"], [self.inputBar textValue]];
+    NSString *params = [NSString stringWithFormat:@"identifier=%@&text=%@", _profile[@"identifier"], [self.inputBar textValue]];
     [NexumBackend postMessages:params];
     [self.inputBar textClear];
 }
@@ -207,9 +219,9 @@
 #pragma mark - Util
 
 -(void)scrollToBottom {
-    if(!self.isScrolling){
-        self.isScrolling = YES;
-        if(self.isFirstLoad){
+    if(!_isScrolling){
+        _isScrolling = YES;
+        if(_isFirstLoad){
             CGRect CSRect = [NexumUtil currentScreenRect:self.interfaceOrientation];
             
             if(CSRect.size.height < (self.tableView.contentSize.height + self.inputBar.frame.size.height + self.navigationController.navigationBar.frame.size.height)){
@@ -218,14 +230,14 @@
                 
             }
             self.tableView.alpha = 1;
-            self.isFirstLoad = NO;
-            self.isScrolling = NO;
+            _isFirstLoad = NO;
+            _isScrolling = NO;
         } else {
-            if(1 < [self.messages count]){
-                NSIndexPath* bottomIndex = [NSIndexPath indexPathForRow:([self.messages count]-1) inSection:0];
+            if(1 < [_messages count]){
+                NSIndexPath* bottomIndex = [NSIndexPath indexPathForRow:([_messages count]-1) inSection:0];
                 [self.tableView scrollToRowAtIndexPath:bottomIndex atScrollPosition:UITableViewScrollPositionTop animated:YES];
             }
-            self.isScrolling = NO;
+            _isScrolling = NO;
         }
     }
 }
@@ -234,8 +246,8 @@
 
 -(void)pushNotification:(NSNotification *)notification{
     NSDictionary *data = notification.userInfo;
-    if([(NSString *)self.account[@"identifier"] isEqualToString:(NSString *)data[@"recipient"]]){
-        if([(NSString *)self.profile[@"identifier"] isEqualToString:(NSString *)data[@"sender"]]){
+    if([(NSString *)_account[@"identifier"] isEqualToString:(NSString *)data[@"recipient"]]){
+        if([(NSString *)_profile[@"identifier"] isEqualToString:(NSString *)data[@"sender"]]){
             [self loadData];
         }
     }

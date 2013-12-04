@@ -12,28 +12,32 @@
 
 @end
 
-@implementation NexumInboxViewController
+@implementation NexumInboxViewController {
+    NSArray *_threads;
+    
+    BOOL _isLoading;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self clearTable];
+    
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
     [refresh addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     [Flurry logPageView];
+    
     [self loadData];
     
-    [self.navigationController.tabBarItem setBadgeValue:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotification:) name:@"pushNotification" object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"pushNotification" object:nil];
 }
 
@@ -42,25 +46,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
-    nextViewController.thread = [self.threads objectAtIndex:indexPath.row];
+    nextViewController.thread = [_threads objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:nextViewController animated:YES];
 }
 
 #pragma mark - Table view data source
 
 - (void)loadData {
-    if(!self.isLoading){
-        self.isLoading = YES;
-        if(0 == [self.threads count]){
+    if(!_isLoading){
+        _isLoading = YES;
+        if(0 == [_threads count]){
             self.activityRow.alpha = 1;
         }
         [NexumBackend getThreadsWithAsyncBlock:^(NSDictionary *data) {
-            self.threads = data[@"threads_data"];
             dispatch_async(dispatch_get_main_queue(), ^ {
+                _threads = data[@"threads_data"];
                 self.activityRow.alpha = 0;
                 [self.tableView reloadData];
                 [self.refreshControl endRefreshing];
-                self.isLoading = NO;
+                [self.navigationController.tabBarItem setBadgeValue:nil];
+                _isLoading = NO;
             });
         }];
     }
@@ -71,14 +76,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.threads count];
+    return [_threads count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"InboxCell";
     NexumThreadCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *thread = [self.threads objectAtIndex:indexPath.row];
+    NSDictionary *thread = [_threads objectAtIndex:indexPath.row];
     cell.identifier = thread[@"identifier"];
     [cell reuseCellWithThread:thread];
     [cell performSelector:@selector(loadImagesWithThread:) withObject:thread afterDelay:0.01];
@@ -87,8 +92,8 @@
 }
 
 - (void)clearTable {
-    self.threads = [NSMutableArray array];
-    self.isLoading = NO;
+    _threads = [NSArray array];
+    _isLoading = NO;
     [self.tableView reloadData];
 }
 

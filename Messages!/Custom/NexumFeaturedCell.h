@@ -18,8 +18,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UIButton *button;
 
-@property (assign, nonatomic) BOOL loadImages;
-
 - (void)reuseCellWithProfile:(NSDictionary *)profile andRow:(int)row;
 - (void)loadImagesWithProfile:(NSDictionary *)profile;
 

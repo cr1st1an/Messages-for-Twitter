@@ -33,6 +33,10 @@
 		2A07A999183E8475008498F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A3B2A921831F4E100E82B8C /* InfoPlist.strings */; };
 		2A09BC5D183C2E8B00AE4152 /* NexumMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A09BC5C183C2E8B00AE4152 /* NexumMessageCell.m */; };
 		2A09BC60183C303F00AE4152 /* NexumThreadTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A09BC5F183C303F00AE4152 /* NexumThreadTable.m */; };
+		2A10C64C184D982900DF833A /* featured.m4r in Resources */ = {isa = PBXBuildFile; fileRef = 2A10C64A184D982900DF833A /* featured.m4r */; };
+		2A10C64D184D982900DF833A /* featured.m4r in Resources */ = {isa = PBXBuildFile; fileRef = 2A10C64A184D982900DF833A /* featured.m4r */; };
+		2A10C64E184D982900DF833A /* newdm.m4r in Resources */ = {isa = PBXBuildFile; fileRef = 2A10C64B184D982900DF833A /* newdm.m4r */; };
+		2A10C64F184D982900DF833A /* newdm.m4r in Resources */ = {isa = PBXBuildFile; fileRef = 2A10C64B184D982900DF833A /* newdm.m4r */; };
 		2A1BAC99183D51080053491E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A3B2A9B1831F4E100E82B8C /* Main.storyboard */; };
 		2A25E433184320AA00A18F26 /* NexumTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A25E432184320AA00A18F26 /* NexumTwitter.m */; };
 		2A25E434184320AA00A18F26 /* NexumTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A25E432184320AA00A18F26 /* NexumTwitter.m */; };
@@ -73,15 +77,11 @@
 		2AE1EFA21846ADC800E7BA04 /* NexumStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */; };
 		2AE2BF8B1848076400821F6B /* libFlurry_4.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE2BF8A1848076400821F6B /* libFlurry_4.3.0.a */; };
 		2AE2BF8C1848076400821F6B /* libFlurry_4.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE2BF8A1848076400821F6B /* libFlurry_4.3.0.a */; };
-		2AE2BF8F18480B0000821F6B /* newdm.aif in Resources */ = {isa = PBXBuildFile; fileRef = 2AE2BF8E18480B0000821F6B /* newdm.aif */; };
-		2AE2BF9018480B0000821F6B /* newdm.aif in Resources */ = {isa = PBXBuildFile; fileRef = 2AE2BF8E18480B0000821F6B /* newdm.aif */; };
 		2AE2BF931848163400821F6B /* NexumTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE2BF921848163400821F6B /* NexumTabsViewController.m */; };
 		2AE2BF941848163400821F6B /* NexumTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE2BF921848163400821F6B /* NexumTabsViewController.m */; };
 		2AE2BF95184832BF00821F6B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03BA851848053800232C08 /* SystemConfiguration.framework */; };
 		2AE8BE68184C1154009249F9 /* NexumFeaturedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE8BE67184C1154009249F9 /* NexumFeaturedCell.m */; };
 		2AE8BE69184C1154009249F9 /* NexumFeaturedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE8BE67184C1154009249F9 /* NexumFeaturedCell.m */; };
-		2AE8BE6B184C1DD4009249F9 /* featured.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2AE8BE6A184C1DD4009249F9 /* featured.mp3 */; };
-		2AE8BE6C184C1DD4009249F9 /* featured.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2AE8BE6A184C1DD4009249F9 /* featured.mp3 */; };
 		2AF59B631832CB2A003E153E /* NexumLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B621832CB2A003E153E /* NexumLoginViewController.m */; };
 		2AF59B671832D355003E153E /* NexumUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B661832D355003E153E /* NexumUtil.m */; };
 		2AF59B6A1832D58F003E153E /* NexumBackend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF59B691832D58F003E153E /* NexumBackend.m */; };
@@ -99,6 +99,8 @@
 		2A09BC5C183C2E8B00AE4152 /* NexumMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumMessageCell.m; path = Custom/NexumMessageCell.m; sourceTree = "<group>"; };
 		2A09BC5E183C303F00AE4152 /* NexumThreadTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumThreadTable.h; path = Custom/NexumThreadTable.h; sourceTree = "<group>"; };
 		2A09BC5F183C303F00AE4152 /* NexumThreadTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumThreadTable.m; path = Custom/NexumThreadTable.m; sourceTree = "<group>"; };
+		2A10C64A184D982900DF833A /* featured.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; name = featured.m4r; path = Media/featured.m4r; sourceTree = "<group>"; };
+		2A10C64B184D982900DF833A /* newdm.m4r */ = {isa = PBXFileReference; lastKnownFileType = file; name = newdm.m4r; path = Media/newdm.m4r; sourceTree = "<group>"; };
 		2A25E431184320AA00A18F26 /* NexumTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumTwitter.h; path = Library/NexumTwitter.h; sourceTree = "<group>"; };
 		2A25E432184320AA00A18F26 /* NexumTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumTwitter.m; path = Library/NexumTwitter.m; sourceTree = "<group>"; };
 		2A26C89018355A8900B3E12F /* NexumProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumProfileViewController.h; path = Controllers/NexumProfileViewController.h; sourceTree = "<group>"; };
@@ -154,12 +156,10 @@
 		2AE1EFA01846ADC800E7BA04 /* NexumStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumStartViewController.m; path = Controllers/NexumStartViewController.m; sourceTree = "<group>"; };
 		2AE2BF891848076400821F6B /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		2AE2BF8A1848076400821F6B /* libFlurry_4.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.0.a; sourceTree = "<group>"; };
-		2AE2BF8E18480B0000821F6B /* newdm.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = newdm.aif; path = Media/newdm.aif; sourceTree = "<group>"; };
 		2AE2BF911848163400821F6B /* NexumTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumTabsViewController.h; path = Controllers/NexumTabsViewController.h; sourceTree = "<group>"; };
 		2AE2BF921848163400821F6B /* NexumTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumTabsViewController.m; path = Controllers/NexumTabsViewController.m; sourceTree = "<group>"; };
 		2AE8BE66184C1154009249F9 /* NexumFeaturedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumFeaturedCell.h; path = Custom/NexumFeaturedCell.h; sourceTree = "<group>"; };
 		2AE8BE67184C1154009249F9 /* NexumFeaturedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumFeaturedCell.m; path = Custom/NexumFeaturedCell.m; sourceTree = "<group>"; };
-		2AE8BE6A184C1DD4009249F9 /* featured.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = featured.mp3; path = Media/featured.mp3; sourceTree = "<group>"; };
 		2AF59B611832CB2A003E153E /* NexumLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NexumLoginViewController.h; path = Controllers/NexumLoginViewController.h; sourceTree = "<group>"; };
 		2AF59B621832CB2A003E153E /* NexumLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NexumLoginViewController.m; path = Controllers/NexumLoginViewController.m; sourceTree = "<group>"; };
 		2AF59B641832CE92003E153E /* DefaultConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultConstants.h; sourceTree = "<group>"; };
@@ -360,8 +360,8 @@
 		2AE2BF8D18480ADA00821F6B /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				2AE8BE6A184C1DD4009249F9 /* featured.mp3 */,
-				2AE2BF8E18480B0000821F6B /* newdm.aif */,
+				2A10C64A184D982900DF833A /* featured.m4r */,
+				2A10C64B184D982900DF833A /* newdm.m4r */,
 			);
 			name = Media;
 			sourceTree = "<group>";
@@ -450,10 +450,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A10C64F184D982900DF833A /* newdm.m4r in Resources */,
+				2A10C64D184D982900DF833A /* featured.m4r in Resources */,
 				2A07A997183E8475008498F4 /* Images.xcassets in Resources */,
 				2A07A998183E8475008498F4 /* Main.storyboard in Resources */,
-				2AE2BF9018480B0000821F6B /* newdm.aif in Resources */,
-				2AE8BE6C184C1DD4009249F9 /* featured.mp3 in Resources */,
 				2A07A999183E8475008498F4 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,10 +462,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A10C64E184D982900DF833A /* newdm.m4r in Resources */,
+				2A10C64C184D982900DF833A /* featured.m4r in Resources */,
 				2AC4E1E2183D6BB700BC589E /* Images.xcassets in Resources */,
 				2A1BAC99183D51080053491E /* Main.storyboard in Resources */,
-				2AE2BF8F18480B0000821F6B /* newdm.aif in Resources */,
-				2AE8BE6B184C1DD4009249F9 /* featured.mp3 in Resources */,
 				2A3B2A941831F4E100E82B8C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

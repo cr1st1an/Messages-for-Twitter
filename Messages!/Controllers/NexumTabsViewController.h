@@ -10,6 +10,4 @@
 
 @interface NexumTabsViewController : UITabBarController
 
-- (void)pushNotification:(NSNotification *)notification;
-
 @end

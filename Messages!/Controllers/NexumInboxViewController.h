@@ -13,17 +13,7 @@
 
 @interface NexumInboxViewController : UITableViewController
 
-@property (strong, nonatomic) NSArray *threads;
-
-@property (assign, nonatomic) BOOL isLoading;
-
-@property (weak, nonatomic) IBOutlet UIView *activityRow;
-
-- (void)loadData;
-- (void)clearTable;
-
+@property (strong, nonatomic) IBOutlet UIView *activityRow;
 - (IBAction)searchAction:(UIBarButtonItem *)sender;
-
-- (void)pushNotification:(NSNotification *)notification;
 
 @end

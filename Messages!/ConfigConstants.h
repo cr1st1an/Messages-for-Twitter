@@ -9,6 +9,8 @@
 #ifndef ConfigConstants_h
 #define ConfigConstants_h
 
-#define FLURRY_API_KEY     @"BJDTPR6N7BMB6Z9X88RP"
+#define FLURRY_API_KEY  @""
+#define BACKEND_URL     @""
+#define TW_INVITE       @""
 
 #endif

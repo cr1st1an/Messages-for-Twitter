@@ -8,28 +8,36 @@
 
 #import "NexumThreadCell.h"
 
-@implementation NexumThreadCell
+@implementation NexumThreadCell {
+    BOOL _opened;
+    BOOL _verified;
+    BOOL _featured;
+    BOOL _protected;
+    BOOL _staff;
+    
+    BOOL _loadImages;
+}
 
 - (void)reuseCellWithThread:(NSDictionary *)thread {
-    BOOL opened = [thread[@"opened"] boolValue];
-    BOOL verified = [thread[@"profile_data"][@"verified"] boolValue];
-    BOOL featured = [thread[@"profile_data"][@"featured"] boolValue];
-    BOOL protected = [thread[@"profile_data"][@"protected"] boolValue];
-    BOOL staff = [thread[@"profile_data"][@"staff"] boolValue];
+    _opened = [thread[@"opened"] boolValue];
+    _verified = [thread[@"profile_data"][@"verified"] boolValue];
+    _featured = [thread[@"profile_data"][@"featured"] boolValue];
+    _protected = [thread[@"profile_data"][@"protected"] boolValue];
+    _staff = [thread[@"profile_data"][@"staff"] boolValue];
     
-    if(opened){
+    if(_opened){
         self.indicator.backgroundColor = [UIColor C_ededea];
     } else {
         self.indicator.backgroundColor = [UIColor C_4fdd86];
     }
     
-    if(staff) {
+    if(_staff) {
         self.badge.image = [UIImage imageNamed:@"badge_staff"];
-    } else if(featured){
+    } else if(_featured){
         self.badge.image = [UIImage imageNamed:@"badge_featured"];
-    } else if(verified) {
+    } else if(_verified) {
         self.badge.image = [UIImage imageNamed:@"badge_verified"];
-    } else if(protected) {
+    } else if(_protected) {
         self.badge.image = [UIImage imageNamed:@"badge_protected"];
     } else {
         self.badge.image = nil;
@@ -45,7 +53,7 @@
     
     BOOL exists = [[FICImageCache sharedImageCache] imageExistsForEntity:profilePicture withFormatName:@"picture"];
     if(exists){
-        self.loadImages = NO;
+        _loadImages = NO;
         if([self.identifier isEqualToString:(NSString *)thread[@"identifier"]]){
             [[FICImageCache sharedImageCache] retrieveImageForEntity:profilePicture withFormatName:@"picture" completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
                 if([self.identifier isEqualToString:(NSString *)thread[@"identifier"]]){
@@ -54,13 +62,13 @@
             }];
         }
     } else {
-        self.loadImages = YES;
+        _loadImages = YES;
         self.picture.image = [UIImage imageNamed:@"placeholder"];
     }
 }
 
 - (void)loadImagesWithThread:(NSDictionary *)thread {
-    if(self.loadImages){
+    if(_loadImages){
         if([self.identifier isEqualToString:(NSString *)thread[@"identifier"]]){
             NexumProfilePicture *profilePicture = [[NexumProfilePicture alloc] init];
             

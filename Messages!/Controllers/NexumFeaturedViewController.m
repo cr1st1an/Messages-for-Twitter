@@ -13,7 +13,13 @@
 @end
 
 @implementation NexumFeaturedViewController {
-    SystemSoundID soundEffect;
+    SystemSoundID _soundEffect;
+    
+    NSDictionary *_featuredProfile;
+    NSString *_featuredIdentifier;
+    NSArray *_profiles;
+    
+    BOOL _isLoading;
 }
 
 - (void)viewDidLoad {
@@ -33,13 +39,13 @@
     [super viewDidAppear:animated];
     [Flurry logPageView];
     
-    [self reloadProfile];
     [self loadData];
+    [self centerProfile];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self reloadProfile];
+    [self centerProfile];
 }
 
 #pragma mark - Table view data source
@@ -49,17 +55,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(0 < [self.profiles count])
+    if(0 < [_profiles count])
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
-    return [self.profiles count];
+    return [_profiles count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"FeaturedCell";
     NexumFeaturedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *profile = [self.profiles objectAtIndex:indexPath.row];
+    NSDictionary *profile = [_profiles objectAtIndex:indexPath.row];
     cell.identifier = profile[@"identifier"];
     [cell reuseCellWithProfile:profile andRow:indexPath.row];
     [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
@@ -70,56 +76,80 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
-    nextViewController.profile =[self.profiles objectAtIndex:indexPath.row];
+    nextViewController.profile =[_profiles objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:nextViewController animated:YES];
 }
 
 - (IBAction)buyAction {
-    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"featured" ofType:@"mp3"];
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"featured" ofType:@"m4r"];
     NSURL *soundURL = [NSURL fileURLWithPath:soundPath];
-    AudioServicesCreateSystemSoundID(CFBridgingRetain(soundURL), &soundEffect);
+    AudioServicesCreateSystemSoundID(CFBridgingRetain(soundURL), &_soundEffect);
     
-    [NexumBackend postPurchases:@"" withAsyncBlock:^(NSDictionary *data) {
-        dispatch_async(dispatch_get_main_queue(), ^ {
-            [self clearTable];
+    if([[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"] isEqualToString:@"mobi.nexum.messages.twitter"]){
+        [self.buyButton setTitle:@"unlocking..." forState:UIControlStateNormal];
+        SKProductsRequest *request= [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject: @"mobi.nexum.messages.twitter.001"]];
+        request.delegate = self;
+        [request start];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not available"
+                                                        message:@"This feature is only available through the App Store  "
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+}
+
+- (IBAction)profileAction:(UIButton *)sender {
+    if(nil != _featuredProfile){
+        BOOL following = [_featuredProfile[@"following"] boolValue];
+        BOOL own = [_featuredProfile[@"own"] boolValue];
+        if(!following && !own){
+            [NexumTwitter follow:_featuredProfile[@"identifier"]];
             [self loadData];
-            AudioServicesPlaySystemSound(soundEffect);
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-        });
-    }];
+        } else {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
+            nextViewController.profile = _featuredProfile;
+            [self.navigationController pushViewController:nextViewController animated:YES];
+
+        }
+    }
 }
 
 - (void)clearTable {
-    self.profiles = [NSMutableArray array];
-    self.isLoading = NO;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    _profiles = [NSArray array];
+    _isLoading = NO;
     [self.tableView reloadData];
 }
 
 - (void)loadData {
-    if(!self.isLoading){
-        self.isLoading = YES;
+    if(!_isLoading){
+        _isLoading = YES;
         self.activityRow.alpha = 1;
         [NexumBackend getPurchasesRecentWithAsyncBlock:^(NSDictionary *data) {
-            self.profiles = data[@"profiles_data"];
-            self.featuredProfile = [self.profiles objectAtIndex:0];
+            _profiles = data[@"profiles_data"];
+            _featuredProfile = [_profiles objectAtIndex:0];
             dispatch_async(dispatch_get_main_queue(), ^ {
                 self.activityRow.alpha = 0;
                 [self reloadProfile];
+                [self centerProfile];
                 [self.tableView reloadData];
                 [self.refreshControl endRefreshing];
-                self.isLoading = NO;
+                _isLoading = NO;
             });
         }];
     }
 }
 
 - (void)reloadProfile {
-    if(![self.featuredIdentifier isEqualToString:(NSString *)self.featuredProfile[@"identifier"]]){
-        BOOL verified = [self.featuredProfile[@"verified"] boolValue];
-        BOOL featured = [self.featuredProfile[@"featured"] boolValue];
-        BOOL staff = [self.featuredProfile[@"staff"] boolValue];
-        BOOL protected = [self.featuredProfile[@"protected"] boolValue];
+    if(nil != _featuredProfile && ![_featuredIdentifier isEqualToString:(NSString *)_featuredProfile[@"identifier"]]){
+        BOOL verified = [_featuredProfile[@"verified"] boolValue];
+        BOOL featured = [_featuredProfile[@"featured"] boolValue];
+        BOOL staff = [_featuredProfile[@"staff"] boolValue];
+        BOOL protected = [_featuredProfile[@"protected"] boolValue];
         
         if(staff) {
             self.badge.image = [UIImage imageNamed:@"badge_staff"];
@@ -133,13 +163,13 @@
             self.badge.image = nil;
         }
         
-        self.featuredIdentifier = (NSString *)self.featuredProfile[@"identifier"];
+        _featuredIdentifier = (NSString *)_featuredProfile[@"identifier"];
         
-        self.username.text = [NSString stringWithFormat:@"@%@", self.featuredProfile[@"username"]];
-        self.description.text = self.featuredProfile[@"description"];
+        self.username.text = [NSString stringWithFormat:@"@%@", _featuredProfile[@"username"]];
+        self.description.text = _featuredProfile[@"description"];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^ {
-            NSData *backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.featuredProfile[@"back"]]];
+            NSData *backData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_featuredProfile[@"back"]]];
             dispatch_async(dispatch_get_main_queue(), ^ {
                 UIImage *backImage = [UIImage imageWithData:backData];
                 [UIView animateWithDuration:0.25 animations:^{
@@ -155,20 +185,95 @@
         
         
         NexumProfilePicture *profilePicture = [[NexumProfilePicture alloc] init];
-        profilePicture.identifier = self.featuredProfile[@"identifier"];
-        profilePicture.pictureURL = self.featuredProfile[@"picture"];
+        profilePicture.identifier = _featuredProfile[@"identifier"];
+        profilePicture.pictureURL = _featuredProfile[@"picture"];
         [[FICImageCache sharedImageCache] retrieveImageForEntity:profilePicture withFormatName:@"picture" completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
             [UIView animateWithDuration:1.0 animations:^(void) {
                 self.picture.image = image;
             }];
         }];
     }
+}
+
+- (void)centerProfile {
+    if(nil != _featuredIdentifier){
+        [self.description sizeToFit];
+        self.infoPlaceholder.frame = CGRectMake(self.infoPlaceholder.frame.origin.x, self.infoPlaceholder.frame.origin.y, self.infoPlaceholder.frame.size.width, (self.description.frame.size.height + 64));
+        [UIView animateWithDuration:0.25 animations:^(void) {
+            self.infoPlaceholder.center = self.mainPlaceholder.center;
+        }];
+    }
+}
+
+- (IBAction)rowButtonAction:(UIButton *)sender {
+    NSDictionary *profile = [_profiles objectAtIndex:[(NexumProfileCell *)sender tag]];
     
-    [self.description sizeToFit];
-    self.infoPlaceholder.frame = CGRectMake(self.infoPlaceholder.frame.origin.x, self.infoPlaceholder.frame.origin.y, self.infoPlaceholder.frame.size.width, (self.description.frame.size.height + 64));
-    [UIView animateWithDuration:0.25 animations:^(void) {
-        self.infoPlaceholder.center = self.mainPlaceholder.center;
+    BOOL following = [profile[@"following"] boolValue];
+    BOOL own = [profile[@"own"] boolValue];
+    if(!following && !own){
+        [NexumTwitter follow:profile[@"identifier"]];
+    }
+}
+
+#pragma mark - StoreKit delegates
+
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    NSArray *myProduct = response.products;
+    NSLog(@"%@",[[myProduct objectAtIndex:0] productIdentifier]);
+    SKPayment *newPayment = [SKPayment paymentWithProduct:[myProduct objectAtIndex:0]];
+    [[SKPaymentQueue defaultQueue] addPayment:newPayment];
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
+    for (SKPaymentTransaction *transaction in transactions) {
+        switch (transaction.transactionState) {
+            case SKPaymentTransactionStatePurchased:
+                [self completeTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateRestored:
+                [self completeTransaction:transaction];
+                break;
+            case SKPaymentTransactionStateFailed:
+                [self failedTransaction:transaction];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+- (void) completeTransaction: (SKPaymentTransaction *)transaction {
+    [self.buyButton setTitle:@"BECOME FEATURED" forState:UIControlStateNormal];
+    
+    [NexumBackend postPurchases:@"" withAsyncBlock:^(NSDictionary *data) {
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            [self clearTable];
+            [self loadData];
+            AudioServicesPlaySystemSound(_soundEffect);
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        });
     }];
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void) failedTransaction: (SKPaymentTransaction *)transaction {
+    [self.buyButton setTitle:@"BECOME FEATURED" forState:UIControlStateNormal];
+    
+    NSString *message;
+    if (transaction.error.code == SKErrorPaymentCancelled) {
+        message = @"It's ok, maybe next time.";
+    } else {
+        message = @"Could not complete the transaction, you have not been charged.";
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not unlocked"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
 }
 
 @end

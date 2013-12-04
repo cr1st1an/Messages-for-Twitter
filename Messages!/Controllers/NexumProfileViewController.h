@@ -13,9 +13,7 @@
 @interface NexumProfileViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSDictionary *profile;
-
-@property (strong, nonatomic) NSMutableArray *profiles;
-@property (strong, nonatomic) NSDictionary *nextProfile;
+@property (assign, nonatomic) BOOL isChildOfThread;
 
 @property (strong, nonatomic) IBOutlet UIImageView *back;
 @property (strong, nonatomic) IBOutlet UIView *mainPlaceholder;
@@ -31,20 +29,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *followingButton;
 @property (strong, nonatomic) IBOutlet UIButton *followersButton;
 
-@property (assign, nonatomic) BOOL isLoading;
-@property (assign, nonatomic) BOOL isChildOfThread;
-@property (strong, nonatomic) NSString *dataSource;
-@property (strong, nonatomic) NSString *page;
-
 - (IBAction)optionsAction:(UIBarButtonItem *)sender;
 - (IBAction)dinamicAction:(id)sender;
 - (IBAction)followingAction:(id)sender;
 - (IBAction)followersAction:(id)sender;
 - (IBAction)rowButtonAction:(id)sender;
-
-- (void)clearTable;
-- (void)loadData;
-- (void)loadProfileImage;
-- (void)loadBackImage;
 
 @end

@@ -8,15 +8,26 @@
 
 #import "NexumFeaturedCell.h"
 
-@implementation NexumFeaturedCell
+@implementation NexumFeaturedCell {
+    BOOL _loadImages;
+}
 
 
 - (void)reuseCellWithProfile:(NSDictionary *)profile andRow:(int)row {
-    //BOOL following = [profile[@"following"] boolValue];
-    BOOL verified = [profile[@"verified"] boolValue];
-    BOOL featured = [profile[@"featured"] boolValue];
-    BOOL staff = [profile[@"staff"] boolValue];
-    BOOL protected = [profile[@"protected"] boolValue];
+    BOOL following = [profile[@"following"] boolValue];
+    BOOL own = [profile[@"own"] boolValue];
+    
+    self.button.tag = row;
+    if(own){
+        [self.button setBackgroundImage:nil forState:UIControlStateNormal];
+        [self.button setBackgroundImage:nil forState:UIControlStateHighlighted];
+    } else if(following){
+        [self.button setBackgroundImage:[UIImage imageNamed:@"following"] forState:UIControlStateNormal];
+        [self.button setBackgroundImage:[UIImage imageNamed:@"following"] forState:UIControlStateHighlighted];
+    } else {
+        [self.button setBackgroundImage:[UIImage imageNamed:@"follow"] forState:UIControlStateNormal];
+        [self.button setBackgroundImage:[UIImage imageNamed:@"follow_tap"] forState:UIControlStateHighlighted];
+    }
     
     self.fullname.text = profile[@"fullname"];
     self.username.text = [NSString stringWithFormat:@"@%@", profile[@"username"]];
@@ -29,7 +40,7 @@
     
     BOOL exists = [[FICImageCache sharedImageCache] imageExistsForEntity:profilePicture withFormatName:@"picture"];
     if(exists){
-        self.loadImages = NO;
+        _loadImages = NO;
         if([self.identifier isEqualToString:(NSString *)profile[@"identifier"]]){
             [[FICImageCache sharedImageCache] retrieveImageForEntity:profilePicture withFormatName:@"picture" completionBlock:^(id<FICEntity> entity, NSString *formatName, UIImage *image) {
                 if([self.identifier isEqualToString:(NSString *)profile[@"identifier"]]){
@@ -38,10 +49,14 @@
             }];
         }
     } else {
-        self.loadImages = YES;
+        _loadImages = YES;
         self.picture.image = [UIImage imageNamed:@"placeholder"];
     }
     
+    BOOL verified = [profile[@"verified"] boolValue];
+    BOOL featured = [profile[@"featured"] boolValue];
+    BOOL staff = [profile[@"staff"] boolValue];
+    BOOL protected = [profile[@"protected"] boolValue];
     if(staff) {
         self.badge.image = [UIImage imageNamed:@"badge_staff"];
     } else if(featured){
@@ -57,7 +72,7 @@
 }
 
 - (void)loadImagesWithProfile: (NSDictionary *) profile{
-    if(self.loadImages){
+    if(_loadImages){
         if([self.identifier isEqualToString:(NSString *)profile[@"identifier"]]){
             NexumProfilePicture *profilePicture = [[NexumProfilePicture alloc] init];
             

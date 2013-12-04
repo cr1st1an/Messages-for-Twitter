@@ -9,10 +9,6 @@
 #ifndef Default_Constants_h
 #define Default_Constants_h
 
-#define BACKEND_URL @"http://dev.twitter.messages.nexum.ws/1.0/"
-
-#define TW_INVITE   @"Hi @%@! I'm looking for you on @getmessages. Please follow me so we can chat :)"
-
 #define C_4fdd86    colorWithRed:0.310 green:0.867 blue:0.525 alpha:1.00
 #define C_1ab4ef    colorWithRed:0.102 green:0.706 blue:0.937 alpha:1.00
 #define C_1ab4ef_T  colorWithRed:0.102 green:0.706 blue:0.937 alpha:0.90

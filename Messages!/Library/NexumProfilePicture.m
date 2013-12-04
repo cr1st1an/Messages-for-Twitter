@@ -18,13 +18,17 @@
 }
 
 - (NSString *)UUID {
+    if(nil == self.identifier || [NSNull null] == (NSNull *)self.identifier){
+        self.identifier = @"";
+    }
+    
     CFUUIDBytes UUIDBytes = FICUUIDBytesFromMD5HashOfString(self.identifier);
     NSString *UUID = FICStringWithUUIDBytes(UUIDBytes);
     return UUID;
 }
 
 - (NSString *)sourceImageUUID {
-    if([NSNull null] == (NSNull *)self.pictureURL){
+    if(nil == self.pictureURL || [NSNull null] == (NSNull *)self.pictureURL){
         self.pictureURL = @"";
     }
 
@@ -35,7 +39,7 @@
 }
 
 - (NSURL *)sourceImageURLWithFormatName:(NSString *)formatName {
-    if([NSNull null] == (NSNull *)self.pictureURL){
+    if(nil == self.pictureURL || [NSNull null] == (NSNull *)self.pictureURL){
         self.pictureURL = @"";
     }
     

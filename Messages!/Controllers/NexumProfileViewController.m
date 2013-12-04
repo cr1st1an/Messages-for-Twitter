@@ -12,7 +12,14 @@
 
 @end
 
-@implementation NexumProfileViewController
+@implementation NexumProfileViewController {
+    NSMutableArray *_profiles;
+    NSDictionary *_nextProfile;
+    
+    BOOL _isLoading;
+    NSString *_dataSource;
+    NSString *_page;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +47,7 @@
     if(own){
         self.actionButton.backgroundColor = [UIColor C_f8bf32];
         self.actionButton.tintColor = [UIColor whiteColor];
-        [self.actionButton setTitle:@"become featured" forState:UIControlStateNormal];
+        [self.actionButton setTitle:@"promote your profile" forState:UIControlStateNormal];
     } else if((follower && following) || follower){
         self.actionButton.backgroundColor = [UIColor C_4fdd86];
         self.actionButton.tintColor = [UIColor whiteColor];
@@ -71,7 +78,7 @@
     }
     
     [self clearTable];
-    self.dataSource = @"following";
+    _dataSource = @"following";
     self.followingButton.tintColor = [UIColor whiteColor];
     
     [self loadData];
@@ -101,7 +108,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     NexumProfileViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
-    nextViewController.profile =[self.profiles objectAtIndex:indexPath.row];
+    nextViewController.profile =[_profiles objectAtIndex:indexPath.row];
     nextViewController.isChildOfThread = self.isChildOfThread;
     [self.navigationController pushViewController:nextViewController animated:YES];
 }
@@ -113,20 +120,20 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.profiles count];
+    return [_profiles count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"ProfileCell";
     NexumProfileCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *profile = [self.profiles objectAtIndex:indexPath.row];
+    NSDictionary *profile = [_profiles objectAtIndex:indexPath.row];
     cell.identifier = profile[@"identifier"];
     [cell reuseCellWithProfile:profile andRow:indexPath.row];
     [cell performSelector:@selector(loadImagesWithProfile:) withObject:profile afterDelay:0.01];
     
-    if([self.profiles count] < (indexPath.row + 20)){
-        if([NSNull null] != (NSNull *)self.page){
+    if([_profiles count] < (indexPath.row + 20)){
+        if([NSNull null] != (NSNull *)_page){
             [self loadData];
         }
     }
@@ -154,28 +161,28 @@
 #pragma mark - Load data
 
 - (void)loadData {
-    if(!self.isLoading){
-        self.isLoading = YES;
+    if(!_isLoading){
+        _isLoading = YES;
         self.activityRow.alpha = 1;
-        NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@", self.profile[@"identifier"], self.page];
-        if([@"following" isEqualToString:self.dataSource]){
+        NSString *params = [NSString stringWithFormat:@"identifier=%@&page=%@", self.profile[@"identifier"], _page];
+        if([@"following" isEqualToString:_dataSource]){
             [NexumBackend getContactsFollowing:params withAsyncBlock:^(NSDictionary *data) {
-                self.page = data[@"pagination"][@"next"];
-                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                _page = data[@"pagination"][@"next"];
+                [_profiles addObjectsFromArray:data[@"profiles_data"]];
                 dispatch_async(dispatch_get_main_queue(), ^ {
                     self.activityRow.alpha = 0;
                     [self.tableView reloadData];
-                    self.isLoading = NO;
+                    _isLoading = NO;
                 });
             }];
-        } else if([@"followers" isEqualToString:self.dataSource]){
+        } else if([@"followers" isEqualToString:_dataSource]){
             [NexumBackend getContactsFollowers:params withAsyncBlock:^(NSDictionary *data) {
-                self.page = data[@"pagination"][@"next"];
-                [self.profiles addObjectsFromArray:data[@"profiles_data"]];
+                _page = data[@"pagination"][@"next"];
+                [_profiles addObjectsFromArray:data[@"profiles_data"]];
                 dispatch_async(dispatch_get_main_queue(), ^ {
                     self.activityRow.alpha = 0;
                     [self.tableView reloadData];
-                    self.isLoading = NO;
+                    _isLoading = NO;
                 });
             }];
         }
@@ -257,7 +264,7 @@
 
 - (IBAction)followingAction:(id)sender {
     [self clearTable];
-    self.dataSource = @"following";
+    _dataSource = @"following";
     self.followersButton.tintColor = [UIColor C_22a1d9];
     self.followingButton.tintColor = [UIColor whiteColor];
     [self loadData];
@@ -265,17 +272,19 @@
 
 - (IBAction)followersAction:(id)sender {
     [self clearTable];
-    self.dataSource = @"followers";
+    _dataSource = @"followers";
     self.followingButton.tintColor = [UIColor C_22a1d9];
     self.followersButton.tintColor = [UIColor whiteColor];
     [self loadData];
 }
 
 - (IBAction)rowButtonAction:(id)sender {
-    NSMutableDictionary *profile = [[self.profiles objectAtIndex:[(NexumProfileCell *)sender tag]] mutableCopy];
+    NSDictionary *profile = [_profiles objectAtIndex:[(NexumProfileCell *)sender tag]];
     
     BOOL follower = [profile[@"follower"] boolValue];
     BOOL following = [profile[@"following"] boolValue];
+    BOOL own = [profile[@"own"] boolValue];
+    
     if((follower && following) || follower){
         NSArray *data = [NSArray arrayWithObjects:profile[@"identifier"], [NSString stringWithFormat:@"@%@", profile[@"username"]], nil];
         NSArray *keys = [NSArray arrayWithObjects:@"identifier", @"subtitle", nil];
@@ -284,7 +293,7 @@
         NexumThreadViewController *nextViewController = [storyboard instantiateViewControllerWithIdentifier:@"ThreadView"];
         nextViewController.thread = [NSDictionary dictionaryWithObjects:data forKeys:keys];
         [self.navigationController pushViewController:nextViewController animated:YES];
-    } else {
+    } else if(!own) {
         [NexumTwitter postStatus:[NSString stringWithFormat:TW_INVITE, profile[@"username"]] onView:self];
     }
 }
@@ -292,9 +301,9 @@
 #pragma mark - Helpers
 
 - (void)clearTable {
-    self.profiles = [NSMutableArray array];
-    self.isLoading = NO;
-    self.page = @"0";
+    _profiles = [NSMutableArray array];
+    _isLoading = NO;
+    _page = @"0";
     [self.tableView reloadData];
 }
 
