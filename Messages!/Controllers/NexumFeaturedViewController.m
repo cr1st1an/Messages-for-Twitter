@@ -14,6 +14,7 @@
 
 @implementation NexumFeaturedViewController {
     SystemSoundID _soundEffect;
+    SKProduct *_product;
     
     NSDictionary *_featuredProfile;
     NSString *_featuredIdentifier;
@@ -33,6 +34,14 @@
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
     [refresh addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
+    
+    if([[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"] isEqualToString:APPSTORE_ID]){
+        SKProductsRequest *request= [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject:[NSString stringWithFormat:@"%@.001", APPSTORE_ID]]];
+        request.delegate = self;
+        [request start];
+        
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -90,10 +99,11 @@
     AudioServicesCreateSystemSoundID(CFBridgingRetain(soundURL), &_soundEffect);
     
     if([[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"] isEqualToString:APPSTORE_ID]){
-        [self.buyButton setTitle:@"unlocking..." forState:UIControlStateNormal];
-        SKProductsRequest *request= [[SKProductsRequest alloc] initWithProductIdentifiers: [NSSet setWithObject:[NSString stringWithFormat:@"%@.001", APPSTORE_ID]]];
-        request.delegate = self;
-        [request start];
+        if(nil != _product){
+            [self.buyButton setTitle:@"unlocking..." forState:UIControlStateNormal];
+            SKPayment *newPayment = [SKPayment paymentWithProduct:_product];
+            [[SKPaymentQueue defaultQueue] addPayment:newPayment];
+        }
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not available"
                                                         message:@"This feature is only available through the App Store  "
@@ -222,11 +232,8 @@
 #pragma mark - StoreKit delegates
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     NSArray *myProduct = response.products;
-    NSLog(@"%@",[[myProduct objectAtIndex:0] productIdentifier]);
-    SKPayment *newPayment = [SKPayment paymentWithProduct:[myProduct objectAtIndex:0]];
-    [[SKPaymentQueue defaultQueue] addPayment:newPayment];
+    _product = [myProduct objectAtIndex:0];
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
@@ -250,7 +257,15 @@
 - (void) completeTransaction: (SKPaymentTransaction *)transaction {
     [self.buyButton setTitle:@"BECOME FEATURED" forState:UIControlStateNormal];
     
-    [NexumBackend postPurchases:@"" withAsyncBlock:^(NSDictionary *data) {
+    NSString *params = [NSString stringWithFormat:@"date=%@&product=%@&transaction=%@&title=%@&price=%@",
+                        transaction.transactionDate,
+                        transaction.payment.productIdentifier,
+                        transaction.transactionIdentifier,
+                        _product.localizedTitle,
+                        _product.price
+                        ];
+    
+    [NexumBackend postPurchases:params withAsyncBlock:^(NSDictionary *data) {
         dispatch_async(dispatch_get_main_queue(), ^ {
             [self clearTable];
             [self loadData];
